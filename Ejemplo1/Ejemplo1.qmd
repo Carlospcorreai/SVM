@@ -1,0 +1,187 @@
+---
+title: "Ejercicio de Máquinas de Soporte Vectorial (SVM)"
+author: "Profesor Carlos Correa Íñiguez"
+format: 
+  revealjs:
+    theme: simple
+    transition: slide
+jupyter: python3
+---
+
+# Introducción
+
+## Breve reseña del contenido
+
+En esta presentación, analizaremos el uso de algoritmos de aprendizaje supervisado para predecir la supervivencia de los pasajeros del Titanic. Utilizaremos diferentes algoritmos, incluyendo:
+
+- Regresión Logística
+- Árboles de Decisión
+- Máquinas de Soporte Vectorial (SVM)
+- Redes Neuronales
+
+---
+
+## Aprendizaje Supervisado
+
+El aprendizaje supervisado es una técnica de Machine Learning donde un modelo es entrenado utilizando datos etiquetados. El objetivo es que el modelo pueda predecir la etiqueta para datos nuevos no vistos.
+
+---
+
+## Objetivos del estudio
+
+- Predecir si un pasajero sobrevivió al naufragio del Titanic.
+- Comparar el desempeño de diferentes algoritmos supervisados.
+- Optimizar los hiperparámetros de los modelos utilizando validación cruzada k-fold.
+
+---
+
+# Definición de Variables
+
+## Variables Dependiente e Independientes
+
+- **Variable Dependiente:**
+  - `Survived` (0 = No sobrevivió, 1 = Sobrevivió)
+
+- **Variables Independientes:**
+  - `Pclass` (Clase del pasajero)
+  - `Sex` (Género)
+  - `Age` (Edad)
+  - `SibSp` (Número de hermanos/esposos a bordo)
+  - `Parch` (Número de padres/hijos a bordo)
+  - `Fare` (Tarifa pagada)
+  - `Embarked` (Puerto de embarque)
+
+### Justificación de Algoritmos
+
+Dado que la variable dependiente es discreta (binaria), utilizaremos algoritmos de **clasificación**.
+
+---
+
+# Importación y Preparación de Datos
+
+```{python}
+import pandas as pd
+import numpy as np
+
+# Cargar los datos desde el enlace
+df = pd.read_csv('https://web.stanford.edu/class/archive/cs/cs109/cs109.1166/stuff/titanic.csv')
+
+# Seleccionar las columnas de interés
+data = df[['Survived', 'Pclass', 'Sex', 'Age', 'SibSp', 'Parch', 'Fare', 'Embarked']]
+
+# Mostrar las primeras filas
+data.head()
+
+---
+
+## Aprendizaje Supervisado
+
+El aprendizaje supervisado es una técnica de Machine Learning donde un modelo es entrenado utilizando datos etiquetados. El objetivo es que el modelo pueda predecir la etiqueta para datos nuevos no vistos.
+
+---
+
+## Objetivos del estudio
+
+- Predecir si un pasajero sobrevivió al naufragio del Titanic.
+- Comparar el desempeño de diferentes algoritmos supervisados.
+- Optimizar los hiperparámetros de los modelos utilizando validación cruzada k-fold.
+
+---
+
+# Definición de Variables
+
+## Variables Dependiente e Independientes
+
+- **Variable Dependiente:**
+  - `Survived` (0 = No sobrevivió, 1 = Sobrevivió)
+
+- **Variables Independientes:**
+  - `Pclass` (Clase del pasajero)
+  - `Sex` (Género)
+  - `Age` (Edad)
+  - `SibSp` (Número de hermanos/esposos a bordo)
+  - `Parch` (Número de padres/hijos a bordo)
+  - `Fare` (Tarifa pagada)
+  - `Embarked` (Puerto de embarque)
+
+---
+
+### Justificación de Algoritmos
+
+Dado que la variable dependiente es discreta (binaria), utilizaremos algoritmos de **clasificación**.
+
+---
+
+# Importación y Preparación de Datos
+
+```{python}
+import pandas as pd
+import numpy as np
+
+# Cargar los datos desde el enlace
+df = pd.read_csv('https://web.stanford.edu/class/archive/cs/cs109/cs109.1166/stuff/titanic.csv')
+
+# Seleccionar las columnas de interés
+data = df[['Survived', 'Pclass', 'Sex', 'Age', 'SibSp', 'Parch', 'Fare', 'Embarked']]
+
+# Mostrar las primeras filas
+data.head()
+
+# Manejar valores faltantes
+data['Age'].fillna(data['Age'].median(), inplace=True)
+data['Embarked'].fillna(data['Embarked'].mode()[0], inplace=True)
+
+# Convertir variables categóricas en numéricas
+data = pd.get_dummies(data, columns=['Sex', 'Embarked'], drop_first=True)
+
+# Mostrar las primeras filas después del preprocesamiento
+data.head()
+
+from sklearn.model_selection import train_test_split
+
+# Definir variables independientes y dependiente
+X = data.drop('Survived', axis=1)
+y = data['Survived']
+
+# Dividir en conjuntos de entrenamiento y prueba
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+from sklearn.model_selection import cross_val_score, KFold
+import time
+
+# Definir modelos a evaluar
+from sklearn.linear_model import LogisticRegression
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.svm import SVC
+from sklearn.neural_network import MLPClassifier
+
+models = {
+    'Regresión Logística': LogisticRegression(max_iter=1000),
+    'Árbol de Decisión': DecisionTreeClassifier(),
+    'SVM': SVC(),
+    'Red Neuronal': MLPClassifier(max_iter=1000)
+}
+
+# Tabla para almacenar los resultados
+results = pd.DataFrame(columns=['Algoritmo', 'Tiempo de Entrenamiento (s)', 'Procesador'])
+
+# Obtener información del procesador
+import platform
+processor = platform.processor()
+
+# Validación cruzada k-fold
+kfold = KFold(n_splits=5, shuffle=True, random_state=42)
+
+for name, model in models.items():
+    start_time = time.time()
+    cv_scores = cross_val_score(model, X_train, y_train, cv=kfold)
+    end_time = time.time()
+    training_time = end_time - start_time
+    results = results.append({
+        'Algoritmo': name,
+        'Tiempo de Entrenamiento (s)': round(training_time, 4),
+        'Procesador': processor
+    }, ignore_index=True)
+
+# Mostrar resultados
+results

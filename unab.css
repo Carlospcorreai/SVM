@@ -1,0 +1,27 @@
+/* Style for the main title on the title slide */
+.reveal .title-slide h1 {
+  font-size: 1.5em; /* Adjust this value to make the title smaller or larger */
+  font-weight: bold; /* Optional: make the title bold */
+  text-align: center; /* Center the title */
+}
+
+/* Style for the subtitle and author on the title slide */
+.reveal .title-slide h2 {
+  font-size: 1em; /* Adjust this value to make the subtitle/author smaller or larger */
+  font-weight: normal; /* Optional: change the font weight */
+  text-align: center; /* Center the subtitle */
+  color: #555; /* Optional: change the text color */
+}
+
+/* Additional spacing adjustments if needed */
+.reveal .title-slide {
+  padding-top: 50px; /* Adjust the top padding to move the content up or down */
+}
+
+.reveal p, .reveal li {
+  font-size: 0.8em; /* Adjust this value to reduce text size */
+}
+
+.reveal .katex {
+  font-size: 0.3em; /* Adjust this value to make formulas smaller */
+}
