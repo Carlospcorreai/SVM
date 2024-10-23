@@ -10,9 +10,9 @@
 <link href="Clasificacion Bayesiana_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.5.57">
 
-  <meta name="author" content="Carlos Correa Íñiguez c.correainiguez@uandresbello.edu">
+  <meta name="author" content="Carlos Correa Íñiguez (c.correainiguez@uandresbello.edu)">
   <meta name="dcterms.date" content="2024-10-15">
-  <title>Clasificación Bayesiana y Máquinas de Soporte Vectorial (SVM)</title>
+  <title>clasificacion-bayesiana</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -30,6 +30,71 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" href="Clasificacion Bayesiana_files/libs/revealjs/dist/theme/quarto.css">
   <link rel="stylesheet" href="unab.css">
@@ -327,42 +392,34 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">Clasificación Bayesiana y Máquinas de Soporte Vectorial (SVM)</h1>
 
-<div class="quarto-title-authors">
-<div class="quarto-title-author">
-<div class="quarto-title-author-name">
-Carlos Correa Íñiguez <a href="mailto:c.correainiguez@uandresbello.edu" class="email">c.correainiguez@uandresbello.edu</a> 
-</div>
-</div>
-</div>
+<section class="slide level2">
 
-  <p class="date">2024-10-15</p>
-</section>
-<section id="unidad-iii-análisis-utilizando-aprendizaje-supervisado" class="slide level2">
-<h2>Unidad III: Análisis utilizando aprendizaje supervisado</h2>
+<h3 id="unidad-iii-análisis-utilizando-aprendizaje-supervisado">Unidad III: Análisis utilizando aprendizaje supervisado</h3>
 <ul>
 <li>Clasificación Bayesiana y Máquinas de Soporte Vectorial (SVM)</li>
 </ul>
 </section>
-<section id="objetivo-de-la-clase" class="slide level2">
-<h2>Objetivo de la Clase</h2>
+<section class="slide level2">
+
+<h3 id="objetivo-de-la-clase">Objetivo de la Clase</h3>
 <ul>
 <li><p><strong>Comprender</strong> los fundamentos de la clasificación Bayesiana y su aplicación práctica.</p></li>
 <li><p><strong>Aplicar</strong> los algoritmos de Máquinas de Soporte Vectorial (SVM) para la clasificación de datos.</p></li>
 <li><p><strong>Evaluar</strong> las ventajas y desventajas de cada enfoque en diferentes escenarios de minería de datos.</p></li>
 </ul>
 </section>
-<section id="introducción" class="slide level2">
-<h2>Introducción</h2>
+<section class="slide level2">
+
+<h3 id="introducción">Introducción</h3>
 <ol type="1">
 <li><p>Método práctico para inducir modelos probabilísticos y razonar sobre nuevos datos. Permite calcular la probabilidad asociada a cada hipótesis, ofreciendo una ventaja frente a otras técnicas.</p></li>
 <li><p>Proporciona un marco para analizar variadas técnicas de aprendizaje y minería de datos, en el ambito de la descripción y clasificación.</p></li>
 </ol>
 </section>
-<section id="ejemplo-sistema-de-recomendación-en-inversiones" class="slide level2">
-<h2>Ejemplo: Sistema de Recomendación en Inversiones</h2>
+<section class="slide level2">
+
+<h3 id="ejemplo-sistema-de-recomendación-en-inversiones">Ejemplo: Sistema de Recomendación en Inversiones</h3>
 <p>Como ejemplo de la ventaja que supone poder dar la probabilidad asociada a la clasificación, piénsese en un sistema de recomendaciones para invertir en bolsa.</p>
 <ul>
 <li><p>A partir de unos datos de entrada sobre un determinado producto, el sistema nos recomienda si invertir o no.</p></li>
@@ -382,8 +439,9 @@ Carlos Correa Íñiguez <a href="mailto:c.correainiguez@uandresbello.edu" class=
 </ul>
 <p>Sin duda alguna, el encargado de tomar la decisión preferiría tener esta información a la proporcionada por un sistema no bayesiano.</p>
 </section>
-<section id="teorema-de-bayes" class="slide level2">
-<h2>Teorema de Bayes</h2>
+<section class="slide level2">
+
+<h3 id="teorema-de-bayes">Teorema de Bayes</h3>
 <ul>
 <li><p>El Teorema de Bayes, propuesto por el filósofo inglés Thomas Bayes en 1760, permite calcular distribuciones condicionales.</p></li>
 <li><p>Este teorema proporciona la probabilidad de que ocurra un evento A, dado que ya ha ocurrido un evento B. La fórmula es: <span class="math display">\[
@@ -392,8 +450,9 @@ P(A|B) = \frac{{P(A) \cdot P(B|A)}}{{P(B)}}
 </ul>
 <p>Donde: - <strong>P(A|B)</strong>: Probabilidad a posteriori. - <strong>P(B|A)</strong>: Verosimilitud. - <strong>P(A)</strong>: Probabilidad a priori.</p>
 </section>
-<section id="clasificación-bayesiana-naïve-bayes" class="slide level2">
-<h2>Clasificación Bayesiana: Naïve Bayes</h2>
+<section class="slide level2">
+
+<h3 id="clasificación-bayesiana-naïve-bayes">Clasificación Bayesiana: Naïve Bayes</h3>
 <ul>
 <li><p>Suposición: todos los atributos son independientes conocido el valor de la clase.</p></li>
 <li><p>Si los eventos <strong>A</strong> y <strong>B</strong> son independientes, entonces se cumple que:</p></li>
@@ -405,16 +464,18 @@ P(A|B) = P(A) \quad \text{y} \quad P(B|A) = P(B)
 <li>El modelo de clasificación con redes bayesianas se basa en la suposición de que todos los atributos son independientes, conocido el valor de la variable clase.</li>
 </ul>
 </section>
-<section id="representación-gráfica-de-una-red-bayesiana" class="slide level2">
-<h2>Representación Gráfica de una Red Bayesiana</h2>
+<section class="slide level2">
+
+<h3 id="representación-gráfica-de-una-red-bayesiana">Representación Gráfica de una Red Bayesiana</h3>
 <ul>
 <li><p><strong>Modelo probabilístico</strong> con un único nodo raíz (la clase), y todos los atributos son nodos hoja que tienen como único padre a la variable clase.</p></li>
 <li><p>[Hernández et al., 2004]</p></li>
 </ul>
 
 <img data-src="Imagen1.png" class="r-stretch quarto-figure-center"><p class="caption">Representación de Red Bayesiana</p></section>
-<section id="probabilidad-condicional-con-múltiples-predictores" class="slide level2">
-<h2>Probabilidad Condicional con Múltiples Predictores</h2>
+<section class="slide level2">
+
+<h3 id="probabilidad-condicional-con-múltiples-predictores">Probabilidad Condicional con Múltiples Predictores</h3>
 <p>Para más de un predictor:</p>
 <p>Sean <span class="math inline">\(x_1\)</span> y <span class="math inline">\(x_2\)</span> dos predictores de la clase <span class="math inline">\(C\)</span>, la probabilidad condicional se define como:</p>
 <p><span class="math display">\[
@@ -427,8 +488,9 @@ P(C|x_1, x_2, x_3) = \frac{P(x_1, x_2, x_3|C) \cdot P(C)}{P(x_1, x_2, x_3)}
 \frac{P(x_1, x_2, x_3|C) \cdot P(C)}{P(x_1, x_2, x_3)} = \frac{P(x_1|C) \cdot P(x_2|C) \cdot P(x_3|C) \cdot P(C)}{P(x_1, x_2, x_3)}
 \]</span></p>
 </section>
-<section id="ejemplo-de-naive-bayes" class="slide level2">
-<h2>Ejemplo de Naive Bayes</h2>
+<section class="slide level2">
+
+<h3 id="ejemplo-de-naive-bayes">Ejemplo de Naive Bayes</h3>
 <p>Para entender mejor cómo funciona Naive Bayes, consideremos un conjunto de datos con 1500 observaciones y tres clases de salida:</p>
 <ul>
 <li><strong>Gato</strong></li>
@@ -443,14 +505,16 @@ P(C|x_1, x_2, x_3) = \frac{P(x_1, x_2, x_3|C) \cdot P(C)}{P(x_1, x_2, x_3)}
 <li>Dientes afilados</li>
 </ul>
 </section>
-<section id="resumen-de-clases" class="slide level2">
-<h2>Resumen de Clases</h2>
+<section class="slide level2">
+
+<h3 id="resumen-de-clases">Resumen de Clases</h3>
 <p><strong>Clase de Gatos</strong>: - 450 de 500 (90%) de gatos pueden nadar - 0 gatos tienen alas - 0 gatos son de color verde - Todos los 500 gatos tienen dientes afilados</p>
 <p><strong>Clase de Loros</strong>: - 50 de 500 (10%) de loros pueden nadar - Todos los 500 loros tienen alas - 400 de 500 (80%) son de color verde - Ningún loro tiene dientes afilados</p>
 <p><strong>Clase de Tortugas</strong>: - Las 500 tortugas pueden nadar - 0 tortugas tienen alas - 100 de 500 (20%) son de color verde - 50 de 500 (10%) tienen dientes afilados</p>
 </section>
-<section id="clasificación-con-naive-bayes" class="slide level2">
-<h2>Clasificación con Naive Bayes</h2>
+<section class="slide level2">
+
+<h3 id="clasificación-con-naive-bayes">Clasificación con Naive Bayes</h3>
 <p>Con estos datos, clasifiquemos la siguiente observación en una de las clases de salida (gato, loro o tortuga) usando Naive Bayes.</p>
 <h3 id="observación">Observación:</h3>
 <ul>
@@ -459,8 +523,9 @@ P(C|x_1, x_2, x_3) = \frac{P(x_1, x_2, x_3|C) \cdot P(C)}{P(x_1, x_2, x_3)}
 </ul>
 <p>El objetivo es predecir si el animal es un <strong>gato</strong>, <strong>loro</strong> o <strong>tortuga</strong> basándonos en estas variables.</p>
 </section>
-<section id="verificación-es-un-gato" class="slide level2">
-<h2>Verificación: ¿Es un Gato?</h2>
+<section class="slide level2">
+
+<h3 id="verificación-es-un-gato">Verificación: ¿Es un Gato?</h3>
 <p>Para comprobar si el animal es un gato, calculamos:</p>
 <p><span class="math display">\[
 \small P(\text{Gato} | \text{Nadar}, \text{Verde}) = \frac{P(\text{Nadar}|\text{Gato}) \cdot P(\text{Verde}|\text{Gato}) \cdot P(\text{Gato})}{P(\text{Nadar}, \text{Verde})}
@@ -470,8 +535,9 @@ P(C|x_1, x_2, x_3) = \frac{P(x_1, x_2, x_3|C) \cdot P(C)}{P(x_1, x_2, x_3)}
 \small P(\text{Gato} | \text{Nadar}, \text{Verde}) = \frac{0.9 \cdot 0 \cdot 0.333}{P(\text{Nadar}, \text{Verde})} = 0
 \]</span></p>
 </section>
-<section id="verificación-es-un-loro" class="slide level2">
-<h2>Verificación: ¿Es un Loro?</h2>
+<section class="slide level2">
+
+<h3 id="verificación-es-un-loro">Verificación: ¿Es un Loro?</h3>
 <p>Para comprobar si el animal es un loro, calculamos:</p>
 <p><span class="math display">\[
 \small P(\text{Loro} | \text{Nadar}, \text{Verde}) = \frac{P(\text{Nadar}|\text{Loro}) \cdot P(\text{Verde}|\text{Loro}) \cdot P(\text{Loro})}{P(\text{Nadar}, \text{Verde})}
@@ -481,8 +547,9 @@ P(C|x_1, x_2, x_3) = \frac{P(x_1, x_2, x_3|C) \cdot P(C)}{P(x_1, x_2, x_3)}
 \small P(\text{Loro} | \text{Nadar}, \text{Verde}) = \frac{0.1 \cdot 0.8 \cdot 0.333}{P(\text{Nadar}, \text{Verde})} = \frac{0.0264}{P(\text{Nadar}, \text{Verde})}
 \]</span></p>
 </section>
-<section id="verificación-es-una-tortuga" class="slide level2">
-<h2>Verificación: ¿Es una Tortuga?</h2>
+<section class="slide level2">
+
+<h3 id="verificación-es-una-tortuga">Verificación: ¿Es una Tortuga?</h3>
 <p>Para comprobar si el animal es una tortuga, calculamos:</p>
 <p><span class="math display">\[
 P(\text{Tortuga} | \text{Nadar}, \text{Verde}) = \frac{P(\text{Nadar}|\text{Tortuga}) \cdot P(\text{Verde}|\text{Tortuga}) \cdot P(\text{Tortuga})}{P(\text{Nadar}, \text{Verde})}
@@ -492,8 +559,9 @@ P(\text{Tortuga} | \text{Nadar}, \text{Verde}) = \frac{P(\text{Nadar}|\text{Tort
 P(\text{Tortuga} | \text{Nadar}, \text{Verde}) = \frac{1 \cdot 0.2 \cdot 0.333}{P(\text{Nadar}, \text{Verde})} = \frac{0.0666}{P(\text{Nadar}, \text{Verde})}
 \]</span></p>
 </section>
-<section id="verificación-es-una-tortuga-1" class="slide level2">
-<h2>Verificación: ¿Es una Tortuga?</h2>
+<section class="slide level2">
+
+<h3 id="verificación-es-una-tortuga-1">Verificación: ¿Es una Tortuga?</h3>
 <p>Para comprobar si el animal es una tortuga, calculamos:</p>
 <p><span class="math display">\[
 P(\text{Tortuga} | \text{Nadar}, \text{Verde}) = \frac{P(\text{Nadar}|\text{Tortuga}) \cdot P(\text{Verde}|\text{Tortuga}) \cdot P(\text{Tortuga})}{P(\text{Nadar}, \text{Verde})}
@@ -503,8 +571,9 @@ P(\text{Tortuga} | \text{Nadar}, \text{Verde}) = \frac{P(\text{Nadar}|\text{Tort
 P(\text{Tortuga} | \text{Nadar}, \text{Verde}) = \frac{1 \cdot 0.2 \cdot 0.333}{P(\text{Nadar}, \text{Verde})} = \frac{0.0666}{P(\text{Nadar}, \text{Verde})}
 \]</span></p>
 </section>
-<section id="conclusión" class="slide level2">
-<h2>Conclusión</h2>
+<section class="slide level2">
+
+<h3 id="conclusión">Conclusión</h3>
 <p>Para todos los cálculos, el denominador es el mismo, es decir, <span class="math inline">\(P(\text{Nadar}, \text{Verde})\)</span>. <span class="math display">\[
 P(\text{Tortuga} | \text{Nadar}, \text{Verde}) = 0.0666 / P(\text{Nadar}, \text{Verde})
 \]</span> <span class="math display">\[
@@ -512,8 +581,9 @@ P(\text{Loro} | \text{Nadar}, \text{Verde}) = 0.0264 / P(\text{Nadar}, \text{Ver
 \]</span></p>
 <p>Dado que <span class="math inline">\(P(\text{Tortuga} | \text{Nadar}, \text{Verde})\)</span> es mayor que <span class="math inline">\(P(\text{Loro} | \text{Nadar}, \text{Verde})\)</span>, podemos predecir correctamente que el animal es una <strong>Tortuga</strong>.</p>
 </section>
-<section id="algoritmo-de-naive-bayes" class="slide level2">
-<h2>Algoritmo de Naive Bayes</h2>
+<section class="slide level2">
+
+<h3 id="algoritmo-de-naive-bayes">Algoritmo de Naive Bayes</h3>
 <ol type="1">
 <li>Encontrar <span class="math inline">\(P(C_i)\)</span>, calculando el total de la i-ésima clase en el total de datos de entrenamiento.</li>
 <li>Calcular la <span class="math inline">\(P(x_t|C_i)\)</span> para cada atributo o predictor de los datos de entrenamiento <span class="math inline">\(X\)</span>.</li>
@@ -522,12 +592,14 @@ P(\text{Loro} | \text{Nadar}, \text{Verde}) = 0.0264 / P(\text{Nadar}, \text{Ver
 <li>Seleccionar la mayor probabilidad para clasificar los nuevos datos.</li>
 </ol>
 </section>
-<section id="ejemplo-diagnóstico-de-sepsis-usando-naive-bayes" class="slide level2">
-<h2>Ejemplo: Diagnóstico de Sepsis usando Naive Bayes</h2>
+<section class="slide level2">
+
+<h3 id="ejemplo-diagnóstico-de-sepsis-usando-naive-bayes">Ejemplo: Diagnóstico de Sepsis usando Naive Bayes</h3>
 <p>Vamos a usar un ejemplo para ilustrar cómo funciona la clasificación Naive Bayes. El ejemplo utilizado es el diagnóstico de sepsis. Supongamos que hay dos predictores de sepsis: la tasa respiratoria y el estado mental.</p>
 </section>
-<section id="tabla-de-verosimilitudes" class="slide level2">
-<h2>Tabla de Verosimilitudes</h2>
+<section class="slide level2">
+
+<h3 id="tabla-de-verosimilitudes">Tabla de Verosimilitudes</h3>
 <p>La siguiente tabla muestra las verosimilitudes para diagnosticar sepsis usando la tasa respiratoria y el estado mental. Los datos provienen de un conjunto de entrenamiento.</p>
 <table class="caption-top" style="width:100%;">
 <colgroup>
@@ -572,16 +644,18 @@ P(\text{Loro} | \text{Nadar}, \text{Verde}) = 0.0264 / P(\text{Nadar}, \text{Ver
 </tbody>
 </table>
 </section>
-<section id="probabilidades-previas" class="slide level2">
-<h2>Probabilidades Previas</h2>
+<section class="slide level2">
+
+<h3 id="probabilidades-previas">Probabilidades Previas</h3>
 <p>Las probabilidades previas para sepsis y no-sepsis son:</p>
 <ul>
 <li><span class="math inline">\(P(\text{sepsis}) = 20/100 = 0.2\)</span></li>
 <li><span class="math inline">\(P(\text{no-sepsis}) = 80/100 = 0.8\)</span></li>
 </ul>
 </section>
-<section id="probabilidades-de-verosimilitud" class="slide level2">
-<h2>Probabilidades de Verosimilitud</h2>
+<section class="slide level2">
+
+<h3 id="probabilidades-de-verosimilitud">Probabilidades de Verosimilitud</h3>
 <p>Las probabilidades de verosimilitud para los diferentes predictores son:</p>
 <ul>
 <li><p><span class="math inline">\(P(\text{tasa respiratoria rápida}|\text{sepsis}) = 15/20 = 0.75\)</span></p></li>
@@ -594,77 +668,245 @@ P(\text{Loro} | \text{Nadar}, \text{Verde}) = 0.0264 / P(\text{Nadar}, \text{Ver
 <li><p><span class="math inline">\(P(\text{estado mental normal}|\text{no-sepsis}) = 77/80 = 0.9625\)</span></p></li>
 </ul>
 </section>
-<section id="aplicando-naive-bayes" class="slide level2">
-<h2>Aplicando Naive Bayes</h2>
+<section class="slide level2">
+
+<h3 id="aplicando-naive-bayes">Aplicando Naive Bayes</h3>
 <p>Queremos clasificar un paciente con una tasa respiratoria lenta y un estado mental alterado. Según la regla de clasificación de máxima verosimilitud, calculamos solo el numerador de la ecuación de Bayes.</p>
 <p>La verosimilitud de sepsis dado una tasa respiratoria lenta y un estado mental alterado es:</p>
 <p><span class="math display">\[
 \tiny P(\text{sepsis}|\text{tasa respiratoria lenta} \cap \text{alterado}) = P(\text{tasa respiratoria lenta}|\text{sepsis}) \times P(\text{alterado}|\text{sepsis}) \times P(\text{sepsis})
 \]</span></p>
 </section>
-<section id="cálculo-de-sepsis" class="slide level2">
-<h2>Cálculo de Sepsis</h2>
+<section class="slide level2">
+
+<h3 id="cálculo-de-sepsis">Cálculo de Sepsis</h3>
 <p>Sustituyendo los valores en la fórmula:</p>
 <p><span class="math display">\[
 P(\text{sepsis}|\text{lenta}, \text{alterado}) = 0.25 \times 0.85 \times 0.2 = 0.0425
 \]</span></p>
 </section>
-<section id="cálculo-de-sepsis-1" class="slide level2">
-<h2>Cálculo de Sepsis</h2>
+<section class="slide level2">
+
+<h3 id="cálculo-de-sepsis-1">Cálculo de Sepsis</h3>
 <p>Sustituyendo los valores en la fórmula:</p>
 <p><span class="math display">\[
 P(\text{sepsis}|\text{lenta}, \text{alterado}) = 0.25 \times 0.85 \times 0.2 = 0.0425
 \]</span></p>
 </section>
-<section id="clasificación-bayesiana-ventajas" class="slide level2">
-<h2>Clasificación Bayesiana: Ventajas</h2>
+<section class="slide level2">
+
+<h3 id="clasificación-bayesiana-ventajas">Clasificación Bayesiana: Ventajas</h3>
 <ul>
 <li>Funciona mejor que otros modelos o algoritmos, bajo el supuesto de independencia entre los predictores.</li>
 <li>Requiere una pequeña cantidad de datos de entrenamiento para estimar los datos de prueba.</li>
 <li>Es fácil de implementar.</li>
 </ul>
 </section>
-<section id="clasificación-bayesiana-desventajas" class="slide level2">
-<h2>Clasificación Bayesiana: Desventajas</h2>
+<section class="slide level2">
+
+<h3 id="clasificación-bayesiana-desventajas">Clasificación Bayesiana: Desventajas</h3>
 <ul>
 <li>Asume implícitamente que todos los atributos son mutuamente independientes; en la vida real, es casi imposible que obtengamos un conjunto de predictores completamente independientes.</li>
 <li>Si la variable categórica tiene una categoría en el conjunto de datos de prueba que no se observó en el conjunto de entrenamiento, el modelo asignará una probabilidad de 0 y no podrá hacer una predicción (frecuencia cero).</li>
 </ul>
 </section>
-<section id="clasificadores-basados-en-redes-bayesianas-rb" class="slide level2">
-<h2>Clasificadores Basados en Redes Bayesianas (RB)</h2>
+<section class="slide level2">
+
+<h3 id="clasificadores-basados-en-redes-bayesianas-rb">Clasificadores Basados en Redes Bayesianas (RB)</h3>
 <ul>
 <li><strong>TAN (Tree Augmented Naïve Bayes)</strong>: permite ciertas dependencias entre los atributos, asumiendo una red bayesiana con forma de árbol.</li>
 <li><strong>BAN (Bayesian Network Augmented Naive Bayes)</strong>: similar a TAN, permite iniciar la red como un NB y luego agregar arcos con un algoritmo de aprendizaje.</li>
 <li><strong>Redes Bayesianas</strong>: aprenden una red incluyendo todas las variables (clase y atributos) para clasificar.</li>
 </ul>
 </section>
-<section id="aplicaciones-de-clasificación-bayesiana" class="slide level2">
-<h2>Aplicaciones de Clasificación Bayesiana</h2>
+<section class="slide level2">
+
+<h3 id="aplicaciones-de-clasificación-bayesiana">Aplicaciones de Clasificación Bayesiana</h3>
 <ul>
 <li><strong>Predicción en tiempo real</strong>.</li>
 <li><strong>Predicción de clases múltiples</strong>: bien conocido por su función en problemas de múltiples clases.</li>
 <li><strong>Clasificación de texto</strong>: usada ampliamente debido a mejores resultados en problemas de varias clases y su regla de independencia.</li>
 </ul>
 </section>
-<section id="otras-aplicaciones" class="slide level2">
-<h2>Otras Aplicaciones</h2>
+<section class="slide level2">
+
+<h3 id="otras-aplicaciones">Otras Aplicaciones</h3>
 <ul>
 <li><strong>Filtrado de correo no deseado</strong>: se usa ampliamente en la detección de spam.</li>
 <li><strong>Análisis de opinión</strong>: utilizado en el análisis de redes sociales para identificar sentimientos positivos y negativos.</li>
 <li><strong>Sistemas de recomendación</strong>: para filtrar información y predecir si un usuario desea un recurso determinado o no.</li>
 </ul>
 </section>
-<section id="un-poco-de-historia-máquinas-de-soporte-vectorial-svm" class="slide level2">
-<h2>Un Poco de Historia: Máquinas de Soporte Vectorial (SVM)</h2>
+<section class="slide level2">
+
+<h3 id="ejemplo-scikit-learn-naive-bayes">Ejemplo Scikit-learn Naive Bayes</h3>
+<p>Los métodos Naive Bayes son un conjunto de algoritmos de aprendizaje supervisado basados en la aplicación del teorema de Bayes con la suposición “ingenua” de independencia condicional entre cada par de características dado el valor de la variable de clase. El teorema de Bayes establece la siguiente relación, dada una variable de clase (y) y un vector de características dependientes ():</p>
+<p><span class="math display">\[
+P(y | \mathbf{x}) = \frac{P(y) P(\mathbf{x} | y)}{P(\mathbf{x})}
+\]</span></p>
+<p>Utilizando la suposición de independencia condicional, podemos simplificar esta relación a:</p>
+<p><span class="math display">\[
+P(y | \mathbf{x}) \approx P(y) \prod_{i=1}^{n} P(x_i | y)
+\]</span></p>
+</section>
+<section class="slide level2">
+
+<h3 id="ejemplo-scikit-learn-naive-bayes-1">Ejemplo Scikit-learn Naive Bayes</h3>
+<p>Ya que <span class="math inline">\(P(\mathbf{x})\)</span> es constante, podemos utilizar la siguiente regla de clasificación:</p>
+<p><span class="math display">\[
+\hat{y} = \underset{y}{\operatorname{argmax}} \ P(y) \prod_{i=1}^{n} P(x_i | y)
+\]</span></p>
+<p>Usamos la estimación de <strong>Máxima A Posteriori (MAP)</strong> para estimar <span class="math inline">\(P(y)\)</span> y <span class="math inline">\(P(x_i | y)\)</span>, donde <span class="math inline">\(P(y)\)</span> es la frecuencia relativa de la clase <span class="math inline">\(y\)</span> en el conjunto de entrenamiento.</p>
+</section>
+<section class="slide level2">
+
+<h3 id="gaussian-naive-bayes">1.9.1. Gaussian Naive Bayes</h3>
+<p>El GaussianNB implementa el algoritmo Naive Bayes Gaussiano para clasificación. Se asume que las características siguen una distribución Gaussiana:</p>
+<p><span class="math display">\[
+P(x_i | y) = \frac{1}{\sqrt{2\pi\sigma_y^2}} \exp\left(-\frac{(x_i - \mu_y)^2}{2\sigma_y^2}\right)
+\]</span></p>
+<p>Los parámetros <span class="math inline">\(\mu_y\)</span> y <span class="math inline">\(\sigma_y\)</span> se estiman utilizando máxima verosimilitud.</p>
+</section>
+<section class="slide level2">
+
+<h3 id="gaussian-naive-bayes-codigo-python-scikit-learn">1.9.1. Gaussian Naive Bayes (Codigo Python Scikit-learn)</h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href=""></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> load_iris</span>
+<span id="cb1-2"><a href=""></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb1-3"><a href=""></a><span class="im">from</span> sklearn.naive_bayes <span class="im">import</span> GaussianNB</span>
+<span id="cb1-4"><a href=""></a></span>
+<span id="cb1-5"><a href=""></a>X, y <span class="op">=</span> load_iris(return_X_y<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb1-6"><a href=""></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(X, y, test_size<span class="op">=</span><span class="fl">0.5</span>, random_state<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb1-7"><a href=""></a></span>
+<span id="cb1-8"><a href=""></a>gnb <span class="op">=</span> GaussianNB()</span>
+<span id="cb1-9"><a href=""></a>y_pred <span class="op">=</span> gnb.fit(X_train, y_train).predict(X_test)</span>
+<span id="cb1-10"><a href=""></a></span>
+<span id="cb1-11"><a href=""></a><span class="bu">print</span>(<span class="st">"Número de puntos mal clasificados de un total de </span><span class="sc">%d</span><span class="st"> puntos: </span><span class="sc">%d</span><span class="st">"</span> <span class="op">%</span> (X_test.shape[<span class="dv">0</span>], (y_test <span class="op">!=</span> y_pred).<span class="bu">sum</span>()))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section class="slide level2">
+
+<h3 id="multinomial-naive-bayes">1.9.2. Multinomial Naive Bayes</h3>
+<p>El <strong>MultinomialNB</strong> implementa el algoritmo Naive Bayes para datos distribuidos de forma multinomial. Este método es clásico para clasificación de texto, donde los datos suelen representarse como recuentos de vectores de palabras.</p>
+<h4 id="fórmula-de-multinomial-naive-bayes">Fórmula de Multinomial Naive Bayes</h4>
+<p>El parámetro <span class="math inline">\(\theta_{y,i}\)</span> es la probabilidad de que la característica <span class="math inline">\(i\)</span> aparezca en una muestra perteneciente a la clase <span class="math inline">\(y\)</span>, estimado como:</p>
+<p><span class="math display">\[
+\theta_{y,i} = \frac{N_{y,i} + \alpha}{N_y + \alpha n}
+\]</span></p>
+<p>Donde:</p>
+<ul>
+<li><span class="math inline">\(N_{y,i}\)</span> es el número de veces que la característica (i) aparece en una muestra de la clase (y).</li>
+<li><span class="math inline">\(N_y\)</span> es el recuento total de todas las características para la clase (y).</li>
+<li><span class="math inline">\(\alpha\)</span> es un parámetro de suavizado.</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<h3 id="complement-naive-bayes">1.9.3. Complement Naive Bayes</h3>
+<p>El <strong>ComplementNB</strong> es una adaptación del Naive Bayes multinomial que es particularmente adecuado para conjuntos de datos desequilibrados. Utiliza estadísticas del complemento de cada clase para calcular los pesos del modelo.</p>
+<h4 id="fórmula-de-complement-naive-bayes">Fórmula de Complement Naive Bayes</h4>
+<p>La estimación de los pesos del modelo se calcula con la siguiente fórmula:</p>
+<p><span class="math display">\[
+\hat{\theta}_{c,i} = \frac{\alpha_i + \sum_{j: y_j \neq c} d_{i,j}}{\alpha + \sum_{j: y_j \neq c} \sum_k d_{k,j}}
+\]</span></p>
+<h4 id="parámetros-de-la-fórmula">Parámetros de la Fórmula</h4>
+<ul>
+<li><span class="math inline">\(\hat{\theta}_{c,i}\)</span>: Estimación del peso del modelo para la clase (c) y la característica (i).</li>
+<li><span class="math inline">\(\alpha_i\)</span>: Parámetro de suavizado.</li>
+<li><span class="math inline">\(d_{i,j}\)</span>: Frecuencia de la característica (i) en el documento (j).</li>
+<li><span class="math inline">\(\alpha\)</span>: Suma de los parámetros de suavizado.</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<h3 id="bernoulli-naive-bayes">1.9.4. Bernoulli Naive Bayes</h3>
+<p>El <strong>BernoulliNB</strong> implementa el Naive Bayes para datos distribuidos según la distribución de <strong>Bernoulli</strong>, es decir, características binarias. Este clasificador es útil para datos donde cada característica es binaria, como la <strong>presencia o ausencia de palabras</strong> en la clasificación de texto.</p>
+<h4 id="regla-de-decisión-de-bernoulli-naive-bayes">Regla de Decisión de Bernoulli Naive Bayes</h4>
+<p>La regla de decisión para el clasificador Bernoulli Naive Bayes es:</p>
+<p><span class="math display">\[
+P(x_i | y) = P(x_i = 1 | y)^{x_i} \cdot (1 - P(x_i = 1 | y))^{1 - x_i}
+\]</span></p>
+<h4 id="aplicación-de-bernoulli-naive-bayes">Aplicación de Bernoulli Naive Bayes</h4>
+<ul>
+<li><strong><span class="math inline">\(P(x_i = 1 | y)\)</span></strong>: Probabilidad de que la característica (x_i) ocurra dado (y).</li>
+<li><strong><span class="math inline">\(x_i\)</span></strong>: Valor binario que indica si la característica está presente (1) o ausente (0).</li>
+<li>Este clasificador penaliza explícitamente la no ocurrencia de una característica, lo que lo diferencia del Naive Bayes multinomial.</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<h3 id="categorical-naive-bayes">1.9.5. Categorical Naive Bayes</h3>
+<p>El <strong>CategoricalNB</strong> implementa el Naive Bayes para datos categóricos. Este clasificador es útil cuando cada característica tiene una distribución categórica, es decir, se representa como una de varias categorías posibles.</p>
+<h4 id="fórmula-de-categorical-naive-bayes">Fórmula de Categorical Naive Bayes</h4>
+<p>La probabilidad de la categoría <span class="math inline">\(t\)</span> en la característica <span class="math inline">\(i\)</span> dado <span class="math inline">\(y\)</span> es estimada como:</p>
+<p><span class="math display">\[
+P(x_i = t | y) = \frac{N_{t, i, c} + \alpha}{N_c + \alpha n_i}
+\]</span></p>
+<h4 id="parámetros-de-la-fórmula-1">Parámetros de la Fórmula</h4>
+<ul>
+<li><span class="math inline">\(N_{t, i, c}\)</span>: Número de veces que la categoría (t) aparece en la característica (i) en la clase (y).</li>
+<li><span class="math inline">\(N_c\)</span>: Número total de muestras en la clase (y).</li>
+<li><span class="math inline">\(\alpha\)</span>: Parámetro de suavizado que evita probabilidades de cero.</li>
+<li><span class="math inline">\(n_i\)</span>: Número de categorías posibles para la característica (i).</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<h3 id="modelo-naive-bayes-fuera-de-memoria">1.9.6. Modelo Naive Bayes fuera de memoria</h3>
+<p>Los modelos <strong>Naive Bayes</strong> pueden utilizarse para resolver problemas de clasificación a gran escala en los que el conjunto de entrenamiento no cabe en la memoria.</p>
+<ul>
+<li>Clasificadores como <strong>MultinomialNB</strong>, <strong>BernoulliNB</strong> y <strong>GaussianNB</strong> exponen un método <code>partial_fit</code>, que permite ajustar el modelo de forma incremental.</li>
+</ul>
+<h4 id="código-de-partial_fit">Código de partial_fit</h4>
+<p>Aquí tienes un ejemplo de uso del método <code>partial_fit</code> para un modelo GaussianNB:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href=""></a>gnb.partial_fit(X_train, y_train, classes<span class="op">=</span>[<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section class="slide level2">
+
+<h3 id="en-resumen">En Resumen</h3>
+<h5 id="naive-bayes-overview">1. Naive Bayes Overview:</h5>
+<ul>
+<li>Explicación breve de la suposición Naive, el teorema de Bayes y la estimación del Máximo A Posteriori (MAP).</li>
+</ul>
+<h5 id="gaussian-naive-bayes-1">2.Gaussian Naive Bayes:</h5>
+<ul>
+<li>Se enfocan en cómo se asumen distribuciones gaussianas para las características y se estiman los parámetros con máxima verosimilitud.</li>
+</ul>
+<h5 id="multinomial-naive-bayes-1">3. Multinomial Naive Bayes:</h5>
+<ul>
+<li>Utilizado para la clasificación de texto; explica las distribuciones multinomiales y técnicas de suavizado (Laplace, Lidstone).</li>
+</ul>
+<h5 id="complement-naive-bayes-1">4. Complement Naive Bayes:</h5>
+<ul>
+<li>Útil para conjuntos de datos desequilibrados, utilizando estadísticas del complemento para mejorar el rendimiento.</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<h3 id="en-resumen-1">En Resumen</h3>
+<h5 id="bernoulli-naive-bayes-1">5. Bernoulli Naive Bayes:</h5>
+<ul>
+<li>Ideal para vectores de características binarias, comúnmente usado en clasificación de texto con ocurrencias binarias.</li>
+</ul>
+<h5 id="categorical-naive-bayes-1">6. Categorical Naive Bayes:</h5>
+<ul>
+<li>Maneja características categóricas, utilizando distribuciones categóricas para calcular probabilidades.</li>
+</ul>
+<h5 id="naive-bayes-fuera-de-memoria">7. Naive Bayes fuera de memoria:</h5>
+<ul>
+<li>Explica el aprendizaje incremental con partial_fit para grandes conjuntos de datos que no caben en memoria de una sola vez.</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<h3 id="un-poco-de-historia-máquinas-de-soporte-vectorial-svm">Un Poco de Historia: Máquinas de Soporte Vectorial (SVM)</h3>
 <ul>
 <li>Las SVM fueron desarrolladas por Vladimir Vapnik y su equipo en los laboratorios AT&amp;T a finales de los años 70 y durante los 80.</li>
 <li>El modelo fue presentado formalmente en la conferencia <strong>COLT (Computational Learning Theory)</strong> en 1992 por Vapnik y otros autores.</li>
 <li>Este avance marcó un hito importante al llevar la <strong>formulación teórica</strong> de las SVM hacia su <strong>aplicación práctica</strong> en problemas reales de reconocimiento de formas (<em>pattern recognition</em>).</li>
 </ul>
 </section>
-<section id="clasificación-binaria-lineal-en-svm" class="slide level2">
-<h2>Clasificación Binaria Lineal en SVM</h2>
+<section class="slide level2">
+
+<h3 id="clasificación-binaria-lineal-en-svm">Clasificación Binaria Lineal en SVM</h3>
 <ul>
 <li><strong>Objetivo</strong>: Encontrar un hiperplano que separe dos clases de manera óptima.</li>
 <li><strong>Margen máximo</strong>: Se maximiza la distancia entre las clases y el hiperplano.</li>
@@ -673,8 +915,9 @@ P(\text{sepsis}|\text{lenta}, \text{alterado}) = 0.25 \times 0.85 \times 0.2 = 0
 <li><strong>Linealidad</strong>: Adecuado para problemas donde las clases son separables linealmente.</li>
 </ul>
 </section>
-<section id="imagen-clasificación-binaria-lineal-en-svm" class="slide level2">
-<h2>Imagen Clasificación Binaria Lineal en SVM</h2>
+<section class="slide level2">
+
+<h3 id="imagen-clasificación-binaria-lineal-en-svm">Imagen Clasificación Binaria Lineal en SVM</h3>
 
 <img data-src="Imagen2.png" class="r-stretch quarto-figure-center"><p class="caption">Clasificacion Binaria Lineal</p></section>
 <section id="cual-es-el-mejor-hiperplano-separador" class="slide level2">
@@ -813,8 +1056,244 @@ a \cdot b = \sum_{i=1}^{n} a_i b_i = a_1 b_1 + a_2 b_2 + \dots + a_n b_n
 <li><p><strong>Modelo basado en bag-of-words</strong>: Representa documentos utilizando vectores de palabras, conocido como el modelo de <strong>bolsa de palabras</strong>.</p></li>
 </ul>
 </section>
-<section id="conclusiones" class="slide level2">
-<h2>Conclusiones</h2>
+<section class="slide level2">
+
+<h3 id="ejemplos-scikit-learn-máquinas-de-soporte-vectorial-svm">Ejemplos Scikit-learn: Máquinas de Soporte Vectorial (SVM)</h3>
+<p>Las <strong>Máquinas de Soporte Vectorial (SVM)</strong> son un conjunto de métodos de aprendizaje supervisado utilizados para clasificación, regresión y detección de outliers.</p>
+<h4 id="ventajas-de-las-svm">Ventajas de las SVM:</h4>
+<ul>
+<li>Efectivas en espacios de alta dimensionalidad.</li>
+<li>Efectivas incluso cuando el número de dimensiones es mayor que el número de muestras.</li>
+<li>Usan un subconjunto de puntos de entrenamiento en la función de decisión (vectores de soporte), por lo que también son eficientes en memoria.</li>
+<li>Versátiles: Se pueden especificar diferentes funciones de Kernel. Los kernels comunes están disponibles, pero también es posible especificar kernels personalizados.</li>
+</ul>
+<h4 id="desventajas-de-las-svm">Desventajas de las SVM:</h4>
+<ul>
+<li>Si el número de características es mucho mayor que el número de muestras, evitar el sobreajuste al elegir las funciones Kernel y el término de regularización es crucial.</li>
+<li>Las SVM no proporcionan estimaciones de probabilidad directamente; se calculan utilizando una costosa validación cruzada de cinco pliegues.</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<h3 id="clasificación-con-svm">Clasificación con SVM</h3>
+<p>Las clases <strong>SVC</strong>, <strong>NuSVC</strong> y <strong>LinearSVC</strong> pueden realizar clasificación binaria y multiclase en un conjunto de datos.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href=""></a><span class="im">from</span> sklearn <span class="im">import</span> svm</span>
+<span id="cb3-2"><a href=""></a>X <span class="op">=</span> [[<span class="dv">0</span>, <span class="dv">0</span>], [<span class="dv">1</span>, <span class="dv">1</span>]]</span>
+<span id="cb3-3"><a href=""></a>y <span class="op">=</span> [<span class="dv">0</span>, <span class="dv">1</span>]</span>
+<span id="cb3-4"><a href=""></a>clf <span class="op">=</span> svm.SVC()</span>
+<span id="cb3-5"><a href=""></a>clf.fit(X, y)</span>
+<span id="cb3-6"><a href=""></a>clf.predict([[<span class="fl">2.</span>, <span class="fl">2.</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>Las SVM utilizan un subconjunto de los datos de entrenamiento llamados vectores de soporte.</li>
+<li>Propiedades como los vectores de soporte se pueden obtener con los atributos support_vectors_, support_ y n_support_.</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<h3 id="clasificación-multiclase">1.4.1.1 Clasificación multiclase</h3>
+<p>Las clases SVC y NuSVC implementan la estrategia de “uno contra uno” para la clasificación multiclase.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href=""></a>X <span class="op">=</span> [[<span class="dv">0</span>], [<span class="dv">1</span>], [<span class="dv">2</span>], [<span class="dv">3</span>]]</span>
+<span id="cb4-2"><a href=""></a>Y <span class="op">=</span> [<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>]</span>
+<span id="cb4-3"><a href=""></a>clf <span class="op">=</span> svm.SVC(decision_function_shape<span class="op">=</span><span class="st">'ovo'</span>)</span>
+<span id="cb4-4"><a href=""></a>clf.fit(X, Y)</span>
+<span id="cb4-5"><a href=""></a>clf.decision_function_shape <span class="op">=</span> <span class="st">"ovr"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>Por otro lado, LinearSVC implementa la estrategia “uno contra el resto” y entrena n modelos para las n clases.</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<h3 id="puntuaciones-y-probabilidades">1.4.1.2 Puntuaciones y probabilidades</h3>
+<p>El método decision_function de SVC y NuSVC proporciona puntuaciones por clase para cada muestra.</p>
+<ul>
+<li>Si se establece probability=True, se habilitan las estimaciones de probabilidad.</li>
+</ul>
+<p>Para estimaciones más precisas, se recomienda utilizar decision_function en lugar de predict_proba.</p>
+</section>
+<section class="slide level2">
+
+<h3 id="regresión-con-svm">1.4.2. Regresión con SVM</h3>
+<p>El método de clasificación de soporte vectorial se puede extender para resolver problemas de regresión, conocido como Regresión de Soporte Vectorial (SVR).</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href=""></a><span class="im">from</span> sklearn <span class="im">import</span> svm</span>
+<span id="cb5-2"><a href=""></a>X <span class="op">=</span> [[<span class="dv">0</span>, <span class="dv">0</span>], [<span class="dv">2</span>, <span class="dv">2</span>]]</span>
+<span id="cb5-3"><a href=""></a>y <span class="op">=</span> [<span class="fl">0.5</span>, <span class="fl">2.5</span>]</span>
+<span id="cb5-4"><a href=""></a>regr <span class="op">=</span> svm.SVR()</span>
+<span id="cb5-5"><a href=""></a>regr.fit(X, y)</span>
+<span id="cb5-6"><a href=""></a>regr.predict([[<span class="dv">1</span>, <span class="dv">1</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section class="slide level2">
+
+<h3 id="estimación-de-densidad-y-detección-de-novedades">1.4.3. Estimación de Densidad y Detección de Novedades</h3>
+<p>La clase <strong>OneClassSVM</strong> implementa una SVM de una sola clase (<strong>One-Class SVM</strong>) que se utiliza para la detección de outliers (valores atípicos) o anomalías en los datos.</p>
+<h4 id="propósito-de-oneclasssvm">Propósito de OneClassSVM</h4>
+<ul>
+<li>Detecta datos que no siguen el patrón general de un conjunto de datos.</li>
+<li>Es especialmente útil en situaciones donde los datos de entrenamiento no contienen ejemplos de outliers.</li>
+</ul>
+<h4 id="ejemplo-de-detección-de-outliers">Ejemplo de Detección de Outliers</h4>
+<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href=""></a><span class="im">from</span> sklearn <span class="im">import</span> svm</span>
+<span id="cb6-2"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb6-3"><a href=""></a></span>
+<span id="cb6-4"><a href=""></a><span class="co"># Generar datos de ejemplo</span></span>
+<span id="cb6-5"><a href=""></a>X <span class="op">=</span> <span class="fl">0.3</span> <span class="op">*</span> np.random.randn(<span class="dv">100</span>, <span class="dv">2</span>)</span>
+<span id="cb6-6"><a href=""></a>X_train <span class="op">=</span> np.r_[X <span class="op">+</span> <span class="dv">2</span>, X <span class="op">-</span> <span class="dv">2</span>]</span>
+<span id="cb6-7"><a href=""></a></span>
+<span id="cb6-8"><a href=""></a><span class="co"># Entrenar el modelo OneClassSVM</span></span>
+<span id="cb6-9"><a href=""></a>clf <span class="op">=</span> svm.OneClassSVM(gamma<span class="op">=</span><span class="st">'auto'</span>).fit(X_train)</span>
+<span id="cb6-10"><a href=""></a></span>
+<span id="cb6-11"><a href=""></a><span class="co"># Predecir si las muestras son outliers o no</span></span>
+<span id="cb6-12"><a href=""></a>y_pred_train <span class="op">=</span> clf.predict(X_train)</span>
+<span id="cb6-13"><a href=""></a></span>
+<span id="cb6-14"><a href=""></a><span class="co"># Resultados:</span></span>
+<span id="cb6-15"><a href=""></a><span class="bu">print</span>(<span class="st">"Predicción de entrenamiento:"</span>, y_pred_train)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section class="slide level2">
+
+<h3 id="complejidad">1.4.4. Complejidad</h3>
+<p>Las <strong>Máquinas de Soporte Vectorial (SVM)</strong> son herramientas poderosas, pero sus requisitos de cómputo y almacenamiento aumentan rápidamente con el número de vectores de entrenamiento.</p>
+<h4 id="problema-de-programación-cuadrática-qp">Problema de Programación Cuadrática (QP)</h4>
+<p>El núcleo de una SVM es un problema de <strong>programación cuadrática (QP)</strong>, que separa los <strong>vectores de soporte</strong> del resto de los datos de entrenamiento.</p>
+<ul>
+<li>Este problema es computacionalmente costoso debido al número de vectores de entrenamiento y la dimensionalidad del espacio de características.</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<h3 id="escalabilidad-de-svm-con-libsvm">Escalabilidad de SVM con libsvm</h3>
+<ul>
+<li>El solucionador de <strong>QP</strong> utilizado por la implementación basada en <strong>libsvm</strong> escala entre:</li>
+</ul>
+<p><span class="math display">\[
+\mathcal{O}(n_{\text{training}}^2)
+\]</span></p>
+<p>y</p>
+<p><span class="math display">\[
+\mathcal{O}(n_{\text{training}}^3)
+\]</span></p>
+<ul>
+<li>dependiendo de qué tan eficientemente se use la caché de <strong>libsvm</strong> en la práctica (esto depende del conjunto de datos).</li>
+</ul>
+<h3 id="casos-de-datos-dispersos">Casos de Datos Dispersos</h3>
+<p>Si los datos son muy dispersos, este costo de complejidad debe reemplazarse por el <strong>número promedio de características no nulas</strong> en un vector de muestra.</p>
+</section>
+<section id="eficiencia-en-el-caso-lineal" class="slide level2">
+<h2>Eficiencia en el Caso Lineal</h2>
+<p>Para el caso lineal, el algoritmo utilizado en <strong>LinearSVC</strong> (implementado por <strong>liblinear</strong>) es mucho más eficiente que su contraparte basada en <strong>libsvm</strong>.</p>
+<ul>
+<li>Puede <strong>escalar casi linealmente</strong> a millones de muestras y/o características, lo que lo hace más adecuado para grandes conjuntos de datos.</li>
+</ul>
+<div class="sourceCode" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href=""></a><span class="im">from</span> sklearn <span class="im">import</span> svm</span>
+<span id="cb7-2"><a href=""></a>X <span class="op">=</span> [[<span class="dv">0</span>, <span class="dv">0</span>], [<span class="dv">2</span>, <span class="dv">2</span>]]</span>
+<span id="cb7-3"><a href=""></a>y <span class="op">=</span> [<span class="fl">0.5</span>, <span class="fl">2.5</span>]</span>
+<span id="cb7-4"><a href=""></a></span>
+<span id="cb7-5"><a href=""></a><span class="co"># Ajuste del modelo utilizando LinearSVC</span></span>
+<span id="cb7-6"><a href=""></a>regr <span class="op">=</span> svm.LinearSVC()</span>
+<span id="cb7-7"><a href=""></a>regr.fit(X, y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section class="slide level2">
+
+<h3 id="consejos-para-el-uso-práctico">1.4.5. Consejos para el uso práctico</h3>
+<h4 id="escalar-los-datos">Escalar los datos</h4>
+<ul>
+<li>Las SVM no son invariantes al escalado, por lo que es altamente recomendable escalar los datos.</li>
+</ul>
+<div class="sourceCode" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href=""></a><span class="im">from</span> sklearn.pipeline <span class="im">import</span> make_pipeline</span>
+<span id="cb8-2"><a href=""></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
+<span id="cb8-3"><a href=""></a><span class="im">from</span> sklearn.svm <span class="im">import</span> SVC</span>
+<span id="cb8-4"><a href=""></a>clf <span class="op">=</span> make_pipeline(StandardScaler(), SVC())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Al utilizar <strong>SVM</strong> es importante tener en cuenta algunos aspectos prácticos para optimizar el rendimiento y evitar errores comunes.</p>
+<h4 id="evitar-la-copia-de-datos">Evitar la Copia de Datos</h4>
+<ul>
+<li>Para <strong>SVC</strong>, <strong>SVR</strong>, <strong>NuSVC</strong> y <strong>NuSVR</strong>, si los datos no están en formato <strong>C-contiguo</strong> y de doble precisión, serán copiados antes de llamar a la implementación subyacente en <strong>C</strong>.</li>
+<li>Verifica si un array de <strong>numpy</strong> es <strong>C-contiguo</strong> inspeccionando su atributo <code>flags</code>.</li>
+<li>Para <strong>LinearSVC</strong> (y <strong>LogisticRegression</strong>), cualquier entrada pasada como array <strong>numpy</strong> será copiada y convertida a la representación interna de datos dispersos de <strong>liblinear</strong>.</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<h3 id="tamaño-de-la-caché-del-kernel">Tamaño de la Caché del Kernel</h3>
+<ul>
+<li>Para SVC, SVR, NuSVC y NuSVR, el tamaño de la caché del kernel impacta significativamente en el tiempo de ejecución para problemas grandes.</li>
+<li>Si tienes suficiente RAM, se recomienda ajustar cache_size a un valor más alto, como 500MB o 1000MB.</li>
+</ul>
+<div class="sourceCode" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href=""></a><span class="im">from</span> sklearn <span class="im">import</span> svm</span>
+<span id="cb9-2"><a href=""></a>clf <span class="op">=</span> svm.SVC(cache_size<span class="op">=</span><span class="dv">500</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<h4 id="ajuste-del-parámetro-c">Ajuste del Parámetro C</h4>
+<ul>
+<li>El parámetro C tiene un valor predeterminado de 1, lo cual es razonable en general.</li>
+<li>Si tienes muchas observaciones con ruido, deberías disminuir C, ya que C menor implica más regularización.</li>
+<li>Para LinearSVC y LinearSVR, los resultados de predicción mejoran hasta un umbral, después del cual valores más altos de C ya no aportan beneficios.</li>
+</ul>
+<div class="sourceCode" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href=""></a>clf <span class="op">=</span> svm.LinearSVC(C<span class="op">=</span><span class="fl">0.1</span>)</span>
+<span id="cb10-2"><a href=""></a>clf.fit(X, y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section class="slide level2">
+
+<h3 id="control-de-aleatoriedad">Control de Aleatoriedad</h3>
+<ul>
+<li>Algunas implementaciones, como SVC y NuSVC, usan un generador de números aleatorios para barajar los datos durante la estimación de probabilidades (si probability=True).</li>
+<li>Controla la aleatoriedad con el parámetro random_state.</li>
+</ul>
+<div class="sourceCode" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href=""></a>clf <span class="op">=</span> svm.SVC(random_state<span class="op">=</span><span class="dv">42</span>, probability<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section class="slide level2">
+
+<h3 id="kernels-personalizados">Kernels Personalizados</h3>
+<div class="sourceCode" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href=""></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb12-2"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb12-3"><a href=""></a></span>
+<span id="cb12-4"><a href=""></a><span class="im">from</span> sklearn <span class="im">import</span> datasets, svm</span>
+<span id="cb12-5"><a href=""></a><span class="im">from</span> sklearn.inspection <span class="im">import</span> DecisionBoundaryDisplay</span>
+<span id="cb12-6"><a href=""></a></span>
+<span id="cb12-7"><a href=""></a><span class="co"># Importamos algunos datos para trabajar</span></span>
+<span id="cb12-8"><a href=""></a>iris <span class="op">=</span> datasets.load_iris()</span>
+<span id="cb12-9"><a href=""></a>X <span class="op">=</span> iris.data[:, :<span class="dv">2</span>]  <span class="co"># solo tomamos las dos primeras características. Podríamos</span></span>
+<span id="cb12-10"><a href=""></a><span class="co"># evitar este corte seleccionando un conjunto de datos bidimensional</span></span>
+<span id="cb12-11"><a href=""></a>Y <span class="op">=</span> iris.target</span>
+<span id="cb12-12"><a href=""></a></span>
+<span id="cb12-13"><a href=""></a></span>
+<span id="cb12-14"><a href=""></a><span class="kw">def</span> my_kernel(X, Y):</span>
+<span id="cb12-15"><a href=""></a>    <span class="co">"""</span></span>
+<span id="cb12-16"><a href=""></a><span class="co">    Creamos un kernel personalizado:</span></span>
+<span id="cb12-17"><a href=""></a></span>
+<span id="cb12-18"><a href=""></a><span class="co">                 (2  0)</span></span>
+<span id="cb12-19"><a href=""></a><span class="co">    k(X, Y) = X  (    ) Y.T</span></span>
+<span id="cb12-20"><a href=""></a><span class="co">                 (0  1)</span></span>
+<span id="cb12-21"><a href=""></a><span class="co">    """</span></span>
+<span id="cb12-22"><a href=""></a>    M <span class="op">=</span> np.array([[<span class="dv">2</span>, <span class="dv">0</span>], [<span class="dv">0</span>, <span class="fl">1.0</span>]])</span>
+<span id="cb12-23"><a href=""></a>    <span class="cf">return</span> np.dot(np.dot(X, M), Y.T)</span>
+<span id="cb12-24"><a href=""></a></span>
+<span id="cb12-25"><a href=""></a></span>
+<span id="cb12-26"><a href=""></a>h <span class="op">=</span> <span class="fl">0.02</span>  <span class="co"># tamaño del paso en la malla</span></span>
+<span id="cb12-27"><a href=""></a></span>
+<span id="cb12-28"><a href=""></a><span class="co"># Creamos una instancia de SVM y ajustamos nuestros datos.</span></span>
+<span id="cb12-29"><a href=""></a>clf <span class="op">=</span> svm.SVC(kernel<span class="op">=</span>my_kernel)</span>
+<span id="cb12-30"><a href=""></a>clf.fit(X, Y)</span>
+<span id="cb12-31"><a href=""></a></span>
+<span id="cb12-32"><a href=""></a>ax <span class="op">=</span> plt.gca()</span>
+<span id="cb12-33"><a href=""></a>DecisionBoundaryDisplay.from_estimator(</span>
+<span id="cb12-34"><a href=""></a>    clf,</span>
+<span id="cb12-35"><a href=""></a>    X,</span>
+<span id="cb12-36"><a href=""></a>    cmap<span class="op">=</span>plt.cm.Paired,</span>
+<span id="cb12-37"><a href=""></a>    ax<span class="op">=</span>ax,</span>
+<span id="cb12-38"><a href=""></a>    response_method<span class="op">=</span><span class="st">"predict"</span>,</span>
+<span id="cb12-39"><a href=""></a>    plot_method<span class="op">=</span><span class="st">"pcolormesh"</span>,</span>
+<span id="cb12-40"><a href=""></a>    shading<span class="op">=</span><span class="st">"auto"</span>,</span>
+<span id="cb12-41"><a href=""></a>)</span>
+<span id="cb12-42"><a href=""></a></span>
+<span id="cb12-43"><a href=""></a><span class="co"># También trazamos los puntos de entrenamiento</span></span>
+<span id="cb12-44"><a href=""></a>plt.scatter(X[:, <span class="dv">0</span>], X[:, <span class="dv">1</span>], c<span class="op">=</span>Y, cmap<span class="op">=</span>plt.cm.Paired, edgecolors<span class="op">=</span><span class="st">"k"</span>)</span>
+<span id="cb12-45"><a href=""></a>plt.title(<span class="st">"Clasificación de 3 clases usando SVM con kernel personalizado"</span>)</span>
+<span id="cb12-46"><a href=""></a>plt.axis(<span class="st">"tight"</span>)</span>
+<span id="cb12-47"><a href=""></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section class="slide level2">
+
+
+<img data-src="Imagen9.png" class="r-stretch quarto-figure-center"><p class="caption">Kernel Personalizado</p></section>
+<section class="slide level2">
+
+<h3 id="conclusiones">Conclusiones</h3>
 <ul>
 <li><p><strong>¿Cómo se define el Teorema de Bayes?</strong></p></li>
 <li><p><strong>¿En qué consiste la clasificación Bayesiana?</strong></p></li>
@@ -831,6 +1310,12 @@ a \cdot b = \sum_{i=1}^{n} a_i b_i = a_1 b_1 + a_2 b_2 + \dots + a_n b_n
 <li>EMC Education Services (2015). <em>Data Science and Big Data Analytics</em>.</li>
 <li>Hernández, J., Ramírez, M. J., Ferri, C. (2004). <em>Introducción a la minería de datos</em>.</li>
 <li>Material de Clase Mailiu: <a href="mailto:m.dazpea@uandresbello.edu" class="email">m.dazpea@uandresbello.edu</a></li>
+<li><strong>H. Zhang</strong> (2004). <em>The optimality of Naive Bayes</em>. Proc. FLAIRS.</li>
+<li><strong>Rennie, J. D., Shih, L., Teevan, J., &amp; Karger, D. R.</strong> (2003). <em>Tackling the poor assumptions of naive Bayes text classifiers</em>. In ICML (Vol. 3, pp.&nbsp;616-623).</li>
+<li><strong>C.D. Manning, P. Raghavan and H. Schütze</strong> (2008). <em>Introduction to Information Retrieval</em>. Cambridge University Press.</li>
+<li><strong>McCallum, A., &amp; Nigam, K.</strong> (1998). <em>A comparison of event models for Naive Bayes text classification</em>. Proc. AAAI/ICML-98 Workshop on Learning for Text Categorization, pp.&nbsp;41-48.</li>
+<li><strong>Metsis, V., Androutsopoulos, I., &amp; Paliouras, G.</strong> (2006). <em>Spam filtering with Naive Bayes – Which Naive Bayes?</em> 3rd Conf. on Email and Anti-Spam (CEAS).</li>
+<li><strong>Raphael A. Finkel and J.L. Bentley</strong> (1979). <em>Quad Trees: A Data Structure for Retrieval on Composite Keys</em>. Stanford University, <a href="http://i.stanford.edu/pub/cstr/reports/cs/tr/79/773/CS-TR-79-773.pdf">CS-TR-79-773</a>.</li>
 </ol>
 </section>
 <section class="slide level2">

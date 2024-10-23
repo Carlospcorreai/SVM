@@ -1,6 +1,5 @@
 ---
-title: "<div style='font-size: 0.6em;'>Clasificación Bayesiana y Máquinas de Soporte Vectorial (SVM)</div>"
-author: "Carlos Correa Íñiguez <c.correainiguez@uandresbello.edu>"
+author: "Carlos Correa Íñiguez (<c.correainiguez@uandresbello.edu>)"
 date: "2024-10-15"
 format: 
   revealjs:
@@ -8,17 +7,18 @@ format:
     slide-number: true
     transition: slide
     theme: beige
+    auto-stretch: true 
 output: html
 output-file: index.html
 ---
 
-## Unidad III: Análisis utilizando aprendizaje supervisado
+### Unidad III: Análisis utilizando aprendizaje supervisado
 
 - Clasificación Bayesiana y Máquinas de Soporte Vectorial (SVM)
 
 ---
 
-## Objetivo de la Clase
+### Objetivo de la Clase
 
 - **Comprender** los fundamentos de la clasificación Bayesiana y su aplicación práctica.
 
@@ -28,7 +28,7 @@ output-file: index.html
 
 ---
 
-## Introducción
+### Introducción
 
 1. Método práctico para inducir modelos probabilísticos y razonar sobre nuevos datos. Permite calcular la probabilidad asociada a cada hipótesis, ofreciendo una ventaja frente a otras técnicas.
 
@@ -36,7 +36,7 @@ output-file: index.html
 
 ---
 
-## Ejemplo: Sistema de Recomendación en Inversiones
+### Ejemplo: Sistema de Recomendación en Inversiones
 
 Como ejemplo de la ventaja que supone poder dar la probabilidad asociada a la clasificación, piénsese en un sistema de recomendaciones para invertir en bolsa.
 
@@ -59,7 +59,7 @@ Sin duda alguna, el encargado de tomar la decisión preferiría tener esta infor
 
 ---
 
-## Teorema de Bayes
+### Teorema de Bayes
 
 - El Teorema de Bayes, propuesto por el filósofo inglés Thomas Bayes en 1760, permite calcular distribuciones condicionales.
 
@@ -75,7 +75,7 @@ Donde:
 
 ---
 
-## Clasificación Bayesiana: Naïve Bayes
+### Clasificación Bayesiana: Naïve Bayes
 
 - Suposición: todos los atributos son independientes conocido el valor de la clase.
 
@@ -89,7 +89,7 @@ $$
 
 ---
 
-## Representación Gráfica de una Red Bayesiana
+### Representación Gráfica de una Red Bayesiana
 
 - **Modelo probabilístico** con un único nodo raíz (la clase), y todos los atributos son nodos hoja que tienen como único padre a la variable clase.
 
@@ -99,7 +99,7 @@ $$
 
 ---
 
-## Probabilidad Condicional con Múltiples Predictores
+### Probabilidad Condicional con Múltiples Predictores
 
 Para más de un predictor:
 
@@ -120,7 +120,7 @@ $$
 
 ---
 
-## Ejemplo de Naive Bayes
+### Ejemplo de Naive Bayes
 
 Para entender mejor cómo funciona Naive Bayes, consideremos un conjunto de datos con 1500 observaciones y tres clases de salida:
 
@@ -137,7 +137,7 @@ Las variables predictoras son categóricas (verdadero o falso):
 
 ---
 
-## Resumen de Clases
+### Resumen de Clases
 
 **Clase de Gatos**:
 - 450 de 500 (90%) de gatos pueden nadar
@@ -159,7 +159,7 @@ Las variables predictoras son categóricas (verdadero o falso):
 
 ---
 
-## Clasificación con Naive Bayes
+### Clasificación con Naive Bayes
 
 Con estos datos, clasifiquemos la siguiente observación en una de las clases de salida (gato, loro o tortuga) usando Naive Bayes.
 
@@ -171,7 +171,7 @@ El objetivo es predecir si el animal es un **gato**, **loro** o **tortuga** bas�
 
 ---
 
-## Verificación: ¿Es un Gato?
+### Verificación: ¿Es un Gato?
 
 Para comprobar si el animal es un gato, calculamos:
 
@@ -187,7 +187,7 @@ $$
 
 ---
 
-## Verificación: ¿Es un Loro?
+### Verificación: ¿Es un Loro?
 
 Para comprobar si el animal es un loro, calculamos:
 
@@ -203,7 +203,7 @@ $$
 
 ---
 
-## Verificación: ¿Es una Tortuga?
+### Verificación: ¿Es una Tortuga?
 
 Para comprobar si el animal es una tortuga, calculamos:
 
@@ -219,7 +219,7 @@ $$
 
 ---
 
-## Verificación: ¿Es una Tortuga?
+### Verificación: ¿Es una Tortuga?
 
 Para comprobar si el animal es una tortuga, calculamos:
 
@@ -236,7 +236,7 @@ $$
 ---
 
 
-## Conclusión
+### Conclusión
 
 Para todos los cálculos, el denominador es el mismo, es decir, $P(\text{Nadar}, \text{Verde})$.
 $$
@@ -250,7 +250,7 @@ Dado que $P(\text{Tortuga} | \text{Nadar}, \text{Verde})$ es mayor que $P(\text{
 
 ---
 
-## Algoritmo de Naive Bayes
+### Algoritmo de Naive Bayes
 
 1. Encontrar $P(C_i)$, calculando el total de la i-ésima clase en el total de datos de entrenamiento.
 2. Calcular la $P(x_t|C_i)$ para cada atributo o predictor de los datos de entrenamiento $X$.
@@ -260,13 +260,13 @@ Dado que $P(\text{Tortuga} | \text{Nadar}, \text{Verde})$ es mayor que $P(\text{
 
 ---
 
-## Ejemplo: Diagnóstico de Sepsis usando Naive Bayes
+### Ejemplo: Diagnóstico de Sepsis usando Naive Bayes
 
 Vamos a usar un ejemplo para ilustrar cómo funciona la clasificación Naive Bayes. El ejemplo utilizado es el diagnóstico de sepsis. Supongamos que hay dos predictores de sepsis: la tasa respiratoria y el estado mental.
 
 ---
 
-## Tabla de Verosimilitudes
+### Tabla de Verosimilitudes
 
 La siguiente tabla muestra las verosimilitudes para diagnosticar sepsis usando la tasa respiratoria y el estado mental. Los datos provienen de un conjunto de entrenamiento.
 
@@ -279,7 +279,7 @@ La siguiente tabla muestra las verosimilitudes para diagnosticar sepsis usando l
 
 ---
 
-## Probabilidades Previas
+### Probabilidades Previas
 
 Las probabilidades previas para sepsis y no-sepsis son:
 
@@ -288,7 +288,7 @@ Las probabilidades previas para sepsis y no-sepsis son:
 
 ---
 
-## Probabilidades de Verosimilitud
+### Probabilidades de Verosimilitud
 
 Las probabilidades de verosimilitud para los diferentes predictores son:
 
@@ -304,7 +304,7 @@ Las probabilidades de verosimilitud para los diferentes predictores son:
 
 ---
 
-## Aplicando Naive Bayes
+### Aplicando Naive Bayes
 
 Queremos clasificar un paciente con una tasa respiratoria lenta y un estado mental alterado. Según la regla de clasificación de máxima verosimilitud, calculamos solo el numerador de la ecuación de Bayes.
 
@@ -316,7 +316,7 @@ $$
 
 ---
 
-## Cálculo de Sepsis
+### Cálculo de Sepsis
 
 Sustituyendo los valores en la fórmula:
 
@@ -326,7 +326,7 @@ $$
 
 ---
 
-## Cálculo de Sepsis
+### Cálculo de Sepsis
 
 Sustituyendo los valores en la fórmula:
 
@@ -336,7 +336,7 @@ $$
 
 ---
 
-## Clasificación Bayesiana: Ventajas
+### Clasificación Bayesiana: Ventajas
 
 - Funciona mejor que otros modelos o algoritmos, bajo el supuesto de independencia entre los predictores.
 - Requiere una pequeña cantidad de datos de entrenamiento para estimar los datos de prueba.
@@ -344,14 +344,14 @@ $$
 
 ---
 
-## Clasificación Bayesiana: Desventajas
+### Clasificación Bayesiana: Desventajas
 
 - Asume implícitamente que todos los atributos son mutuamente independientes; en la vida real, es casi imposible que obtengamos un conjunto de predictores completamente independientes.
 - Si la variable categórica tiene una categoría en el conjunto de datos de prueba que no se observó en el conjunto de entrenamiento, el modelo asignará una probabilidad de 0 y no podrá hacer una predicción (frecuencia cero).
 
 ---
 
-## Clasificadores Basados en Redes Bayesianas (RB)
+### Clasificadores Basados en Redes Bayesianas (RB)
 
 - **TAN (Tree Augmented Naïve Bayes)**: permite ciertas dependencias entre los atributos, asumiendo una red bayesiana con forma de árbol.
 - **BAN (Bayesian Network Augmented Naive Bayes)**: similar a TAN, permite iniciar la red como un NB y luego agregar arcos con un algoritmo de aprendizaje.
@@ -359,7 +359,7 @@ $$
 
 ---
 
-## Aplicaciones de Clasificación Bayesiana
+### Aplicaciones de Clasificación Bayesiana
 
 - **Predicción en tiempo real**.
 - **Predicción de clases múltiples**: bien conocido por su función en problemas de múltiples clases.
@@ -367,7 +367,7 @@ $$
 
 ---
 
-## Otras Aplicaciones
+### Otras Aplicaciones
 
 - **Filtrado de correo no deseado**: se usa ampliamente en la detección de spam.
 - **Análisis de opinión**: utilizado en el análisis de redes sociales para identificar sentimientos positivos y negativos.
@@ -375,7 +375,192 @@ $$
 
 ---
 
-## Un Poco de Historia: Máquinas de Soporte Vectorial (SVM)
+### Ejemplo Scikit-learn Naive Bayes
+
+Los métodos Naive Bayes son un conjunto de algoritmos de aprendizaje supervisado basados en la aplicación del teorema de Bayes con la suposición "ingenua" de independencia condicional entre cada par de características dado el valor de la variable de clase. El teorema de Bayes establece la siguiente relación, dada una variable de clase \(y\) y un vector de características dependientes \(\mathbf{x_1, \dots, x_n}\):
+
+$$
+P(y | \mathbf{x}) = \frac{P(y) P(\mathbf{x} | y)}{P(\mathbf{x})}
+$$
+
+Utilizando la suposición de independencia condicional, podemos simplificar esta relación a:
+
+$$
+P(y | \mathbf{x}) \approx P(y) \prod_{i=1}^{n} P(x_i | y)
+$$
+
+---
+
+### Ejemplo Scikit-learn Naive Bayes
+
+Ya que $P(\mathbf{x})$ es constante, podemos utilizar la siguiente regla de clasificación:
+
+$$
+\hat{y} = \underset{y}{\operatorname{argmax}} \ P(y) \prod_{i=1}^{n} P(x_i | y)
+$$
+
+Usamos la estimación de **Máxima A Posteriori (MAP)** para estimar $P(y)$ y $P(x_i | y)$, donde $P(y)$ es la frecuencia relativa de la clase $y$ en el conjunto de entrenamiento.
+
+---
+
+### 1.9.1. Gaussian Naive Bayes
+
+El GaussianNB implementa el algoritmo Naive Bayes Gaussiano para clasificación. Se asume que las características siguen una distribución Gaussiana:
+
+$$
+P(x_i | y) = \frac{1}{\sqrt{2\pi\sigma_y^2}} \exp\left(-\frac{(x_i - \mu_y)^2}{2\sigma_y^2}\right)
+$$
+
+Los parámetros $\mu_y$ y $\sigma_y$ se estiman utilizando máxima verosimilitud.
+
+---
+
+### 1.9.1. Gaussian Naive Bayes (Codigo Python Scikit-learn)
+
+```python
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.naive_bayes import GaussianNB
+
+X, y = load_iris(return_X_y=True)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.5, random_state=0)
+
+gnb = GaussianNB()
+y_pred = gnb.fit(X_train, y_train).predict(X_test)
+
+print("Número de puntos mal clasificados de un total de %d puntos: %d" % (X_test.shape[0], (y_test != y_pred).sum()))
+```
+
+---
+
+### 1.9.2. Multinomial Naive Bayes
+
+El **MultinomialNB** implementa el algoritmo Naive Bayes para datos distribuidos de forma multinomial. Este método es clásico para clasificación de texto, donde los datos suelen representarse como recuentos de vectores de palabras.
+
+#### Fórmula de Multinomial Naive Bayes
+
+El parámetro $\theta_{y,i}$ es la probabilidad de que la característica $i$ aparezca en una muestra perteneciente a la clase $y$, estimado como:
+
+$$
+\theta_{y,i} = \frac{N_{y,i} + \alpha}{N_y + \alpha n}
+$$
+
+Donde:
+
+- $N_{y,i}$ es el número de veces que la característica \(i\) aparece en una muestra de la clase \(y\).
+- $N_y$ es el recuento total de todas las características para la clase \(y\).
+- $\alpha$ es un parámetro de suavizado.
+
+---
+
+### 1.9.3. Complement Naive Bayes
+
+El **ComplementNB** es una adaptación del Naive Bayes multinomial que es particularmente adecuado para conjuntos de datos desequilibrados. Utiliza estadísticas del complemento de cada clase para calcular los pesos del modelo.
+
+#### Fórmula de Complement Naive Bayes
+
+La estimación de los pesos del modelo se calcula con la siguiente fórmula:
+
+$$
+\hat{\theta}_{c,i} = \frac{\alpha_i + \sum_{j: y_j \neq c} d_{i,j}}{\alpha + \sum_{j: y_j \neq c} \sum_k d_{k,j}}
+$$
+
+#### Parámetros de la Fórmula
+
+- $\hat{\theta}_{c,i}$: Estimación del peso del modelo para la clase \(c\) y la característica \(i\).
+- $\alpha_i$: Parámetro de suavizado.
+- $d_{i,j}$: Frecuencia de la característica \(i\) en el documento \(j\).
+- $\alpha$: Suma de los parámetros de suavizado.
+
+---
+
+### 1.9.4. Bernoulli Naive Bayes
+
+El **BernoulliNB** implementa el Naive Bayes para datos distribuidos según la distribución de **Bernoulli**, es decir, características binarias. Este clasificador es útil para datos donde cada característica es binaria, como la **presencia o ausencia de palabras** en la clasificación de texto.
+
+#### Regla de Decisión de Bernoulli Naive Bayes
+
+La regla de decisión para el clasificador Bernoulli Naive Bayes es:
+
+$$
+P(x_i | y) = P(x_i = 1 | y)^{x_i} \cdot (1 - P(x_i = 1 | y))^{1 - x_i}
+$$
+
+#### Aplicación de Bernoulli Naive Bayes
+
+- **$P(x_i = 1 | y)$**: Probabilidad de que la característica \(x_i\) ocurra dado \(y\).
+- **$x_i$**: Valor binario que indica si la característica está presente (1) o ausente (0).
+- Este clasificador penaliza explícitamente la no ocurrencia de una característica, lo que lo diferencia del Naive Bayes multinomial.
+
+---
+
+### 1.9.5. Categorical Naive Bayes
+
+El **CategoricalNB** implementa el Naive Bayes para datos categóricos. Este clasificador es útil cuando cada característica tiene una distribución categórica, es decir, se representa como una de varias categorías posibles.
+
+#### Fórmula de Categorical Naive Bayes
+
+La probabilidad de la categoría $t$ en la característica $i$ dado $y$ es estimada como:
+
+$$
+P(x_i = t | y) = \frac{N_{t, i, c} + \alpha}{N_c + \alpha n_i}
+$$
+
+#### Parámetros de la Fórmula
+
+- $N_{t, i, c}$: Número de veces que la categoría \(t\) aparece en la característica \(i\) en la clase \(y\).
+- $N_c$: Número total de muestras en la clase \(y\).
+- $\alpha$: Parámetro de suavizado que evita probabilidades de cero.
+- $n_i$: Número de categorías posibles para la característica \(i\).
+
+---
+
+### 1.9.6. Modelo Naive Bayes fuera de memoria
+
+Los modelos **Naive Bayes** pueden utilizarse para resolver problemas de clasificación a gran escala en los que el conjunto de entrenamiento no cabe en la memoria.
+
+- Clasificadores como **MultinomialNB**, **BernoulliNB** y **GaussianNB** exponen un método `partial_fit`, que permite ajustar el modelo de forma incremental.
+
+#### Código de partial_fit
+
+Aquí tienes un ejemplo de uso del método `partial_fit` para un modelo GaussianNB:
+
+```python
+gnb.partial_fit(X_train, y_train, classes=[0, 1, 2])
+```
+
+---
+
+### En Resumen
+
+##### 1.	Naive Bayes Overview:
+- Explicación breve de la suposición Naive, el teorema de Bayes y la estimación del Máximo A Posteriori (MAP).
+
+##### 2.Gaussian Naive Bayes:
+- Se enfocan en cómo se asumen distribuciones gaussianas para las características y se estiman los parámetros con máxima verosimilitud.
+
+##### 3.	Multinomial Naive Bayes:
+- Utilizado para la clasificación de texto; explica las distribuciones multinomiales y técnicas de suavizado (Laplace, Lidstone).
+
+##### 4.	Complement Naive Bayes:
+- Útil para conjuntos de datos desequilibrados, utilizando estadísticas del complemento para mejorar el rendimiento.
+
+---
+
+### En Resumen
+
+##### 5.	Bernoulli Naive Bayes:
+- Ideal para vectores de características binarias, comúnmente usado en clasificación de texto con ocurrencias binarias.
+
+##### 6.	Categorical Naive Bayes:
+- Maneja características categóricas, utilizando distribuciones categóricas para calcular probabilidades.
+
+##### 7.	Naive Bayes fuera de memoria:
+- Explica el aprendizaje incremental con partial_fit para grandes conjuntos de datos que no caben en memoria de una sola vez.
+
+---
+
+### Un Poco de Historia: Máquinas de Soporte Vectorial (SVM)
 
 - Las SVM fueron desarrolladas por Vladimir Vapnik y su equipo en los laboratorios AT&T a finales de los años 70 y durante los 80.
 - El modelo fue presentado formalmente en la conferencia **COLT (Computational Learning Theory)** en 1992 por Vapnik y otros autores.
@@ -383,7 +568,7 @@ $$
 
 ---
 
-## Clasificación Binaria Lineal en SVM
+### Clasificación Binaria Lineal en SVM
 
 - **Objetivo**: Encontrar un hiperplano que separe dos clases de manera óptima.
 - **Margen máximo**: Se maximiza la distancia entre las clases y el hiperplano.
@@ -394,7 +579,7 @@ $$
 ---
 
 
-## Imagen Clasificación Binaria Lineal en SVM
+### Imagen Clasificación Binaria Lineal en SVM
 
 ![Clasificacion Binaria Lineal](Imagen2.png)
 
@@ -570,7 +755,282 @@ $$
 
 ---
 
-## Conclusiones
+### Ejemplos Scikit-learn: Máquinas de Soporte Vectorial (SVM)
+
+Las **Máquinas de Soporte Vectorial (SVM)** son un conjunto de métodos de aprendizaje supervisado utilizados para clasificación, regresión y detección de outliers.
+
+#### Ventajas de las SVM:
+
+- Efectivas en espacios de alta dimensionalidad.
+- Efectivas incluso cuando el número de dimensiones es mayor que el número de muestras.
+- Usan un subconjunto de puntos de entrenamiento en la función de decisión (vectores de soporte), por lo que también son eficientes en memoria.
+- Versátiles: Se pueden especificar diferentes funciones de Kernel. Los kernels comunes están disponibles, pero también es posible especificar kernels personalizados.
+
+#### Desventajas de las SVM:
+
+- Si el número de características es mucho mayor que el número de muestras, evitar el sobreajuste al elegir las funciones Kernel y el término de regularización es crucial.
+- Las SVM no proporcionan estimaciones de probabilidad directamente; se calculan utilizando una costosa validación cruzada de cinco pliegues.
+
+---
+
+### Clasificación con SVM
+
+Las clases **SVC**, **NuSVC** y **LinearSVC** pueden realizar clasificación binaria y multiclase en un conjunto de datos.
+
+```python
+from sklearn import svm
+X = [[0, 0], [1, 1]]
+y = [0, 1]
+clf = svm.SVC()
+clf.fit(X, y)
+clf.predict([[2., 2.]])
+```
+
+- Las SVM utilizan un subconjunto de los datos de entrenamiento llamados vectores de soporte.
+- Propiedades como los vectores de soporte se pueden obtener con los atributos support_vectors_, support_ y n_support_.
+
+---
+
+### 1.4.1.1 Clasificación multiclase
+
+Las clases SVC y NuSVC implementan la estrategia de “uno contra uno” para la clasificación multiclase.
+
+```python
+X = [[0], [1], [2], [3]]
+Y = [0, 1, 2, 3]
+clf = svm.SVC(decision_function_shape='ovo')
+clf.fit(X, Y)
+clf.decision_function_shape = "ovr"
+```
+
+- Por otro lado, LinearSVC implementa la estrategia “uno contra el resto” y entrena n modelos para las n clases.
+
+---
+
+### 1.4.1.2 Puntuaciones y probabilidades
+
+El método decision_function de SVC y NuSVC proporciona puntuaciones por clase para cada muestra.
+
+- Si se establece probability=True, se habilitan las estimaciones de probabilidad.
+
+Para estimaciones más precisas, se recomienda utilizar decision_function en lugar de predict_proba.
+
+---
+
+### 1.4.2. Regresión con SVM
+
+El método de clasificación de soporte vectorial se puede extender para resolver problemas de regresión, conocido como Regresión de Soporte Vectorial (SVR).
+
+```python
+from sklearn import svm
+X = [[0, 0], [2, 2]]
+y = [0.5, 2.5]
+regr = svm.SVR()
+regr.fit(X, y)
+regr.predict([[1, 1]])
+```
+
+---
+
+### 1.4.3. Estimación de Densidad y Detección de Novedades
+
+La clase **OneClassSVM** implementa una SVM de una sola clase (**One-Class SVM**) que se utiliza para la detección de outliers (valores atípicos) o anomalías en los datos.
+
+#### Propósito de OneClassSVM
+
+- Detecta datos que no siguen el patrón general de un conjunto de datos.
+- Es especialmente útil en situaciones donde los datos de entrenamiento no contienen ejemplos de outliers.
+
+#### Ejemplo de Detección de Outliers
+
+```python
+from sklearn import svm
+import numpy as np
+
+# Generar datos de ejemplo
+X = 0.3 * np.random.randn(100, 2)
+X_train = np.r_[X + 2, X - 2]
+
+# Entrenar el modelo OneClassSVM
+clf = svm.OneClassSVM(gamma='auto').fit(X_train)
+
+# Predecir si las muestras son outliers o no
+y_pred_train = clf.predict(X_train)
+
+# Resultados:
+print("Predicción de entrenamiento:", y_pred_train)
+```
+
+---
+
+### 1.4.4. Complejidad
+
+Las **Máquinas de Soporte Vectorial (SVM)** son herramientas poderosas, pero sus requisitos de cómputo y almacenamiento aumentan rápidamente con el número de vectores de entrenamiento.
+
+#### Problema de Programación Cuadrática (QP)
+
+El núcleo de una SVM es un problema de **programación cuadrática (QP)**, que separa los **vectores de soporte** del resto de los datos de entrenamiento.
+
+- Este problema es computacionalmente costoso debido al número de vectores de entrenamiento y la dimensionalidad del espacio de características.
+
+---
+
+### Escalabilidad de SVM con libsvm
+
+- El solucionador de **QP** utilizado por la implementación basada en **libsvm** escala entre:
+
+$$
+\mathcal{O}(n_{\text{training}}^2)
+$$
+
+y 
+
+$$
+\mathcal{O}(n_{\text{training}}^3)
+$$
+
+- dependiendo de qué tan eficientemente se use la caché de **libsvm** en la práctica (esto depende del conjunto de datos).
+
+### Casos de Datos Dispersos
+
+Si los datos son muy dispersos, este costo de complejidad debe reemplazarse por el **número promedio de características no nulas** en un vector de muestra.
+
+---
+
+## Eficiencia en el Caso Lineal
+
+Para el caso lineal, el algoritmo utilizado en **LinearSVC** (implementado por **liblinear**) es mucho más eficiente que su contraparte basada en **libsvm**.
+
+- Puede **escalar casi linealmente** a millones de muestras y/o características, lo que lo hace más adecuado para grandes conjuntos de datos.
+
+```python
+from sklearn import svm
+X = [[0, 0], [2, 2]]
+y = [0.5, 2.5]
+
+# Ajuste del modelo utilizando LinearSVC
+regr = svm.LinearSVC()
+regr.fit(X, y)
+```
+
+---
+
+### 1.4.5. Consejos para el uso práctico
+
+#### Escalar los datos
+
+- Las SVM no son invariantes al escalado, por lo que es altamente recomendable escalar los datos.
+
+```python
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import StandardScaler
+from sklearn.svm import SVC
+clf = make_pipeline(StandardScaler(), SVC())
+```
+
+Al utilizar **SVM** es importante tener en cuenta algunos aspectos prácticos para optimizar el rendimiento y evitar errores comunes.
+
+#### Evitar la Copia de Datos
+
+- Para **SVC**, **SVR**, **NuSVC** y **NuSVR**, si los datos no están en formato **C-contiguo** y de doble precisión, serán copiados antes de llamar a la implementación subyacente en **C**.
+- Verifica si un array de **numpy** es **C-contiguo** inspeccionando su atributo `flags`.
+- Para **LinearSVC** (y **LogisticRegression**), cualquier entrada pasada como array **numpy** será copiada y convertida a la representación interna de datos dispersos de **liblinear**.
+  
+---
+
+### Tamaño de la Caché del Kernel
+
+- Para SVC, SVR, NuSVC y NuSVR, el tamaño de la caché del kernel impacta significativamente en el tiempo de ejecución para problemas grandes.
+- Si tienes suficiente RAM, se recomienda ajustar cache_size a un valor más alto, como 500MB o 1000MB.
+
+```python
+from sklearn import svm
+clf = svm.SVC(cache_size=500)
+```
+
+#### Ajuste del Parámetro C
+
+- El parámetro C tiene un valor predeterminado de 1, lo cual es razonable en general.
+- Si tienes muchas observaciones con ruido, deberías disminuir C, ya que C menor implica más regularización.
+- Para LinearSVC y LinearSVR, los resultados de predicción mejoran hasta un umbral, después del cual valores más altos de C ya no aportan beneficios.
+
+```python
+clf = svm.LinearSVC(C=0.1)
+clf.fit(X, y)
+```
+
+---
+
+### Control de Aleatoriedad
+
+- Algunas implementaciones, como SVC y NuSVC, usan un generador de números aleatorios para barajar los datos durante la estimación de probabilidades (si probability=True).
+- Controla la aleatoriedad con el parámetro random_state.
+
+```python
+clf = svm.SVC(random_state=42, probability=True)
+```
+
+---
+
+### Kernels Personalizados
+
+```python
+import matplotlib.pyplot as plt
+import numpy as np
+
+from sklearn import datasets, svm
+from sklearn.inspection import DecisionBoundaryDisplay
+
+# Importamos algunos datos para trabajar
+iris = datasets.load_iris()
+X = iris.data[:, :2]  # solo tomamos las dos primeras características. Podríamos
+# evitar este corte seleccionando un conjunto de datos bidimensional
+Y = iris.target
+
+
+def my_kernel(X, Y):
+    """
+    Creamos un kernel personalizado:
+
+                 (2  0)
+    k(X, Y) = X  (    ) Y.T
+                 (0  1)
+    """
+    M = np.array([[2, 0], [0, 1.0]])
+    return np.dot(np.dot(X, M), Y.T)
+
+
+h = 0.02  # tamaño del paso en la malla
+
+# Creamos una instancia de SVM y ajustamos nuestros datos.
+clf = svm.SVC(kernel=my_kernel)
+clf.fit(X, Y)
+
+ax = plt.gca()
+DecisionBoundaryDisplay.from_estimator(
+    clf,
+    X,
+    cmap=plt.cm.Paired,
+    ax=ax,
+    response_method="predict",
+    plot_method="pcolormesh",
+    shading="auto",
+)
+
+# También trazamos los puntos de entrenamiento
+plt.scatter(X[:, 0], X[:, 1], c=Y, cmap=plt.cm.Paired, edgecolors="k")
+plt.title("Clasificación de 3 clases usando SVM con kernel personalizado")
+plt.axis("tight")
+plt.show()
+```
+
+---
+
+![Kernel Personalizado](Imagen9.png)
+
+---
+
+### Conclusiones
 
 - **¿Cómo se define el Teorema de Bayes?**
   
@@ -593,5 +1053,10 @@ $$
 1. EMC Education Services (2015). *Data Science and Big Data Analytics*.
 2. Hernández, J., Ramírez, M. J., Ferri, C. (2004). *Introducción a la minería de datos*.
 3. Material de Clase Mailiu: <m.dazpea@uandresbello.edu>
-
+4. **H. Zhang** (2004). *The optimality of Naive Bayes*. Proc. FLAIRS.
+5. **Rennie, J. D., Shih, L., Teevan, J., & Karger, D. R.** (2003). *Tackling the poor assumptions of naive Bayes text classifiers*. In ICML (Vol. 3, pp. 616-623).
+6. **C.D. Manning, P. Raghavan and H. Schütze** (2008). *Introduction to Information Retrieval*. Cambridge University Press.
+7. **McCallum, A., & Nigam, K.** (1998). *A comparison of event models for Naive Bayes text classification*. Proc. AAAI/ICML-98 Workshop on Learning for Text Categorization, pp. 41-48.
+8. **Metsis, V., Androutsopoulos, I., & Paliouras, G.** (2006). *Spam filtering with Naive Bayes – Which Naive Bayes?* 3rd Conf. on Email and Anti-Spam (CEAS).
+9. **Raphael A. Finkel and J.L. Bentley** (1979). *Quad Trees: A Data Structure for Retrieval on Composite Keys*. Stanford University, [CS-TR-79-773](http://i.stanford.edu/pub/cstr/reports/cs/tr/79/773/CS-TR-79-773.pdf).
 ---

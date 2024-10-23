@@ -25,3 +25,21 @@
 .reveal .katex {
   font-size: 0.3em; /* Adjust this value to make formulas smaller */
 }
+
+/* Reducir levemente el tamaño de fuente en las diapositivas */
+.reveal .slides section {
+  font-size: 85%; /* Ajuste leve al tamaño predeterminado */
+}
+
+/* Reducir levemente el tamaño de los títulos */
+.reveal .slides h1 {
+  font-size: 90%; /* Ajusta según lo que necesites */
+}
+
+.reveal .slides h2 {
+  font-size: 90%;
+}
+
+.reveal .slides h3 {
+  font-size: 90%;
+}
