@@ -1059,4 +1059,583 @@ plt.show()
 7. **McCallum, A., & Nigam, K.** (1998). *A comparison of event models for Naive Bayes text classification*. Proc. AAAI/ICML-98 Workshop on Learning for Text Categorization, pp. 41-48.
 8. **Metsis, V., Androutsopoulos, I., & Paliouras, G.** (2006). *Spam filtering with Naive Bayes – Which Naive Bayes?* 3rd Conf. on Email and Anti-Spam (CEAS).
 9. **Raphael A. Finkel and J.L. Bentley** (1979). *Quad Trees: A Data Structure for Retrieval on Composite Keys*. Stanford University, [CS-TR-79-773](http://i.stanford.edu/pub/cstr/reports/cs/tr/79/773/CS-TR-79-773.pdf).
+
 ---
+
+## Anexos: "Validación Cruzada: Evaluación del Rendimiento del Estimador"
+
+![Cross_Validation](Cross_Validation1.png)
+
+---
+
+## **Introducción a la Validación Cruzada**
+
+- La validación cruzada se utiliza para evaluar el rendimiento de un modelo al dividir los datos en conjuntos de entrenamiento y prueba.
+
+- El **overfitting** ocurre cuando un modelo aprende el ruido en los datos en lugar de la señal real.
+    - Esto conduce a una precisión perfecta en los datos de entrenamiento, pero un mal rendimiento en datos no vistos.
+
+- En scikit-learn, una división aleatoria en conjuntos de entrenamiento y prueba se puede calcular con la función train_test_split
+
+- Vamos a cargar el conjunto de datos iris para ajustar una máquina de soporte vectorial lineal (SVM) en él:
+
+### División de Conjuntos en Scikit-learn
+
+```python
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn import datasets
+from sklearn import svm
+
+# Cargar el conjunto de datos Iris
+X, y = datasets.load_iris(return_X_y=True)
+
+# Ver la forma de los datos
+X.shape, y.shape
+```
+
+---
+
+## División de Conjuntos en Scikit-learn
+
+- Ahora podemos tomar una muestra del conjunto de entrenamiento, reservando el 40% de los datos para la evaluación de nuestro clasificador.
+
+```python
+# Dividir los datos en conjuntos de entrenamiento y prueba, 
+# reservando el 40% de los datos para la prueba (test_size=0.4).
+# El parámetro random_state asegura que la división sea reproducible.
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.4, random_state=0)
+
+# Mostrar la forma (dimensiones) del conjunto de entrenamiento (X e y)
+X_train.shape, y_train.shape
+
+# Mostrar la forma (dimensiones) del conjunto de prueba (X e y)
+X_test.shape, y_test.shape
+
+# Entrenar un clasificador de máquina de soporte vectorial (SVM) con un kernel lineal.
+# El parámetro C=1 regula el margen del clasificador.
+clf = svm.SVC(kernel='linear', C=1).fit(X_train, y_train)
+
+# Calcular la puntuación de precisión del modelo en el conjunto de prueba.
+clf.score(X_test, y_test)
+```
+
+---
+
+## Riesgo de Sobreajuste al Ajustar Hiperparámetros en Modelos
+
+- Al ajustar los hiperparámetros, como el valor de C en una SVM, existe el riesgo de sobreajuste en el conjunto de prueba. 
+
+- Esto ocurre porque los parámetros pueden ajustarse hasta que el modelo rinda de manera óptima en el conjunto de prueba, lo que puede provocar que el modelo se ajuste demasiado a esos datos y no generalice bien con datos nuevos. 
+
+- Este problema se conoce como fuga de conocimiento del conjunto de prueba hacia el modelo.
+
+### La Solución: Conjunto de Validación
+
+- Para mitigar este riesgo, una parte adicional del conjunto de datos se reserva como conjunto de validación. 
+
+- El modelo se entrena en el conjunto de entrenamiento y luego se evalúa en el conjunto de validación para ajustar los hiperparámetros. 
+
+- Después de obtener buenos resultados en el conjunto de validación, se realiza una evaluación final en el conjunto de prueba.
+
+### Problema de la Partición de Datos
+
+- Pero dividir los datos en tres conjuntos (entrenamiento, validación y prueba) reduce drásticamente el número de muestras disponibles para entrenar el modelo, lo que podría afectar su precisión. 
+
+- Además, los resultados pueden depender de una selección aleatoria particular de los conjuntos de entrenamiento y validación.
+
+- Una solución a este problema es un procedimiento llamado validación cruzada (abreviado como CV). Se debe mantener un conjunto de prueba para la evaluación final, pero el conjunto de validación ya no es necesario cuando se utiliza la validación cruzada. 
+
+
+---
+
+## Validacion Cruzada K-Fold
+
+- En el enfoque básico, llamado validación cruzada k-fold, el conjunto de entrenamiento se divide en k subconjuntos más pequeños. El siguiente procedimiento se sigue para cada uno de los k “folds”:
+  1. Un modelo se entrena utilizando k-1 de los subconjuntos como datos de entrenamiento;
+  2. El modelo resultante se valida en la parte restante de los datos (es decir, se utiliza como conjunto de prueba para calcular una métrica de rendimiento, como la precisión).
+
+- La métrica de rendimiento reportada por la validación cruzada k-fold es el promedio de los valores calculados en el bucle. 
+
+- Este enfoque puede ser computacionalmente costoso, pero no desperdicia demasiados datos (como ocurre al fijar arbitrariamente un conjunto de validación).
+
+![Cross_Validation](Cross_Validation2.png)
+
+---
+
+## Cálculo de métricas con validación cruzada
+
+- La forma más simple de utilizar la validación cruzada es llamar a la función auxiliar cross_val_score en el estimador y el conjunto de datos.
+
+- El siguiente ejemplo demuestra cómo estimar la precisión de una máquina de soporte vectorial con kernel lineal en el conjunto de datos iris, dividiendo los datos, ajustando un modelo y calculando la puntuación 5 veces consecutivas (con divisiones diferentes cada vez):
+
+```python
+# Importar la función cross_val_score para realizar validación cruzada
+from sklearn.model_selection import cross_val_score
+
+# Crear un clasificador SVM con un kernel lineal y un estado aleatorio fijo para reproducibilidad
+clf = svm.SVC(kernel='linear', C=1, random_state=42)
+
+# Realizar validación cruzada con 5 particiones (cv=5)
+scores = cross_val_score(clf, X, y, cv=5)
+
+# Mostrar las puntuaciones de precisión obtenidas en cada partición
+scores
+```
+
+- Resultado array([0.96..., 1. , 0.96..., 0.96..., 1. ])
+
+- La puntuación media y la desviación estándar se dan de la siguiente manera:
+
+```python
+# Imprimir la precisión promedio y la desviación estándar de las puntuaciones obtenidas
+print("%0.2f accuracy with a standard deviation of %0.2f" % (scores.mean(), scores.std()))
+```
+- 0.98 accuracy with a standard deviation of 0.02
+
+---
+
+- Por defecto, la puntuación calculada en cada iteración de la validación cruzada (CV) es el método score del estimador. Es posible cambiar esto utilizando el parámetro scoring:
+
+```python
+# Importar la métrica de evaluación
+from sklearn import metrics
+
+# Realizar validación cruzada con 5 particiones (cv=5) utilizando la métrica F1 macro
+scores = cross_val_score(
+    clf, X, y, cv=5, scoring='f1_macro')
+
+# Mostrar las puntuaciones F1 obtenidas en cada partición
+scores
+```
+
+- Resultado: array([0.96..., 1.  ..., 0.96..., 0.96..., 1.        ])
+
+- Ver el parámetro de evaluación: The scoring parameter: definir las reglas de evaluación del modelo para más detalles. En el caso del conjunto de datos Iris, las muestras están equilibradas entre las clases objetivo, por lo tanto, la exactitud (accuracy) y el puntaje F1 son casi iguales.
+
+- Cuando el argumento cv es un número entero, cross_val_score utiliza las estrategias KFold o StratifiedKFold por defecto, siendo la última usada si el estimador proviene de ClassifierMixin.
+
+---
+
+## La función cross_validate y la evaluación de múltiples métricas
+
+- La función cross_validate se diferencia de cross_val_score en dos aspectos:
+
+	1.	Permite especificar múltiples métricas para la evaluación.
+	2.	Devuelve un diccionario que contiene los tiempos de ajuste (fit-times), tiempos de puntuación (score-times) (y opcionalmente los puntajes de entrenamiento, estimadores ajustados, índices de división de entrenamiento-prueba) además del puntaje de prueba.
+
+- Para la evaluación de una sola métrica, donde el parámetro scoring es una cadena, función callable o None, las claves serán: ['test_score', 'fit_time', 'score_time'].
+
+- Y para la evaluación de múltiples métricas, el valor devuelto es un diccionario con las siguientes claves: ['test_<nombre_scorer1>', 'test_<nombre_scorer2>', 'test_<nombre_scorer...>', 'fit_time', 'score_time'].
+
+- El parámetro return_train_score está configurado en False por defecto para ahorrar tiempo de computación. 
+
+- Para evaluar los puntajes en el conjunto de entrenamiento también, debes establecerlo en True. También puedes conservar el estimador ajustado en cada conjunto de entrenamiento estableciendo return_estimator=True. 
+
+- De manera similar, puedes establecer return_indices=True para retener los índices de entrenamiento y prueba utilizados para dividir el conjunto de datos en conjuntos de entrenamiento y prueba para cada división de validación cruzada.
+
+---
+
+## La función cross_validate y la evaluación de múltiples métricas
+
+Las múltiples métricas pueden especificarse como una lista, tupla o conjunto de nombres de evaluadores (scorers) predefinidos:
+
+```python
+# Importar la función cross_validate para realizar validación cruzada con múltiples métricas
+from sklearn.model_selection import cross_validate
+
+# Importar la métrica de evaluación recall_score
+from sklearn.metrics import recall_score
+
+# Definir las métricas de evaluación que se utilizarán en la validación cruzada
+scoring = ['precision_macro', 'recall_macro']
+
+# Crear un clasificador SVM con un kernel lineal y un estado aleatorio fijo para reproducibilidad
+clf = svm.SVC(kernel='linear', C=1, random_state=0)
+
+# Realizar validación cruzada con las métricas definidas
+scores = cross_validate(clf, X, y, scoring=scoring)
+
+# Mostrar las claves del diccionario de resultados ordenadas
+sorted(scores.keys())
+
+# Mostrar las puntuaciones de recall macro obtenidas en cada partición
+scores['test_recall_macro']
+```
+
+---
+
+## La función cross_validate y la evaluación de múltiples métricas
+
+- O como un diccionario que mapea el nombre del evaluador (scorer) a una función de evaluación (scoring) predefinida o personalizada:
+
+```python
+# Importar la función make_scorer para crear un evaluador personalizado
+from sklearn.metrics import make_scorer
+
+# Definir las métricas de evaluación que se utilizarán en la validación cruzada
+# 'prec_macro' utiliza la métrica de precisión macro predefinida
+# 'rec_macro' utiliza un evaluador personalizado para la métrica de recall macro
+scoring = {'prec_macro': 'precision_macro',
+           'rec_macro': make_scorer(recall_score, average='macro')}
+
+# Realizar validación cruzada con las métricas definidas, utilizando 5 particiones (cv=5)
+# y devolviendo las puntuaciones del conjunto de entrenamiento
+scores = cross_validate(clf, X, y, scoring=scoring,
+                        cv=5, return_train_score=True)
+
+# Mostrar las claves del diccionario de resultados ordenadas
+sorted(scores.keys())
+
+# Mostrar las puntuaciones de recall macro obtenidas en el conjunto de entrenamiento en cada partición
+scores['train_rec_macro']
+```
+
+---
+
+## La función cross_validate y la evaluación de una unica métrica
+
+
+- Aquí tienes un ejemplo de uso de cross_validate utilizando una única métrica:
+
+```python
+# Realizar validación cruzada con la métrica de precisión macro, utilizando 5 particiones (cv=5)
+# y devolviendo los estimadores ajustados para cada partición
+scores = cross_validate(clf, X, y,
+                        scoring='precision_macro', cv=5,
+                        return_estimator=True)
+
+# Mostrar las claves del diccionario de resultados ordenadas
+sorted(scores.keys())
+```
+
+---
+
+## Obtención de predicciones mediante validación cruzada
+
+- La función cross_val_predict tiene una interfaz similar a cross_val_score, pero devuelve, para cada elemento en la entrada, la predicción que se obtuvo para ese elemento cuando estaba en el conjunto de prueba. 
+
+- Solo se pueden utilizar estrategias de validación cruzada que asignen todos los elementos a un conjunto de prueba exactamente una vez (de lo contrario, se generará una excepción).
+
+- Nota sobre el uso inapropiado de cross_val_predict:
+  1. El resultado de cross_val_predict puede ser diferente de aquellos obtenidos utilizando cross_val_score, ya que los elementos se agrupan de diferentes maneras. 
+  2. La función cross_val_score toma un promedio sobre los pliegues de validación cruzada, mientras que cross_val_predict simplemente devuelve las etiquetas (o probabilidades) de varios modelos distintos sin diferenciarlos. 
+  3. Por lo tanto, cross_val_predict no es una medida adecuada del error de generalización.
+
+---
+
+## Ejemplos:
+
+### K-Fold
+
+```python
+## Ejemplo de K-Fold con K=5
+
+from sklearn.model_selection import KFold
+import numpy as np
+
+# Crear un conjunto de datos de ejemplo
+X = np.arange(20)  # Datos de ejemplo
+
+# Crear el objeto KFold con 5 particiones, sin barajar los datos y sin estado aleatorio fijo
+kf = KFold(n_splits=5, shuffle=False, random_state=None)
+
+# Iterar sobre cada partición (fold)
+for fold, (train_index, test_index) in enumerate(kf.split(X)):
+    print(f"Fold {fold+1}")
+    print(f"Entrenamiento: {train_index}, Prueba: {test_index}\n")
+```
+
+---
+
+- Podemos visualizar cómo se divide el conjunto de datos en cada iteración:
+
+```python
+import matplotlib.pyplot as plt
+from sklearn.model_selection import KFold
+import numpy as np
+
+# Crear un conjunto de datos de ejemplo
+X = np.arange(20)  # Datos de ejemplo
+
+# Crear el objeto KFold con 5 particiones, barajando los datos y con un estado aleatorio fijo
+kf = KFold(n_splits=5, shuffle=False, random_state=None)
+
+# Crear una figura y un eje para la visualización
+fig, ax = plt.subplots()
+
+# Iterar sobre cada partición (fold)
+for i, (train_index, test_index) in enumerate(kf.split(X)):
+    # Crear listas de índices para los conjuntos de entrenamiento y prueba
+    y_train = [i + 0.5] * len(train_index)
+    y_test = [i + 0.5] * len(test_index)
+    
+    # Graficar los índices de entrenamiento y prueba
+    ax.scatter(train_index, y_train, c='blue', marker='s', s=100, label='Entrenamiento' if i == 0 else "")
+    ax.scatter(test_index, y_test, c='red', marker='o', s=100, label='Prueba' if i == 0 else "")
+
+# Configurar etiquetas y título del gráfico
+ax.set_xlabel('Índice de muestra')
+ax.set_yticks([i + 0.5 for i in range(5)])
+ax.set_yticklabels([f'Fold {i+1}' for i in range(5)])
+ax.set_title('Visualización de K-Fold Cross-Validation')
+ax.legend()
+```
+
+---
+
+## Validación Cruzada con Grupos
+
+- Group K-Fold Cross-Validation
+  - GroupKFold asegura que las muestras del mismo grupo no aparezcan en ambos conjuntos de entrenamiento y prueba.
+  - Útil cuando las muestras dentro de un grupo están relacionadas o son dependientes.
+
+Ejemplo con Grupos
+
+```python
+# Crear un conjunto de datos de ejemplo
+X = np.arange(10)  # Datos de ejemplo
+y = np.random.randint(0, 2, size=10)  # Etiquetas de ejemplo (0 o 1)
+groups = np.array([1, 1, 2, 2, 3, 3, 4, 4, 5, 5])  # Grupos de ejemplo
+
+# Crear el objeto GroupKFold con 5 particiones
+gkf = GroupKFold(n_splits=5)
+
+# Iterar sobre cada partición (fold)
+for train_index, test_index in gkf.split(X, y, groups):
+    print(f"Entrenamiento: {train_index}, Prueba: {test_index}")
+```
+
+---
+
+## Visualización de GroupKFold
+
+- Group K-Fold Cross-Validation se utiliza cuando tus datos están organizados en grupos y quieres asegurarte de que las muestras de un mismo grupo no aparezcan en ambos conjuntos de entrenamiento y prueba durante la validación cruzada.
+
+```python
+from sklearn.model_selection import GroupKFold
+import numpy as np
+
+# Crear un conjunto de datos de ejemplo
+X = np.arange(10)  # Datos de ejemplo
+y = np.random.randint(0, 2, size=10)  # Etiquetas de ejemplo (0 o 1)
+groups = np.array([1, 1, 2, 2, 3, 3, 4, 4, 5, 5])  # Grupos de ejemplo
+
+# Crear el objeto GroupKFold con 5 particiones
+gkf = GroupKFold(n_splits=5)
+
+# Iterar sobre cada partición (fold)
+for train_index, test_index in gkf.split(X, y, groups):
+    print(f"Entrenamiento: {train_index}, Prueba: {test_index}")
+
+    import matplotlib.pyplot as plt
+    from sklearn.model_selection import GroupKFold
+    import numpy as np
+
+    # Crear un conjunto de datos de ejemplo
+    X = np.arange(10)  # Datos de ejemplo
+    groups = np.array([1, 1, 2, 2, 3, 3, 4, 4, 5, 5])  # Grupos de ejemplo
+
+    # Crear el objeto GroupKFold con 5 particiones
+    gkf = GroupKFold(n_splits=5)
+
+    # Crear una figura y un eje para la visualización
+    fig, ax = plt.subplots()
+
+    # Iterar sobre cada partición (fold)
+    for i, (train_index, test_index) in enumerate(gkf.split(X, groups=groups)):
+        # Crear listas de índices para los conjuntos de entrenamiento y prueba
+        y_train = [i + 0.5] * len(train_index)
+        y_test = [i + 0.5] * len(test_index)
+        
+        # Graficar los índices de entrenamiento y prueba
+        ax.scatter(train_index, y_train, c='blue', marker='s', s=100, label='Entrenamiento' if i == 0 else "")
+        ax.scatter(test_index, y_test, c='red', marker='o', s=100, label='Prueba' if i == 0 else "")
+
+    # Configurar etiquetas y título del gráfico
+    ax.set_xlabel('Índice de muestra')
+    ax.set_yticks([i + 0.5 for i in range(5)])
+    ax.set_yticklabels([f'Fold {i+1}' for i in range(5)])
+    ax.set_title('Visualización de GroupKFold')
+    ax.legend()
+
+    # Mostrar el gráfico
+    plt.show()
+```
+
+---
+
+## Stratified K-Fold Cross-Validation
+
+
+Concepto
+
+	•	Stratified K-Fold mantiene la proporción de clases en cada fold.
+	•	Es especialmente útil en conjuntos de datos desequilibrados.
+	•	Garantiza que cada fold sea una representación adecuada del conjunto completo.
+
+
+```python
+from sklearn.model_selection import StratifiedKFold
+import numpy as np
+
+# Crear un conjunto de datos de ejemplo
+X = np.ones((50, 1))
+y = np.hstack((np.zeros(45), np.ones(5)))  # 45 ceros y 5 unos
+
+# Crear el objeto StratifiedKFold con 5 particiones, barajando los datos y con un estado aleatorio fijo
+skf = StratifiedKFold(n_splits=5, shuffle=False, random_state=None)
+
+# Iterar sobre cada partición (fold)
+for fold, (train_index, test_index) in enumerate(skf.split(X, y)):
+    print(f"Fold {fold+1}")
+    # Mostrar la distribución de las clases en el conjunto de entrenamiento
+    print(f"Distribución en entrenamiento: {np.bincount(y[train_index].astype(int))}")
+    # Mostrar la distribución de las clases en el conjunto de prueba
+    print(f"Distribución en prueba: {np.bincount(y[test_index].astype(int))}\n")
+```
+
+---
+
+## Visualizacion: Stratified K-Fold Cross-Validation
+
+- StratifiedGroupKFold es un esquema de validación cruzada que combina tanto StratifiedKFold como GroupKFold.
+- La idea es intentar preservar la distribución de clases en cada división, manteniendo al mismo tiempo cada grupo dentro de una única división. 
+- Esto puede ser útil cuando tienes un conjunto de datos desequilibrado, de modo que usar solo GroupKFold podría producir divisiones sesgadas.
+
+```python
+    import matplotlib.pyplot as plt
+    from sklearn.model_selection import StratifiedKFold
+    import numpy as np
+
+    # Crear un conjunto de datos de ejemplo
+    X = np.arange(50)
+    y = np.hstack((np.zeros(45), np.ones(5)))
+
+    # Crear el objeto StratifiedKFold con 5 particiones, barajando los datos y con un estado aleatorio fijo
+    skf = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
+
+    # Crear una figura y un eje para la visualización
+    fig, ax = plt.subplots()
+
+    # Iterar sobre cada partición (fold)
+    for i, (train_index, test_index) in enumerate(skf.split(X, y)):
+        # Crear listas de índices para los conjuntos de entrenamiento y prueba
+        y_train = [i + 0.5] * len(train_index)
+        y_test = [i + 0.5] * len(test_index)
+        
+        # Graficar los índices de entrenamiento y prueba
+        ax.scatter(train_index, y_train, c='blue', marker='s', s=10, label='Entrenamiento' if i == 0 else "")
+        ax.scatter(test_index, y_test, c='red', marker='o', s=10, label='Prueba' if i == 0 else "")
+
+    # Configurar etiquetas y título del gráfico
+    ax.set_xlabel('Índice de muestra')
+    ax.set_yticks([i + 0.5 for i in range(5)])
+    ax.set_yticklabels([f'Fold {i+1}' for i in range(5)])
+    ax.set_title('Visualización de Stratified K-Fold')
+    ax.legend()
+
+    # Mostrar el gráfico
+    plt.show()
+```
+
+---
+
+## Preguntas y Respuestas
+
+### Pregunta 1
+
+- P: ¿Qué es el sobreajuste (overfitting) y por qué es perjudicial para un modelo de aprendizaje automático?
+
+- R:
+
+	- El sobreajuste ocurre cuando un modelo aprende los detalles y el ruido en los datos de entrenamiento hasta el punto de perjudicar su rendimiento en datos nuevos.
+
+	- Es perjudicial porque el modelo no generaliza bien a datos no vistos, lo que significa que su rendimiento en el mundo real será pobre.
+
+### Pregunta 2
+
+- P: ¿Por qué es importante dividir los datos en conjuntos de entrenamiento y prueba?
+
+- R:
+
+	- Dividir los datos permite evaluar cómo generaliza el modelo a datos no vistos.
+  - El conjunto de entrenamiento se utiliza para ajustar el modelo, mientras que el conjunto de prueba evalúa su rendimiento real.
+
+Riesgo de Sobreajuste al Ajustar Hiperparámetros
+  - Al ajustar hiperparámetros, como el valor de C en una SVM, existe el riesgo de sobreajuste si se evalúa repetidamente en el conjunto de prueba.
+
+### Pregunta 3
+
+- P: ¿Cómo podemos evitar el sobreajuste al ajustar hiperparámetros?
+
+R:
+  - Utilizando un conjunto de validación separado o aplicando validación cruzada.
+  - La validación cruzada permite usar todos los datos para entrenamiento y validación sin sobreajustar al conjunto de prueba.
+
+---
+
+## Pregunta 4
+
+- P: ¿Qué ventaja tiene la validación cruzada K-Fold sobre una única división entrenamiento/prueba?
+
+- R:
+  - La validación cruzada utiliza más datos para el entrenamiento y validación.
+  - Proporciona una estimación más robusta y menos sesgada del rendimiento del modelo.
+
+### Pregunta 5
+
+- P: ¿Para qué sirve la función cross_validate y en qué se diferencia de cross_val_score?
+
+- R:
+  - cross_validate permite evaluar múltiples métricas simultáneamente y proporciona tiempos de ajuste y puntuación.
+  - A diferencia de cross_val_score, que solo permite una métrica y devuelve las puntuaciones directamente.
+
+### Pregunta 6
+
+- P: ¿Es adecuado usar cross_val_predict para estimar el error de generalización? ¿Por qué?
+
+- R:
+  - No es adecuado porque las predicciones se obtienen de modelos entrenados en diferentes particiones.
+
+  - No proporciona una métrica de rendimiento agregada y puede llevar a interpretaciones incorrectas del error.
+
+  ---
+
+## Introducción al Algoritmo k-NN
+
+- ¿Qué es k-NN?
+  -k-NN (k-Nearest Neighbors) es un algoritmo de aprendizaje supervisado utilizado tanto para clasificación como para regresión.
+- -Se basa en la idea de que muestras similares están cerca en el espacio de características.
+
+- ¿Cómo funciona?
+
+	1.	Definición de k: Seleccionar el número de vecinos más cercanos a considerar.
+	2.	Cálculo de distancias: Medir la distancia entre el punto de interés y todos los puntos en el conjunto de entrenamiento.
+	3.	Identificación de vecinos: Seleccionar los k vecinos más cercanos según las distancias calculadas.
+	4.	Predicción:
+    - Clasificación: Asignar la clase más común entre los vecinos
+    - Regresión: Calcular el promedio de los valores de los vecinos.
+
+--- 
+
+## Ventajas del Algoritmo k-NN
+
+- Simplicidad: Fácil de entender e implementar.
+- Flexibilidad: No hace suposiciones sobre la distribución de los datos
+- Adaptabilidad: Puede manejar problemas de clasificación y regresión.
+
+### Desventajas del Algoritmo k-NN
+
+- Eficiencia Computacional:
+  - Puede ser costoso en términos de tiempo de cálculo para conjuntos de datos grandes.
+  -Requiere calcular la distancia a todos los puntos de entrenamiento para cada predicción.
+  
+- Almacenamiento:
+  - Necesita almacenar todo el conjunto de entrenamiento en memoria
+  - Sensibilidad a la Dimensionalidad:
+  - Su rendimiento puede degradarse con datos de alta dimensión.
+
+
+

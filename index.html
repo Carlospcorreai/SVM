@@ -1318,8 +1318,518 @@ a \cdot b = \sum_{i=1}^{n} a_i b_i = a_1 b_1 + a_2 b_2 + \dots + a_n b_n
 <li><strong>Raphael A. Finkel and J.L. Bentley</strong> (1979). <em>Quad Trees: A Data Structure for Retrieval on Composite Keys</em>. Stanford University, <a href="http://i.stanford.edu/pub/cstr/reports/cs/tr/79/773/CS-TR-79-773.pdf">CS-TR-79-773</a>.</li>
 </ol>
 </section>
+<section id="anexos-validación-cruzada-evaluación-del-rendimiento-del-estimador" class="slide level2">
+<h2>Anexos: “Validación Cruzada: Evaluación del Rendimiento del Estimador”</h2>
+
+<img data-src="Cross_Validation1.png" class="r-stretch quarto-figure-center"><p class="caption">Cross_Validation</p></section>
+<section id="introducción-a-la-validación-cruzada" class="slide level2">
+<h2><strong>Introducción a la Validación Cruzada</strong></h2>
+<ul>
+<li><p>La validación cruzada se utiliza para evaluar el rendimiento de un modelo al dividir los datos en conjuntos de entrenamiento y prueba.</p></li>
+<li><p>El <strong>overfitting</strong> ocurre cuando un modelo aprende el ruido en los datos en lugar de la señal real.</p>
+<ul>
+<li>Esto conduce a una precisión perfecta en los datos de entrenamiento, pero un mal rendimiento en datos no vistos.</li>
+</ul></li>
+<li><p>En scikit-learn, una división aleatoria en conjuntos de entrenamiento y prueba se puede calcular con la función train_test_split</p></li>
+<li><p>Vamos a cargar el conjunto de datos iris para ajustar una máquina de soporte vectorial lineal (SVM) en él:</p></li>
+</ul>
+<h3 id="división-de-conjuntos-en-scikit-learn">División de Conjuntos en Scikit-learn</h3>
+<div class="sourceCode" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb13-2"><a href=""></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb13-3"><a href=""></a><span class="im">from</span> sklearn <span class="im">import</span> datasets</span>
+<span id="cb13-4"><a href=""></a><span class="im">from</span> sklearn <span class="im">import</span> svm</span>
+<span id="cb13-5"><a href=""></a></span>
+<span id="cb13-6"><a href=""></a><span class="co"># Cargar el conjunto de datos Iris</span></span>
+<span id="cb13-7"><a href=""></a>X, y <span class="op">=</span> datasets.load_iris(return_X_y<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb13-8"><a href=""></a></span>
+<span id="cb13-9"><a href=""></a><span class="co"># Ver la forma de los datos</span></span>
+<span id="cb13-10"><a href=""></a>X.shape, y.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="división-de-conjuntos-en-scikit-learn-1" class="slide level2">
+<h2>División de Conjuntos en Scikit-learn</h2>
+<ul>
+<li>Ahora podemos tomar una muestra del conjunto de entrenamiento, reservando el 40% de los datos para la evaluación de nuestro clasificador.</li>
+</ul>
+<div class="sourceCode" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href=""></a><span class="co"># Dividir los datos en conjuntos de entrenamiento y prueba, </span></span>
+<span id="cb14-2"><a href=""></a><span class="co"># reservando el 40% de los datos para la prueba (test_size=0.4).</span></span>
+<span id="cb14-3"><a href=""></a><span class="co"># El parámetro random_state asegura que la división sea reproducible.</span></span>
+<span id="cb14-4"><a href=""></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(</span>
+<span id="cb14-5"><a href=""></a>    X, y, test_size<span class="op">=</span><span class="fl">0.4</span>, random_state<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb14-6"><a href=""></a></span>
+<span id="cb14-7"><a href=""></a><span class="co"># Mostrar la forma (dimensiones) del conjunto de entrenamiento (X e y)</span></span>
+<span id="cb14-8"><a href=""></a>X_train.shape, y_train.shape</span>
+<span id="cb14-9"><a href=""></a></span>
+<span id="cb14-10"><a href=""></a><span class="co"># Mostrar la forma (dimensiones) del conjunto de prueba (X e y)</span></span>
+<span id="cb14-11"><a href=""></a>X_test.shape, y_test.shape</span>
+<span id="cb14-12"><a href=""></a></span>
+<span id="cb14-13"><a href=""></a><span class="co"># Entrenar un clasificador de máquina de soporte vectorial (SVM) con un kernel lineal.</span></span>
+<span id="cb14-14"><a href=""></a><span class="co"># El parámetro C=1 regula el margen del clasificador.</span></span>
+<span id="cb14-15"><a href=""></a>clf <span class="op">=</span> svm.SVC(kernel<span class="op">=</span><span class="st">'linear'</span>, C<span class="op">=</span><span class="dv">1</span>).fit(X_train, y_train)</span>
+<span id="cb14-16"><a href=""></a></span>
+<span id="cb14-17"><a href=""></a><span class="co"># Calcular la puntuación de precisión del modelo en el conjunto de prueba.</span></span>
+<span id="cb14-18"><a href=""></a>clf.score(X_test, y_test)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="riesgo-de-sobreajuste-al-ajustar-hiperparámetros-en-modelos" class="slide level2">
+<h2>Riesgo de Sobreajuste al Ajustar Hiperparámetros en Modelos</h2>
+<ul>
+<li><p>Al ajustar los hiperparámetros, como el valor de C en una SVM, existe el riesgo de sobreajuste en el conjunto de prueba.</p></li>
+<li><p>Esto ocurre porque los parámetros pueden ajustarse hasta que el modelo rinda de manera óptima en el conjunto de prueba, lo que puede provocar que el modelo se ajuste demasiado a esos datos y no generalice bien con datos nuevos.</p></li>
+<li><p>Este problema se conoce como fuga de conocimiento del conjunto de prueba hacia el modelo.</p></li>
+</ul>
+<h3 id="la-solución-conjunto-de-validación">La Solución: Conjunto de Validación</h3>
+<ul>
+<li><p>Para mitigar este riesgo, una parte adicional del conjunto de datos se reserva como conjunto de validación.</p></li>
+<li><p>El modelo se entrena en el conjunto de entrenamiento y luego se evalúa en el conjunto de validación para ajustar los hiperparámetros.</p></li>
+<li><p>Después de obtener buenos resultados en el conjunto de validación, se realiza una evaluación final en el conjunto de prueba.</p></li>
+</ul>
+<h3 id="problema-de-la-partición-de-datos">Problema de la Partición de Datos</h3>
+<ul>
+<li><p>Pero dividir los datos en tres conjuntos (entrenamiento, validación y prueba) reduce drásticamente el número de muestras disponibles para entrenar el modelo, lo que podría afectar su precisión.</p></li>
+<li><p>Además, los resultados pueden depender de una selección aleatoria particular de los conjuntos de entrenamiento y validación.</p></li>
+<li><p>Una solución a este problema es un procedimiento llamado validación cruzada (abreviado como CV). Se debe mantener un conjunto de prueba para la evaluación final, pero el conjunto de validación ya no es necesario cuando se utiliza la validación cruzada.</p></li>
+</ul>
+</section>
+<section id="validacion-cruzada-k-fold" class="slide level2">
+<h2>Validacion Cruzada K-Fold</h2>
+<ul>
+<li><p>En el enfoque básico, llamado validación cruzada k-fold, el conjunto de entrenamiento se divide en k subconjuntos más pequeños. El siguiente procedimiento se sigue para cada uno de los k “folds”:</p>
+<ol type="1">
+<li>Un modelo se entrena utilizando k-1 de los subconjuntos como datos de entrenamiento;</li>
+<li>El modelo resultante se valida en la parte restante de los datos (es decir, se utiliza como conjunto de prueba para calcular una métrica de rendimiento, como la precisión).</li>
+</ol></li>
+<li><p>La métrica de rendimiento reportada por la validación cruzada k-fold es el promedio de los valores calculados en el bucle.</p></li>
+<li><p>Este enfoque puede ser computacionalmente costoso, pero no desperdicia demasiados datos (como ocurre al fijar arbitrariamente un conjunto de validación).</p></li>
+</ul>
+
+<img data-src="Cross_Validation2.png" class="r-stretch quarto-figure-center"><p class="caption">Cross_Validation</p></section>
+<section id="cálculo-de-métricas-con-validación-cruzada" class="slide level2">
+<h2>Cálculo de métricas con validación cruzada</h2>
+<ul>
+<li><p>La forma más simple de utilizar la validación cruzada es llamar a la función auxiliar cross_val_score en el estimador y el conjunto de datos.</p></li>
+<li><p>El siguiente ejemplo demuestra cómo estimar la precisión de una máquina de soporte vectorial con kernel lineal en el conjunto de datos iris, dividiendo los datos, ajustando un modelo y calculando la puntuación 5 veces consecutivas (con divisiones diferentes cada vez):</p></li>
+</ul>
+<div class="sourceCode" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href=""></a><span class="co"># Importar la función cross_val_score para realizar validación cruzada</span></span>
+<span id="cb15-2"><a href=""></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> cross_val_score</span>
+<span id="cb15-3"><a href=""></a></span>
+<span id="cb15-4"><a href=""></a><span class="co"># Crear un clasificador SVM con un kernel lineal y un estado aleatorio fijo para reproducibilidad</span></span>
+<span id="cb15-5"><a href=""></a>clf <span class="op">=</span> svm.SVC(kernel<span class="op">=</span><span class="st">'linear'</span>, C<span class="op">=</span><span class="dv">1</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb15-6"><a href=""></a></span>
+<span id="cb15-7"><a href=""></a><span class="co"># Realizar validación cruzada con 5 particiones (cv=5)</span></span>
+<span id="cb15-8"><a href=""></a>scores <span class="op">=</span> cross_val_score(clf, X, y, cv<span class="op">=</span><span class="dv">5</span>)</span>
+<span id="cb15-9"><a href=""></a></span>
+<span id="cb15-10"><a href=""></a><span class="co"># Mostrar las puntuaciones de precisión obtenidas en cada partición</span></span>
+<span id="cb15-11"><a href=""></a>scores</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li><p>Resultado array([0.96…, 1. , 0.96…, 0.96…, 1. ])</p></li>
+<li><p>La puntuación media y la desviación estándar se dan de la siguiente manera:</p></li>
+</ul>
+<div class="sourceCode" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href=""></a><span class="co"># Imprimir la precisión promedio y la desviación estándar de las puntuaciones obtenidas</span></span>
+<span id="cb16-2"><a href=""></a><span class="bu">print</span>(<span class="st">"</span><span class="sc">%0.2f</span><span class="st"> accuracy with a standard deviation of </span><span class="sc">%0.2f</span><span class="st">"</span> <span class="op">%</span> (scores.mean(), scores.std()))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>0.98 accuracy with a standard deviation of 0.02</li>
+</ul>
+</section>
 <section class="slide level2">
 
+<ul>
+<li>Por defecto, la puntuación calculada en cada iteración de la validación cruzada (CV) es el método score del estimador. Es posible cambiar esto utilizando el parámetro scoring:</li>
+</ul>
+<div class="sourceCode" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href=""></a><span class="co"># Importar la métrica de evaluación</span></span>
+<span id="cb17-2"><a href=""></a><span class="im">from</span> sklearn <span class="im">import</span> metrics</span>
+<span id="cb17-3"><a href=""></a></span>
+<span id="cb17-4"><a href=""></a><span class="co"># Realizar validación cruzada con 5 particiones (cv=5) utilizando la métrica F1 macro</span></span>
+<span id="cb17-5"><a href=""></a>scores <span class="op">=</span> cross_val_score(</span>
+<span id="cb17-6"><a href=""></a>    clf, X, y, cv<span class="op">=</span><span class="dv">5</span>, scoring<span class="op">=</span><span class="st">'f1_macro'</span>)</span>
+<span id="cb17-7"><a href=""></a></span>
+<span id="cb17-8"><a href=""></a><span class="co"># Mostrar las puntuaciones F1 obtenidas en cada partición</span></span>
+<span id="cb17-9"><a href=""></a>scores</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li><p>Resultado: array([0.96…, 1. …, 0.96…, 0.96…, 1. ])</p></li>
+<li><p>Ver el parámetro de evaluación: The scoring parameter: definir las reglas de evaluación del modelo para más detalles. En el caso del conjunto de datos Iris, las muestras están equilibradas entre las clases objetivo, por lo tanto, la exactitud (accuracy) y el puntaje F1 son casi iguales.</p></li>
+<li><p>Cuando el argumento cv es un número entero, cross_val_score utiliza las estrategias KFold o StratifiedKFold por defecto, siendo la última usada si el estimador proviene de ClassifierMixin.</p></li>
+</ul>
+</section>
+<section id="la-función-cross_validate-y-la-evaluación-de-múltiples-métricas" class="slide level2">
+<h2>La función cross_validate y la evaluación de múltiples métricas</h2>
+<ul>
+<li><p>La función cross_validate se diferencia de cross_val_score en dos aspectos:</p>
+<ol type="1">
+<li>Permite especificar múltiples métricas para la evaluación.</li>
+<li>Devuelve un diccionario que contiene los tiempos de ajuste (fit-times), tiempos de puntuación (score-times) (y opcionalmente los puntajes de entrenamiento, estimadores ajustados, índices de división de entrenamiento-prueba) además del puntaje de prueba.</li>
+</ol></li>
+<li><p>Para la evaluación de una sola métrica, donde el parámetro scoring es una cadena, función callable o None, las claves serán: [‘test_score’, ‘fit_time’, ‘score_time’].</p></li>
+<li><p>Y para la evaluación de múltiples métricas, el valor devuelto es un diccionario con las siguientes claves: [‘test_<nombre_scorer1>’, ‘test_<nombre_scorer2>’, ‘test_&lt;nombre_scorer…&gt;’, ‘fit_time’, ‘score_time’].</nombre_scorer2></nombre_scorer1></p></li>
+<li><p>El parámetro return_train_score está configurado en False por defecto para ahorrar tiempo de computación.</p></li>
+<li><p>Para evaluar los puntajes en el conjunto de entrenamiento también, debes establecerlo en True. También puedes conservar el estimador ajustado en cada conjunto de entrenamiento estableciendo return_estimator=True.</p></li>
+<li><p>De manera similar, puedes establecer return_indices=True para retener los índices de entrenamiento y prueba utilizados para dividir el conjunto de datos en conjuntos de entrenamiento y prueba para cada división de validación cruzada.</p></li>
+</ul>
+</section>
+<section id="la-función-cross_validate-y-la-evaluación-de-múltiples-métricas-1" class="slide level2">
+<h2>La función cross_validate y la evaluación de múltiples métricas</h2>
+<p>Las múltiples métricas pueden especificarse como una lista, tupla o conjunto de nombres de evaluadores (scorers) predefinidos:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href=""></a><span class="co"># Importar la función cross_validate para realizar validación cruzada con múltiples métricas</span></span>
+<span id="cb18-2"><a href=""></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> cross_validate</span>
+<span id="cb18-3"><a href=""></a></span>
+<span id="cb18-4"><a href=""></a><span class="co"># Importar la métrica de evaluación recall_score</span></span>
+<span id="cb18-5"><a href=""></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> recall_score</span>
+<span id="cb18-6"><a href=""></a></span>
+<span id="cb18-7"><a href=""></a><span class="co"># Definir las métricas de evaluación que se utilizarán en la validación cruzada</span></span>
+<span id="cb18-8"><a href=""></a>scoring <span class="op">=</span> [<span class="st">'precision_macro'</span>, <span class="st">'recall_macro'</span>]</span>
+<span id="cb18-9"><a href=""></a></span>
+<span id="cb18-10"><a href=""></a><span class="co"># Crear un clasificador SVM con un kernel lineal y un estado aleatorio fijo para reproducibilidad</span></span>
+<span id="cb18-11"><a href=""></a>clf <span class="op">=</span> svm.SVC(kernel<span class="op">=</span><span class="st">'linear'</span>, C<span class="op">=</span><span class="dv">1</span>, random_state<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb18-12"><a href=""></a></span>
+<span id="cb18-13"><a href=""></a><span class="co"># Realizar validación cruzada con las métricas definidas</span></span>
+<span id="cb18-14"><a href=""></a>scores <span class="op">=</span> cross_validate(clf, X, y, scoring<span class="op">=</span>scoring)</span>
+<span id="cb18-15"><a href=""></a></span>
+<span id="cb18-16"><a href=""></a><span class="co"># Mostrar las claves del diccionario de resultados ordenadas</span></span>
+<span id="cb18-17"><a href=""></a><span class="bu">sorted</span>(scores.keys())</span>
+<span id="cb18-18"><a href=""></a></span>
+<span id="cb18-19"><a href=""></a><span class="co"># Mostrar las puntuaciones de recall macro obtenidas en cada partición</span></span>
+<span id="cb18-20"><a href=""></a>scores[<span class="st">'test_recall_macro'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="la-función-cross_validate-y-la-evaluación-de-múltiples-métricas-2" class="slide level2">
+<h2>La función cross_validate y la evaluación de múltiples métricas</h2>
+<ul>
+<li>O como un diccionario que mapea el nombre del evaluador (scorer) a una función de evaluación (scoring) predefinida o personalizada:</li>
+</ul>
+<div class="sourceCode" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href=""></a><span class="co"># Importar la función make_scorer para crear un evaluador personalizado</span></span>
+<span id="cb19-2"><a href=""></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> make_scorer</span>
+<span id="cb19-3"><a href=""></a></span>
+<span id="cb19-4"><a href=""></a><span class="co"># Definir las métricas de evaluación que se utilizarán en la validación cruzada</span></span>
+<span id="cb19-5"><a href=""></a><span class="co"># 'prec_macro' utiliza la métrica de precisión macro predefinida</span></span>
+<span id="cb19-6"><a href=""></a><span class="co"># 'rec_macro' utiliza un evaluador personalizado para la métrica de recall macro</span></span>
+<span id="cb19-7"><a href=""></a>scoring <span class="op">=</span> {<span class="st">'prec_macro'</span>: <span class="st">'precision_macro'</span>,</span>
+<span id="cb19-8"><a href=""></a>           <span class="st">'rec_macro'</span>: make_scorer(recall_score, average<span class="op">=</span><span class="st">'macro'</span>)}</span>
+<span id="cb19-9"><a href=""></a></span>
+<span id="cb19-10"><a href=""></a><span class="co"># Realizar validación cruzada con las métricas definidas, utilizando 5 particiones (cv=5)</span></span>
+<span id="cb19-11"><a href=""></a><span class="co"># y devolviendo las puntuaciones del conjunto de entrenamiento</span></span>
+<span id="cb19-12"><a href=""></a>scores <span class="op">=</span> cross_validate(clf, X, y, scoring<span class="op">=</span>scoring,</span>
+<span id="cb19-13"><a href=""></a>                        cv<span class="op">=</span><span class="dv">5</span>, return_train_score<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb19-14"><a href=""></a></span>
+<span id="cb19-15"><a href=""></a><span class="co"># Mostrar las claves del diccionario de resultados ordenadas</span></span>
+<span id="cb19-16"><a href=""></a><span class="bu">sorted</span>(scores.keys())</span>
+<span id="cb19-17"><a href=""></a></span>
+<span id="cb19-18"><a href=""></a><span class="co"># Mostrar las puntuaciones de recall macro obtenidas en el conjunto de entrenamiento en cada partición</span></span>
+<span id="cb19-19"><a href=""></a>scores[<span class="st">'train_rec_macro'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="la-función-cross_validate-y-la-evaluación-de-una-unica-métrica" class="slide level2">
+<h2>La función cross_validate y la evaluación de una unica métrica</h2>
+<ul>
+<li>Aquí tienes un ejemplo de uso de cross_validate utilizando una única métrica:</li>
+</ul>
+<div class="sourceCode" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href=""></a><span class="co"># Realizar validación cruzada con la métrica de precisión macro, utilizando 5 particiones (cv=5)</span></span>
+<span id="cb20-2"><a href=""></a><span class="co"># y devolviendo los estimadores ajustados para cada partición</span></span>
+<span id="cb20-3"><a href=""></a>scores <span class="op">=</span> cross_validate(clf, X, y,</span>
+<span id="cb20-4"><a href=""></a>                        scoring<span class="op">=</span><span class="st">'precision_macro'</span>, cv<span class="op">=</span><span class="dv">5</span>,</span>
+<span id="cb20-5"><a href=""></a>                        return_estimator<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb20-6"><a href=""></a></span>
+<span id="cb20-7"><a href=""></a><span class="co"># Mostrar las claves del diccionario de resultados ordenadas</span></span>
+<span id="cb20-8"><a href=""></a><span class="bu">sorted</span>(scores.keys())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="obtención-de-predicciones-mediante-validación-cruzada" class="slide level2">
+<h2>Obtención de predicciones mediante validación cruzada</h2>
+<ul>
+<li><p>La función cross_val_predict tiene una interfaz similar a cross_val_score, pero devuelve, para cada elemento en la entrada, la predicción que se obtuvo para ese elemento cuando estaba en el conjunto de prueba.</p></li>
+<li><p>Solo se pueden utilizar estrategias de validación cruzada que asignen todos los elementos a un conjunto de prueba exactamente una vez (de lo contrario, se generará una excepción).</p></li>
+<li><p>Nota sobre el uso inapropiado de cross_val_predict:</p>
+<ol type="1">
+<li>El resultado de cross_val_predict puede ser diferente de aquellos obtenidos utilizando cross_val_score, ya que los elementos se agrupan de diferentes maneras.</li>
+<li>La función cross_val_score toma un promedio sobre los pliegues de validación cruzada, mientras que cross_val_predict simplemente devuelve las etiquetas (o probabilidades) de varios modelos distintos sin diferenciarlos.</li>
+<li>Por lo tanto, cross_val_predict no es una medida adecuada del error de generalización.</li>
+</ol></li>
+</ul>
+</section>
+<section id="ejemplos" class="slide level2">
+<h2>Ejemplos:</h2>
+<h3 id="k-fold">K-Fold</h3>
+<div class="sourceCode" id="cb21"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href=""></a><span class="co">## Ejemplo de K-Fold con K=5</span></span>
+<span id="cb21-2"><a href=""></a></span>
+<span id="cb21-3"><a href=""></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> KFold</span>
+<span id="cb21-4"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb21-5"><a href=""></a></span>
+<span id="cb21-6"><a href=""></a><span class="co"># Crear un conjunto de datos de ejemplo</span></span>
+<span id="cb21-7"><a href=""></a>X <span class="op">=</span> np.arange(<span class="dv">20</span>)  <span class="co"># Datos de ejemplo</span></span>
+<span id="cb21-8"><a href=""></a></span>
+<span id="cb21-9"><a href=""></a><span class="co"># Crear el objeto KFold con 5 particiones, sin barajar los datos y sin estado aleatorio fijo</span></span>
+<span id="cb21-10"><a href=""></a>kf <span class="op">=</span> KFold(n_splits<span class="op">=</span><span class="dv">5</span>, shuffle<span class="op">=</span><span class="va">False</span>, random_state<span class="op">=</span><span class="va">None</span>)</span>
+<span id="cb21-11"><a href=""></a></span>
+<span id="cb21-12"><a href=""></a><span class="co"># Iterar sobre cada partición (fold)</span></span>
+<span id="cb21-13"><a href=""></a><span class="cf">for</span> fold, (train_index, test_index) <span class="kw">in</span> <span class="bu">enumerate</span>(kf.split(X)):</span>
+<span id="cb21-14"><a href=""></a>    <span class="bu">print</span>(<span class="ss">f"Fold </span><span class="sc">{</span>fold<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb21-15"><a href=""></a>    <span class="bu">print</span>(<span class="ss">f"Entrenamiento: </span><span class="sc">{</span>train_index<span class="sc">}</span><span class="ss">, Prueba: </span><span class="sc">{</span>test_index<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section class="slide level2">
+
+<ul>
+<li>Podemos visualizar cómo se divide el conjunto de datos en cada iteración:</li>
+</ul>
+<div class="sourceCode" id="cb22"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href=""></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb22-2"><a href=""></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> KFold</span>
+<span id="cb22-3"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb22-4"><a href=""></a></span>
+<span id="cb22-5"><a href=""></a><span class="co"># Crear un conjunto de datos de ejemplo</span></span>
+<span id="cb22-6"><a href=""></a>X <span class="op">=</span> np.arange(<span class="dv">20</span>)  <span class="co"># Datos de ejemplo</span></span>
+<span id="cb22-7"><a href=""></a></span>
+<span id="cb22-8"><a href=""></a><span class="co"># Crear el objeto KFold con 5 particiones, barajando los datos y con un estado aleatorio fijo</span></span>
+<span id="cb22-9"><a href=""></a>kf <span class="op">=</span> KFold(n_splits<span class="op">=</span><span class="dv">5</span>, shuffle<span class="op">=</span><span class="va">False</span>, random_state<span class="op">=</span><span class="va">None</span>)</span>
+<span id="cb22-10"><a href=""></a></span>
+<span id="cb22-11"><a href=""></a><span class="co"># Crear una figura y un eje para la visualización</span></span>
+<span id="cb22-12"><a href=""></a>fig, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb22-13"><a href=""></a></span>
+<span id="cb22-14"><a href=""></a><span class="co"># Iterar sobre cada partición (fold)</span></span>
+<span id="cb22-15"><a href=""></a><span class="cf">for</span> i, (train_index, test_index) <span class="kw">in</span> <span class="bu">enumerate</span>(kf.split(X)):</span>
+<span id="cb22-16"><a href=""></a>    <span class="co"># Crear listas de índices para los conjuntos de entrenamiento y prueba</span></span>
+<span id="cb22-17"><a href=""></a>    y_train <span class="op">=</span> [i <span class="op">+</span> <span class="fl">0.5</span>] <span class="op">*</span> <span class="bu">len</span>(train_index)</span>
+<span id="cb22-18"><a href=""></a>    y_test <span class="op">=</span> [i <span class="op">+</span> <span class="fl">0.5</span>] <span class="op">*</span> <span class="bu">len</span>(test_index)</span>
+<span id="cb22-19"><a href=""></a>    </span>
+<span id="cb22-20"><a href=""></a>    <span class="co"># Graficar los índices de entrenamiento y prueba</span></span>
+<span id="cb22-21"><a href=""></a>    ax.scatter(train_index, y_train, c<span class="op">=</span><span class="st">'blue'</span>, marker<span class="op">=</span><span class="st">'s'</span>, s<span class="op">=</span><span class="dv">100</span>, label<span class="op">=</span><span class="st">'Entrenamiento'</span> <span class="cf">if</span> i <span class="op">==</span> <span class="dv">0</span> <span class="cf">else</span> <span class="st">""</span>)</span>
+<span id="cb22-22"><a href=""></a>    ax.scatter(test_index, y_test, c<span class="op">=</span><span class="st">'red'</span>, marker<span class="op">=</span><span class="st">'o'</span>, s<span class="op">=</span><span class="dv">100</span>, label<span class="op">=</span><span class="st">'Prueba'</span> <span class="cf">if</span> i <span class="op">==</span> <span class="dv">0</span> <span class="cf">else</span> <span class="st">""</span>)</span>
+<span id="cb22-23"><a href=""></a></span>
+<span id="cb22-24"><a href=""></a><span class="co"># Configurar etiquetas y título del gráfico</span></span>
+<span id="cb22-25"><a href=""></a>ax.set_xlabel(<span class="st">'Índice de muestra'</span>)</span>
+<span id="cb22-26"><a href=""></a>ax.set_yticks([i <span class="op">+</span> <span class="fl">0.5</span> <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5</span>)])</span>
+<span id="cb22-27"><a href=""></a>ax.set_yticklabels([<span class="ss">f'Fold </span><span class="sc">{</span>i<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ss">'</span> <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5</span>)])</span>
+<span id="cb22-28"><a href=""></a>ax.set_title(<span class="st">'Visualización de K-Fold Cross-Validation'</span>)</span>
+<span id="cb22-29"><a href=""></a>ax.legend()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="validación-cruzada-con-grupos" class="slide level2">
+<h2>Validación Cruzada con Grupos</h2>
+<ul>
+<li>Group K-Fold Cross-Validation
+<ul>
+<li>GroupKFold asegura que las muestras del mismo grupo no aparezcan en ambos conjuntos de entrenamiento y prueba.</li>
+<li>Útil cuando las muestras dentro de un grupo están relacionadas o son dependientes.</li>
+</ul></li>
+</ul>
+<p>Ejemplo con Grupos</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href=""></a><span class="co"># Crear un conjunto de datos de ejemplo</span></span>
+<span id="cb23-2"><a href=""></a>X <span class="op">=</span> np.arange(<span class="dv">10</span>)  <span class="co"># Datos de ejemplo</span></span>
+<span id="cb23-3"><a href=""></a>y <span class="op">=</span> np.random.randint(<span class="dv">0</span>, <span class="dv">2</span>, size<span class="op">=</span><span class="dv">10</span>)  <span class="co"># Etiquetas de ejemplo (0 o 1)</span></span>
+<span id="cb23-4"><a href=""></a>groups <span class="op">=</span> np.array([<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">5</span>])  <span class="co"># Grupos de ejemplo</span></span>
+<span id="cb23-5"><a href=""></a></span>
+<span id="cb23-6"><a href=""></a><span class="co"># Crear el objeto GroupKFold con 5 particiones</span></span>
+<span id="cb23-7"><a href=""></a>gkf <span class="op">=</span> GroupKFold(n_splits<span class="op">=</span><span class="dv">5</span>)</span>
+<span id="cb23-8"><a href=""></a></span>
+<span id="cb23-9"><a href=""></a><span class="co"># Iterar sobre cada partición (fold)</span></span>
+<span id="cb23-10"><a href=""></a><span class="cf">for</span> train_index, test_index <span class="kw">in</span> gkf.split(X, y, groups):</span>
+<span id="cb23-11"><a href=""></a>    <span class="bu">print</span>(<span class="ss">f"Entrenamiento: </span><span class="sc">{</span>train_index<span class="sc">}</span><span class="ss">, Prueba: </span><span class="sc">{</span>test_index<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="visualización-de-groupkfold" class="slide level2">
+<h2>Visualización de GroupKFold</h2>
+<ul>
+<li>Group K-Fold Cross-Validation se utiliza cuando tus datos están organizados en grupos y quieres asegurarte de que las muestras de un mismo grupo no aparezcan en ambos conjuntos de entrenamiento y prueba durante la validación cruzada.</li>
+</ul>
+<div class="sourceCode" id="cb24"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href=""></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> GroupKFold</span>
+<span id="cb24-2"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb24-3"><a href=""></a></span>
+<span id="cb24-4"><a href=""></a><span class="co"># Crear un conjunto de datos de ejemplo</span></span>
+<span id="cb24-5"><a href=""></a>X <span class="op">=</span> np.arange(<span class="dv">10</span>)  <span class="co"># Datos de ejemplo</span></span>
+<span id="cb24-6"><a href=""></a>y <span class="op">=</span> np.random.randint(<span class="dv">0</span>, <span class="dv">2</span>, size<span class="op">=</span><span class="dv">10</span>)  <span class="co"># Etiquetas de ejemplo (0 o 1)</span></span>
+<span id="cb24-7"><a href=""></a>groups <span class="op">=</span> np.array([<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">5</span>])  <span class="co"># Grupos de ejemplo</span></span>
+<span id="cb24-8"><a href=""></a></span>
+<span id="cb24-9"><a href=""></a><span class="co"># Crear el objeto GroupKFold con 5 particiones</span></span>
+<span id="cb24-10"><a href=""></a>gkf <span class="op">=</span> GroupKFold(n_splits<span class="op">=</span><span class="dv">5</span>)</span>
+<span id="cb24-11"><a href=""></a></span>
+<span id="cb24-12"><a href=""></a><span class="co"># Iterar sobre cada partición (fold)</span></span>
+<span id="cb24-13"><a href=""></a><span class="cf">for</span> train_index, test_index <span class="kw">in</span> gkf.split(X, y, groups):</span>
+<span id="cb24-14"><a href=""></a>    <span class="bu">print</span>(<span class="ss">f"Entrenamiento: </span><span class="sc">{</span>train_index<span class="sc">}</span><span class="ss">, Prueba: </span><span class="sc">{</span>test_index<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb24-15"><a href=""></a></span>
+<span id="cb24-16"><a href=""></a>    <span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb24-17"><a href=""></a>    <span class="im">from</span> sklearn.model_selection <span class="im">import</span> GroupKFold</span>
+<span id="cb24-18"><a href=""></a>    <span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb24-19"><a href=""></a></span>
+<span id="cb24-20"><a href=""></a>    <span class="co"># Crear un conjunto de datos de ejemplo</span></span>
+<span id="cb24-21"><a href=""></a>    X <span class="op">=</span> np.arange(<span class="dv">10</span>)  <span class="co"># Datos de ejemplo</span></span>
+<span id="cb24-22"><a href=""></a>    groups <span class="op">=</span> np.array([<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">5</span>])  <span class="co"># Grupos de ejemplo</span></span>
+<span id="cb24-23"><a href=""></a></span>
+<span id="cb24-24"><a href=""></a>    <span class="co"># Crear el objeto GroupKFold con 5 particiones</span></span>
+<span id="cb24-25"><a href=""></a>    gkf <span class="op">=</span> GroupKFold(n_splits<span class="op">=</span><span class="dv">5</span>)</span>
+<span id="cb24-26"><a href=""></a></span>
+<span id="cb24-27"><a href=""></a>    <span class="co"># Crear una figura y un eje para la visualización</span></span>
+<span id="cb24-28"><a href=""></a>    fig, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb24-29"><a href=""></a></span>
+<span id="cb24-30"><a href=""></a>    <span class="co"># Iterar sobre cada partición (fold)</span></span>
+<span id="cb24-31"><a href=""></a>    <span class="cf">for</span> i, (train_index, test_index) <span class="kw">in</span> <span class="bu">enumerate</span>(gkf.split(X, groups<span class="op">=</span>groups)):</span>
+<span id="cb24-32"><a href=""></a>        <span class="co"># Crear listas de índices para los conjuntos de entrenamiento y prueba</span></span>
+<span id="cb24-33"><a href=""></a>        y_train <span class="op">=</span> [i <span class="op">+</span> <span class="fl">0.5</span>] <span class="op">*</span> <span class="bu">len</span>(train_index)</span>
+<span id="cb24-34"><a href=""></a>        y_test <span class="op">=</span> [i <span class="op">+</span> <span class="fl">0.5</span>] <span class="op">*</span> <span class="bu">len</span>(test_index)</span>
+<span id="cb24-35"><a href=""></a>        </span>
+<span id="cb24-36"><a href=""></a>        <span class="co"># Graficar los índices de entrenamiento y prueba</span></span>
+<span id="cb24-37"><a href=""></a>        ax.scatter(train_index, y_train, c<span class="op">=</span><span class="st">'blue'</span>, marker<span class="op">=</span><span class="st">'s'</span>, s<span class="op">=</span><span class="dv">100</span>, label<span class="op">=</span><span class="st">'Entrenamiento'</span> <span class="cf">if</span> i <span class="op">==</span> <span class="dv">0</span> <span class="cf">else</span> <span class="st">""</span>)</span>
+<span id="cb24-38"><a href=""></a>        ax.scatter(test_index, y_test, c<span class="op">=</span><span class="st">'red'</span>, marker<span class="op">=</span><span class="st">'o'</span>, s<span class="op">=</span><span class="dv">100</span>, label<span class="op">=</span><span class="st">'Prueba'</span> <span class="cf">if</span> i <span class="op">==</span> <span class="dv">0</span> <span class="cf">else</span> <span class="st">""</span>)</span>
+<span id="cb24-39"><a href=""></a></span>
+<span id="cb24-40"><a href=""></a>    <span class="co"># Configurar etiquetas y título del gráfico</span></span>
+<span id="cb24-41"><a href=""></a>    ax.set_xlabel(<span class="st">'Índice de muestra'</span>)</span>
+<span id="cb24-42"><a href=""></a>    ax.set_yticks([i <span class="op">+</span> <span class="fl">0.5</span> <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5</span>)])</span>
+<span id="cb24-43"><a href=""></a>    ax.set_yticklabels([<span class="ss">f'Fold </span><span class="sc">{</span>i<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ss">'</span> <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5</span>)])</span>
+<span id="cb24-44"><a href=""></a>    ax.set_title(<span class="st">'Visualización de GroupKFold'</span>)</span>
+<span id="cb24-45"><a href=""></a>    ax.legend()</span>
+<span id="cb24-46"><a href=""></a></span>
+<span id="cb24-47"><a href=""></a>    <span class="co"># Mostrar el gráfico</span></span>
+<span id="cb24-48"><a href=""></a>    plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="stratified-k-fold-cross-validation" class="slide level2">
+<h2>Stratified K-Fold Cross-Validation</h2>
+<p>Concepto</p>
+<pre><code>•   Stratified K-Fold mantiene la proporción de clases en cada fold.
+•   Es especialmente útil en conjuntos de datos desequilibrados.
+•   Garantiza que cada fold sea una representación adecuada del conjunto completo.</code></pre>
+<div class="sourceCode" id="cb26"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href=""></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> StratifiedKFold</span>
+<span id="cb26-2"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb26-3"><a href=""></a></span>
+<span id="cb26-4"><a href=""></a><span class="co"># Crear un conjunto de datos de ejemplo</span></span>
+<span id="cb26-5"><a href=""></a>X <span class="op">=</span> np.ones((<span class="dv">50</span>, <span class="dv">1</span>))</span>
+<span id="cb26-6"><a href=""></a>y <span class="op">=</span> np.hstack((np.zeros(<span class="dv">45</span>), np.ones(<span class="dv">5</span>)))  <span class="co"># 45 ceros y 5 unos</span></span>
+<span id="cb26-7"><a href=""></a></span>
+<span id="cb26-8"><a href=""></a><span class="co"># Crear el objeto StratifiedKFold con 5 particiones, barajando los datos y con un estado aleatorio fijo</span></span>
+<span id="cb26-9"><a href=""></a>skf <span class="op">=</span> StratifiedKFold(n_splits<span class="op">=</span><span class="dv">5</span>, shuffle<span class="op">=</span><span class="va">False</span>, random_state<span class="op">=</span><span class="va">None</span>)</span>
+<span id="cb26-10"><a href=""></a></span>
+<span id="cb26-11"><a href=""></a><span class="co"># Iterar sobre cada partición (fold)</span></span>
+<span id="cb26-12"><a href=""></a><span class="cf">for</span> fold, (train_index, test_index) <span class="kw">in</span> <span class="bu">enumerate</span>(skf.split(X, y)):</span>
+<span id="cb26-13"><a href=""></a>    <span class="bu">print</span>(<span class="ss">f"Fold </span><span class="sc">{</span>fold<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb26-14"><a href=""></a>    <span class="co"># Mostrar la distribución de las clases en el conjunto de entrenamiento</span></span>
+<span id="cb26-15"><a href=""></a>    <span class="bu">print</span>(<span class="ss">f"Distribución en entrenamiento: </span><span class="sc">{</span>np<span class="sc">.</span>bincount(y[train_index].astype(<span class="bu">int</span>))<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb26-16"><a href=""></a>    <span class="co"># Mostrar la distribución de las clases en el conjunto de prueba</span></span>
+<span id="cb26-17"><a href=""></a>    <span class="bu">print</span>(<span class="ss">f"Distribución en prueba: </span><span class="sc">{</span>np<span class="sc">.</span>bincount(y[test_index].astype(<span class="bu">int</span>))<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="visualizacion-stratified-k-fold-cross-validation" class="slide level2">
+<h2>Visualizacion: Stratified K-Fold Cross-Validation</h2>
+<ul>
+<li>StratifiedGroupKFold es un esquema de validación cruzada que combina tanto StratifiedKFold como GroupKFold.</li>
+<li>La idea es intentar preservar la distribución de clases en cada división, manteniendo al mismo tiempo cada grupo dentro de una única división.</li>
+<li>Esto puede ser útil cuando tienes un conjunto de datos desequilibrado, de modo que usar solo GroupKFold podría producir divisiones sesgadas.</li>
+</ul>
+<div class="sourceCode" id="cb27"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href=""></a>    <span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb27-2"><a href=""></a>    <span class="im">from</span> sklearn.model_selection <span class="im">import</span> StratifiedKFold</span>
+<span id="cb27-3"><a href=""></a>    <span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb27-4"><a href=""></a></span>
+<span id="cb27-5"><a href=""></a>    <span class="co"># Crear un conjunto de datos de ejemplo</span></span>
+<span id="cb27-6"><a href=""></a>    X <span class="op">=</span> np.arange(<span class="dv">50</span>)</span>
+<span id="cb27-7"><a href=""></a>    y <span class="op">=</span> np.hstack((np.zeros(<span class="dv">45</span>), np.ones(<span class="dv">5</span>)))</span>
+<span id="cb27-8"><a href=""></a></span>
+<span id="cb27-9"><a href=""></a>    <span class="co"># Crear el objeto StratifiedKFold con 5 particiones, barajando los datos y con un estado aleatorio fijo</span></span>
+<span id="cb27-10"><a href=""></a>    skf <span class="op">=</span> StratifiedKFold(n_splits<span class="op">=</span><span class="dv">5</span>, shuffle<span class="op">=</span><span class="va">True</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb27-11"><a href=""></a></span>
+<span id="cb27-12"><a href=""></a>    <span class="co"># Crear una figura y un eje para la visualización</span></span>
+<span id="cb27-13"><a href=""></a>    fig, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb27-14"><a href=""></a></span>
+<span id="cb27-15"><a href=""></a>    <span class="co"># Iterar sobre cada partición (fold)</span></span>
+<span id="cb27-16"><a href=""></a>    <span class="cf">for</span> i, (train_index, test_index) <span class="kw">in</span> <span class="bu">enumerate</span>(skf.split(X, y)):</span>
+<span id="cb27-17"><a href=""></a>        <span class="co"># Crear listas de índices para los conjuntos de entrenamiento y prueba</span></span>
+<span id="cb27-18"><a href=""></a>        y_train <span class="op">=</span> [i <span class="op">+</span> <span class="fl">0.5</span>] <span class="op">*</span> <span class="bu">len</span>(train_index)</span>
+<span id="cb27-19"><a href=""></a>        y_test <span class="op">=</span> [i <span class="op">+</span> <span class="fl">0.5</span>] <span class="op">*</span> <span class="bu">len</span>(test_index)</span>
+<span id="cb27-20"><a href=""></a>        </span>
+<span id="cb27-21"><a href=""></a>        <span class="co"># Graficar los índices de entrenamiento y prueba</span></span>
+<span id="cb27-22"><a href=""></a>        ax.scatter(train_index, y_train, c<span class="op">=</span><span class="st">'blue'</span>, marker<span class="op">=</span><span class="st">'s'</span>, s<span class="op">=</span><span class="dv">10</span>, label<span class="op">=</span><span class="st">'Entrenamiento'</span> <span class="cf">if</span> i <span class="op">==</span> <span class="dv">0</span> <span class="cf">else</span> <span class="st">""</span>)</span>
+<span id="cb27-23"><a href=""></a>        ax.scatter(test_index, y_test, c<span class="op">=</span><span class="st">'red'</span>, marker<span class="op">=</span><span class="st">'o'</span>, s<span class="op">=</span><span class="dv">10</span>, label<span class="op">=</span><span class="st">'Prueba'</span> <span class="cf">if</span> i <span class="op">==</span> <span class="dv">0</span> <span class="cf">else</span> <span class="st">""</span>)</span>
+<span id="cb27-24"><a href=""></a></span>
+<span id="cb27-25"><a href=""></a>    <span class="co"># Configurar etiquetas y título del gráfico</span></span>
+<span id="cb27-26"><a href=""></a>    ax.set_xlabel(<span class="st">'Índice de muestra'</span>)</span>
+<span id="cb27-27"><a href=""></a>    ax.set_yticks([i <span class="op">+</span> <span class="fl">0.5</span> <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5</span>)])</span>
+<span id="cb27-28"><a href=""></a>    ax.set_yticklabels([<span class="ss">f'Fold </span><span class="sc">{</span>i<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ss">'</span> <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5</span>)])</span>
+<span id="cb27-29"><a href=""></a>    ax.set_title(<span class="st">'Visualización de Stratified K-Fold'</span>)</span>
+<span id="cb27-30"><a href=""></a>    ax.legend()</span>
+<span id="cb27-31"><a href=""></a></span>
+<span id="cb27-32"><a href=""></a>    <span class="co"># Mostrar el gráfico</span></span>
+<span id="cb27-33"><a href=""></a>    plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="preguntas-y-respuestas" class="slide level2">
+<h2>Preguntas y Respuestas</h2>
+<h3 id="pregunta-1">Pregunta 1</h3>
+<ul>
+<li><p>P: ¿Qué es el sobreajuste (overfitting) y por qué es perjudicial para un modelo de aprendizaje automático?</p></li>
+<li><p>R:</p>
+<ul>
+<li><p>El sobreajuste ocurre cuando un modelo aprende los detalles y el ruido en los datos de entrenamiento hasta el punto de perjudicar su rendimiento en datos nuevos.</p></li>
+<li><p>Es perjudicial porque el modelo no generaliza bien a datos no vistos, lo que significa que su rendimiento en el mundo real será pobre.</p></li>
+</ul></li>
+</ul>
+<h3 id="pregunta-2">Pregunta 2</h3>
+<ul>
+<li><p>P: ¿Por qué es importante dividir los datos en conjuntos de entrenamiento y prueba?</p></li>
+<li><p>R:</p>
+<ul>
+<li>Dividir los datos permite evaluar cómo generaliza el modelo a datos no vistos.</li>
+<li>El conjunto de entrenamiento se utiliza para ajustar el modelo, mientras que el conjunto de prueba evalúa su rendimiento real.</li>
+</ul></li>
+</ul>
+<p>Riesgo de Sobreajuste al Ajustar Hiperparámetros - Al ajustar hiperparámetros, como el valor de C en una SVM, existe el riesgo de sobreajuste si se evalúa repetidamente en el conjunto de prueba.</p>
+<h3 id="pregunta-3">Pregunta 3</h3>
+<ul>
+<li>P: ¿Cómo podemos evitar el sobreajuste al ajustar hiperparámetros?</li>
+</ul>
+<p>R: - Utilizando un conjunto de validación separado o aplicando validación cruzada. - La validación cruzada permite usar todos los datos para entrenamiento y validación sin sobreajustar al conjunto de prueba.</p>
+</section>
+<section id="pregunta-4" class="slide level2">
+<h2>Pregunta 4</h2>
+<ul>
+<li><p>P: ¿Qué ventaja tiene la validación cruzada K-Fold sobre una única división entrenamiento/prueba?</p></li>
+<li><p>R:</p>
+<ul>
+<li>La validación cruzada utiliza más datos para el entrenamiento y validación.</li>
+<li>Proporciona una estimación más robusta y menos sesgada del rendimiento del modelo.</li>
+</ul></li>
+</ul>
+<h3 id="pregunta-5">Pregunta 5</h3>
+<ul>
+<li><p>P: ¿Para qué sirve la función cross_validate y en qué se diferencia de cross_val_score?</p></li>
+<li><p>R:</p>
+<ul>
+<li>cross_validate permite evaluar múltiples métricas simultáneamente y proporciona tiempos de ajuste y puntuación.</li>
+<li>A diferencia de cross_val_score, que solo permite una métrica y devuelve las puntuaciones directamente.</li>
+</ul></li>
+</ul>
+<h3 id="pregunta-6">Pregunta 6</h3>
+<ul>
+<li><p>P: ¿Es adecuado usar cross_val_predict para estimar el error de generalización? ¿Por qué?</p></li>
+<li><p>R:</p>
+<ul>
+<li><p>No es adecuado porque las predicciones se obtienen de modelos entrenados en diferentes particiones.</p></li>
+<li><p>No proporciona una métrica de rendimiento agregada y puede llevar a interpretaciones incorrectas del error.</p></li>
+</ul>
+<hr></li>
+</ul>
+</section>
+<section id="introducción-al-algoritmo-k-nn" class="slide level2">
+<h2>Introducción al Algoritmo k-NN</h2>
+<ul>
+<li><p>¿Qué es k-NN? -k-NN (k-Nearest Neighbors) es un algoritmo de aprendizaje supervisado utilizado tanto para clasificación como para regresión.</p></li>
+<li><p>-Se basa en la idea de que muestras similares están cerca en el espacio de características.</p></li>
+<li><p>¿Cómo funciona?</p>
+<ol type="1">
+<li>Definición de k: Seleccionar el número de vecinos más cercanos a considerar.</li>
+<li>Cálculo de distancias: Medir la distancia entre el punto de interés y todos los puntos en el conjunto de entrenamiento.</li>
+<li>Identificación de vecinos: Seleccionar los k vecinos más cercanos según las distancias calculadas.</li>
+<li>Predicción:</li>
+</ol>
+<ul>
+<li>Clasificación: Asignar la clase más común entre los vecinos</li>
+<li>Regresión: Calcular el promedio de los valores de los vecinos.</li>
+</ul></li>
+</ul>
+</section>
+<section id="ventajas-del-algoritmo-k-nn" class="slide level2">
+<h2>Ventajas del Algoritmo k-NN</h2>
+<ul>
+<li>Simplicidad: Fácil de entender e implementar.</li>
+<li>Flexibilidad: No hace suposiciones sobre la distribución de los datos</li>
+<li>Adaptabilidad: Puede manejar problemas de clasificación y regresión.</li>
+</ul>
+<h3 id="desventajas-del-algoritmo-k-nn">Desventajas del Algoritmo k-NN</h3>
+<ul>
+<li>Eficiencia Computacional:
+<ul>
+<li>Puede ser costoso en términos de tiempo de cálculo para conjuntos de datos grandes. -Requiere calcular la distancia a todos los puntos de entrenamiento para cada predicción.</li>
+</ul></li>
+<li>Almacenamiento:
+<ul>
+<li>Necesita almacenar todo el conjunto de entrenamiento en memoria</li>
+<li>Sensibilidad a la Dimensionalidad:</li>
+<li>Su rendimiento puede degradarse con datos de alta dimensión.</li>
+</ul></li>
+</ul>
 <div class="quarto-auto-generated-content">
 <div class="footer footer-default">
 
