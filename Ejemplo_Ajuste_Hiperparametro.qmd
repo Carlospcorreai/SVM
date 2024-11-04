@@ -1,0 +1,239 @@
+---
+author: "Carlos Correa Íñiguez (<c.correainiguez@uandresbello.edu>)"
+title: "Ejemplo de Ajuste de Hiperparámetros"
+date: "2024-10-15"
+format: 
+    revealjs:
+        css: unab.css
+        slide-number: true
+        transition: slide
+        theme: beige
+        auto-stretch: false
+        title-slide-attributes:
+            data-font-size: 2em
+output-file: index.html
+
+---
+
+## Ajuste de Hiperparámetros de un Estimador
+
+- Los hiperparámetros no se aprenden directamente en los estimadores, sino que se pasan como argumentos al constructor.
+- Ejemplos comunes: `C`, `kernel`, `gamma` en SVC y `alpha` en Lasso.
+- Se recomienda buscar en el espacio de hiperparámetros el mejor puntaje de validación cruzada.
+
+---
+
+## Obtener los Parámetros Actuales
+
+Para obtener nombres y valores actuales de todos los parámetros de un estimador:
+
+```python
+estimator.get_params()
+```
+
+### Componentes de una Búsqueda de Parámetros
+
+1.	Un estimador (regresor o clasificador)
+2.	Un espacio de parámetros
+3.	Un método de búsqueda
+4.	Un esquema de validación cruzada
+5.	Una función de puntaje
+
+---
+
+## Métodos Generales para Búsqueda de Parámetros
+
+- GridSearchCV: Evalúa todas las combinaciones de parámetros.
+- RandomizedSearchCV: Muestrea un número específico de combinaciones con una distribución dada.
+
+Ambas tienen versiones de “halving” para una búsqueda más rápida: HalvingGridSearchCV y HalvingRandomSearchCV.
+
+---
+
+## Grid Search CV
+
+- La búsqueda en cuadrícula proporcionada por GridSearchCV genera exhaustivamente candidatos a partir de una cuadrícula de valores de parámetros especificados con el parámetro param_grid. 
+
+- Por ejemplo, el siguiente param_grid:
+
+```python
+param_grid = [
+    {'C': [1, 10, 100, 1000], 'kernel': ['linear']},
+    {'C': [1, 10, 100, 1000], 'gamma': [0.001, 0.0001], 'kernel': ['rbf']}
+]
+```
+
+- Este ejemplo especifica que se deben explorar dos cuadrículas: una con un kernel lineal y valores de C en [1, 10, 100, 1000], y la segunda con un kernel RBF, y el producto cruzado de valores de C en [1, 10, 100, 1000] y valores de gamma en [0.001, 0.0001].
+
+- La instancia de GridSearchCV implementa la API de estimador habitual: al "ajustarla" en un conjunto de datos, se evalúan todas las combinaciones posibles de valores de parámetros y se retiene la mejor combinación.
+
+---
+
+## Optimización Aleatoria de Parámetros:
+
+Aunque el uso de una cuadrícula de configuraciones de parámetros es actualmente el método más utilizado para la optimización de parámetros, existen otros métodos de búsqueda con propiedades más favorables. 
+
+- RandomizedSearchCV implementa una búsqueda aleatoria sobre los parámetros, donde cada configuración se selecciona de una distribución de valores posibles de los parámetros. Este método tiene dos beneficios principales sobre una búsqueda exhaustiva:
+
+	1.	Se puede elegir un presupuesto independiente del número de parámetros y valores posibles.
+	2.	Agregar parámetros que no influyen en el rendimiento no reduce la eficiencia.
+
+- La especificación de cómo deben muestrearse los parámetros se realiza mediante un diccionario, de forma muy similar a como se especifican los parámetros en GridSearchCV. 
+
+- Además, un presupuesto computacional, que corresponde al número de candidatos muestreados o iteraciones de muestreo, se especifica utilizando el parámetro n_iter. 
+
+- Para cada parámetro, se puede especificar una distribución de valores posibles o una lista de opciones discretas (que se muestrearán de forma uniforme).
+
+---
+
+- Ejemplo: 
+
+```python
+{'C': scipy.stats.expon(scale=100), 'gamma': scipy.stats.expon(scale=.1),
+'kernel': ['rbf'], 'class_weight':['balanced', None]}
+```
+
+- Este ejemplo utiliza el módulo scipy.stats, que contiene muchas distribuciones útiles para el muestreo de parámetros, tales como expon, gamma, uniform, loguniform o randint.
+
+- En principio, se puede pasar cualquier función que proporcione un método rvs (muestra de variates aleatorios) para muestrear un valor. Una llamada a la función rvs debería proporcionar muestras aleatorias independientes de los valores posibles de los parámetros en llamadas consecutivas.
+
+---
+
+- Para parámetros continuos, como el C mencionado anteriormente, es importante especificar una distribución continua para aprovechar al máximo la aleatorización. De esta manera, aumentar n_iter siempre conducirá a una búsqueda más precisa.
+
+- Una variable aleatoria continua log-uniforme es la versión continua de un parámetro espaciado logarítmicamente. Por ejemplo, para especificar el equivalente de C de arriba, se puede usar loguniform(1, 100) en lugar de [1, 10, 100].
+
+- Reflejando el ejemplo anterior en la búsqueda de cuadrícula, podemos especificar una variable aleatoria continua que esté distribuida log-uniformemente entre 1e0 y 1e3
+
+```python
+from sklearn.utils.fixes import loguniform
+{'C': loguniform(1e0, 1e3),
+'gamma': loguniform(1e-4, 1e-3),
+'kernel': ['rbf'],
+'class_weight':['balanced', None]}
+```
+
+---
+
+## Búsqueda de parámetros óptimos con reducción sucesiva
+
+- Scikit-learn también proporciona los estimadores HalvingGridSearchCV y HalvingRandomSearchCV, que pueden utilizarse para buscar en un espacio de parámetros mediante reducción sucesiva. 
+
+- La reducción sucesiva (SH, por sus siglas en inglés) es como un torneo entre combinaciones de parámetros candidatas. 
+
+- SH es un proceso de selección iterativo donde todos los candidatos (combinaciones de parámetros) se evalúan con una pequeña cantidad de recursos en la primera iteración. Solo algunos de estos candidatos son seleccionados para la siguiente iteración, a la cual se le asignarán más recursos. 
+
+- Para el ajuste de parámetros, el recurso suele ser el número de muestras de entrenamiento, pero también puede ser un parámetro numérico arbitrario, como n_estimators en un bosque aleatorio.
+
+---
+
+## Iteraciones de Reducción Sucesiva
+
+- Como se ilustra en la figura a continuación, solo un subconjunto de candidatos “sobrevive” hasta la última iteración. 
+- Estos son los candidatos que consistentemente han estado entre los de mayor puntaje en todas las iteraciones. 
+- En cada iteración se asigna una cantidad creciente de recursos por candidato, en este caso el número de muestras.
+
+![Puntaje de iteraciones sobre candidatos](halving_iterations_1.png){width=40%}
+
+---
+
+## Iteraciones de Reducción Sucesiva
+
+![Puntaje de iteraciones sobre candidatos](halving_iterations_1.png){width=50%}
+
+<div style="font-size: 0.5em;">
+
+- En la primera iteración, se utiliza una pequeña cantidad de recursos.
+- En la segunda iteración, solo se evalúa la mejor mitad de los candidatos, duplicando los recursos asignados.
+- Este proceso se repite hasta la última iteración, donde solo quedan 2 candidatos.
+- El mejor candidato es aquel que obtiene el mejor puntaje en la última iteración.
+
+</div>
+
+---
+
+## Iteraciones de Reducción Sucesiva
+
+- Reducción progresiva de candidatos: En cada iteración, solo los candidatos con mejor rendimiento avanzan, mientras que se eliminan aquellos con peores resultados.
+- Asignación creciente de recursos: Con cada iteración, la cantidad de recursos asignados a cada candidato (por ejemplo, muestras de entrenamiento) se multiplica por un factor, permitiendo una evaluación más exhaustiva de los mejores candidatos.
+- Control con el parámetro factor: Este parámetro determina la velocidad de crecimiento de los recursos y la eliminación de candidatos. Un valor de factor=3 suele ser adecuado para equilibrar ambas.
+- Eliminación agresiva (aggressive_elimination=True): Cuando los recursos son limitados, esta opción acelera el proceso al eliminar más candidatos en cada iteración.
+
+---
+
+## Tips para la busqueda de parametros
+
+#### Especificar una Métrica Objetivo
+
+- La búsqueda de parámetros utiliza, por defecto, la función de puntuación del estimador.
+  - `sklearn.metrics.accuracy_score` para clasificación.
+  - `sklearn.metrics.r2_score` para regresión.
+
+- En algunos casos, otras métricas pueden ser más adecuadas.
+  - Ejemplo: en clasificación desequilibrada, la precisión no siempre es informativa.
+
+- **Personalización de la métrica**: Se puede especificar una métrica alternativa mediante el parámetro `scoring` en la mayoría de las herramientas de búsqueda de parámetros.
+
+- Para más detalles, consulta la definición de reglas de evaluación en el parámetro `scoring`.
+
+---
+
+## Especificar Múltiples Métricas para la Evaluación
+
+- **GridSearchCV** y **RandomizedSearchCV** permiten definir múltiples métricas con el parámetro `scoring`.
+  - Las métricas pueden especificarse como:
+    - Lista de nombres de puntuación predefinidos.
+    - Diccionario que asigna el nombre del puntaje a su función o nombre predefinido.
+
+- **Parámetro `refit`**:
+  - Se debe establecer en la métrica usada para obtener `best_params_` y construir el `best_estimator_`.
+  - Para evitar reconstruir el modelo, establece `refit=False`.
+  - Dejar `refit=None` genera un error con múltiples métricas.
+
+- Consulta en la documentacion sklearn la **Demostración de evaluación con múltiples métricas** para ejemplos de uso.
+
+---
+
+## Estimadores Compuestos y Espacios de Parámetros
+
+- **GridSearchCV** y **RandomizedSearchCV** permiten la búsqueda de parámetros en estimadores compuestos o anidados**:
+  - Ejemplos: `Pipeline`, `ColumnTransformer`, `VotingClassifier`, `CalibratedClassifierCV`.
+
+- **Sintaxis `<estimator>__<parameter>`**:
+  - Se utiliza para definir los parámetros de estimadores anidados.
+  - Ejemplo de uso con `Pipeline` y `CalibratedClassifierCV` para configurar y ajustar hiperparámetros en un solo proceso.
+
+- Permite búsquedas complejas en modelos con múltiples niveles de anidamiento.
+
+- Consulta **Pipeline: encadenamiento de estimadores** para búsquedas de parámetros en pipelines.
+
+---
+
+## Selección de Modelo: Desarrollo y Evaluación
+
+- La selección de modelo ajusta varios parámetros usando los datos etiquetados.
+- **Evaluación del modelo**:
+  - Es importante usar muestras separadas (no vistas durante la búsqueda) para evaluar el modelo final.
+  - Recomendación: dividir los datos en:
+    - Conjunto de desarrollo (para `GridSearchCV`).
+    - Conjunto de evaluación (para calcular métricas de rendimiento).
+
+- **Función `train_test_split`** facilita esta división.
+
+---
+
+## Paralelización en Búsqueda de Parámetros
+
+- Las combinaciones de parámetros se evalúan de forma independiente en cada partición de datos.
+- **Ejecución en paralelo**:
+  - Usa el argumento `n_jobs=-1` para ejecutar cálculos en paralelo y optimizar el tiempo de procesamiento.
+
+- Consulta la firma de la función y el glosario sobre `n_jobs` para más detalles.
+
+---
+
+## Referencias
+
+- Bergstra, J., & Bengio, Y. (2012). *Random search for hyper-parameter optimization*. The Journal of Machine Learning Research.
+
+- Scikit-learn: Machine Learning in Python. *scikit-learn.org*. Disponible en: https://scikit-learn.org/stable/

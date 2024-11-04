@@ -1,45 +1,65 @@
-/* Style for the main title on the title slide */
+/* Estilo para el título principal en la diapositiva de título */
 .reveal .title-slide h1 {
-  font-size: 1.5em; /* Adjust this value to make the title smaller or larger */
-  font-weight: bold; /* Optional: make the title bold */
-  text-align: center; /* Center the title */
+  font-size: 2em; /* Tamaño ajustado para mayor impacto */
+  font-weight: bold; /* Título en negrita */
+  text-align: center; /* Centrado */
+  color: #004080; /* Color azul oscuro, representativo */
 }
 
-/* Style for the subtitle and author on the title slide */
+/* Estilo para el subtítulo y autor en la diapositiva de título */
 .reveal .title-slide h2 {
-  font-size: 1em; /* Adjust this value to make the subtitle/author smaller or larger */
-  font-weight: normal; /* Optional: change the font weight */
-  text-align: center; /* Center the subtitle */
-  color: #555; /* Optional: change the text color */
+  font-size: 1.2em; /* Tamaño ajustado para subtítulo y autor */
+  font-weight: normal;
+  text-align: center;
+  color: #0072c6; /* Azul UNAB para subtítulo */
+  margin-top: 10px; /* Espacio adicional sobre el subtítulo */
 }
 
-/* Additional spacing adjustments if needed */
+/* Ajustes adicionales de espaciado en la diapositiva de título */
 .reveal .title-slide {
-  padding-top: 50px; /* Adjust the top padding to move the content up or down */
+  padding-top: 60px; /* Espacio superior ajustado */
+  background-color: #f5f5f5; /* Fondo claro para contraste */
 }
 
+/* Estilo general para texto y listas en las diapositivas */
 .reveal p, .reveal li {
-  font-size: 0.8em; /* Adjust this value to reduce text size */
+  font-size: 0.9em; /* Tamaño de texto adecuado para presentaciones */
+  color: #333; /* Color de texto gris oscuro */
 }
 
+/* Ajuste de fórmulas en KaTeX */
 .reveal .katex {
-  font-size: 0.3em; /* Adjust this value to make formulas smaller */
+  font-size: 0.8em; /* Tamaño ajustado para fórmulas matemáticas */
+  color: #004080; /* Color en azul oscuro para coherencia */
 }
 
-/* Reducir levemente el tamaño de fuente en las diapositivas */
+/* Tamaño de fuente en las diapositivas */
 .reveal .slides section {
-  font-size: 85%; /* Ajuste leve al tamaño predeterminado */
+  font-size: 85%; /* Ajuste leve para un diseño más compacto */
+  color: #333;
 }
 
-/* Reducir levemente el tamaño de los títulos */
+/* Estilos para los títulos en las diapositivas */
 .reveal .slides h1 {
-  font-size: 90%; /* Ajusta según lo que necesites */
+  font-size: 1.4em; /* Tamaño del título principal en diapositivas */
+  color: #004080;
 }
 
 .reveal .slides h2 {
-  font-size: 90%;
+  font-size: 1.2em; /* Tamaño del subtítulo */
+  color: #0072c6;
 }
 
 .reveal .slides h3 {
-  font-size: 90%;
+  font-size: 1em; /* Tamaño del encabezado terciario */
+  color: #333;
+}
+
+/* Fondo y transiciones */
+.reveal .backgrounds {
+  background-color: #ffffff; /* Fondo blanco para claridad */
+}
+
+.reveal .slides {
+  transition: background 0.5s ease-in-out; /* Transición suave */
 }
