@@ -1,23 +1,23 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<script src="Ejemplo_Ajuste_Hiperparametro_files/libs/clipboard/clipboard.min.js"></script>
-<script src="Ejemplo_Ajuste_Hiperparametro_files/libs/quarto-html/tabby.min.js"></script>
-<script src="Ejemplo_Ajuste_Hiperparametro_files/libs/quarto-html/popper.min.js"></script>
-<script src="Ejemplo_Ajuste_Hiperparametro_files/libs/quarto-html/tippy.umd.min.js"></script>
-<link href="Ejemplo_Ajuste_Hiperparametro_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="Ejemplo_Ajuste_Hiperparametro_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="Ejemplo_Ajuste_Hiperparametro_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
-<link href="Ejemplo_Ajuste_Hiperparametro_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+<script src="Clasificacion Bayesiana_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Clasificacion Bayesiana_files/libs/quarto-html/tabby.min.js"></script>
+<script src="Clasificacion Bayesiana_files/libs/quarto-html/popper.min.js"></script>
+<script src="Clasificacion Bayesiana_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="Clasificacion Bayesiana_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Clasificacion Bayesiana_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="Clasificacion Bayesiana_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
+<link href="Clasificacion Bayesiana_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.5.57">
 
   <meta name="author" content="Carlos Correa Íñiguez (c.correainiguez@uandresbello.edu)">
   <meta name="dcterms.date" content="2024-10-15">
-  <title>Ejemplo de Ajuste de Hiperparámetros</title>
+  <title>clasificacion-bayesiana</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="Ejemplo_Ajuste_Hiperparametro_files/libs/revealjs/dist/reset.css">
-  <link rel="stylesheet" href="Ejemplo_Ajuste_Hiperparametro_files/libs/revealjs/dist/reveal.css">
+  <link rel="stylesheet" href="Clasificacion Bayesiana_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="Clasificacion Bayesiana_files/libs/revealjs/dist/reveal.css">
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -96,12 +96,12 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="Ejemplo_Ajuste_Hiperparametro_files/libs/revealjs/dist/theme/quarto.css">
+  <link rel="stylesheet" href="Clasificacion Bayesiana_files/libs/revealjs/dist/theme/quarto.css">
   <link rel="stylesheet" href="unab.css">
-  <link href="Ejemplo_Ajuste_Hiperparametro_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-  <link href="Ejemplo_Ajuste_Hiperparametro_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-  <link href="Ejemplo_Ajuste_Hiperparametro_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="Ejemplo_Ajuste_Hiperparametro_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <link href="Clasificacion Bayesiana_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="Clasificacion Bayesiana_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="Clasificacion Bayesiana_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="Clasificacion Bayesiana_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
   <style type="text/css">
 
   .callout {
@@ -392,236 +392,1443 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" data-font-size="2em" class="quarto-title-block center">
-  <h1 class="title">Ejemplo de Ajuste de Hiperparámetros</h1>
 
-<div class="quarto-title-authors">
-<div class="quarto-title-author">
-<div class="quarto-title-author-name">
-Carlos Correa Íñiguez (<a href="mailto:c.correainiguez@uandresbello.edu" class="email">c.correainiguez@uandresbello.edu</a>) 
-</div>
-</div>
-</div>
+<section class="slide level2">
 
-  <p class="date">2024-10-15</p>
-</section>
-<section id="ajuste-de-hiperparámetros-de-un-estimador" class="slide level2">
-<h2>Ajuste de Hiperparámetros de un Estimador</h2>
+<h3 id="unidad-iii-análisis-utilizando-aprendizaje-supervisado">Unidad III: Análisis utilizando aprendizaje supervisado</h3>
 <ul>
-<li>Los hiperparámetros no se aprenden directamente en los estimadores, sino que se pasan como argumentos al constructor.</li>
-<li>Ejemplos comunes: <code>C</code>, <code>kernel</code>, <code>gamma</code> en SVC y <code>alpha</code> en Lasso.</li>
-<li>Se recomienda buscar en el espacio de hiperparámetros el mejor puntaje de validación cruzada.</li>
+<li>Clasificación Bayesiana y Máquinas de Soporte Vectorial (SVM)</li>
 </ul>
 </section>
-<section id="obtener-los-parámetros-actuales" class="slide level2">
-<h2>Obtener los Parámetros Actuales</h2>
-<p>Para obtener nombres y valores actuales de todos los parámetros de un estimador:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href=""></a>estimator.get_params()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<h3 id="componentes-de-una-búsqueda-de-parámetros">Componentes de una Búsqueda de Parámetros</h3>
+<section class="slide level2">
+
+<h3 id="objetivo-de-la-clase">Objetivo de la Clase</h3>
+<ul>
+<li><p><strong>Comprender</strong> los fundamentos de la clasificación Bayesiana y su aplicación práctica.</p></li>
+<li><p><strong>Aplicar</strong> los algoritmos de Máquinas de Soporte Vectorial (SVM) para la clasificación de datos.</p></li>
+<li><p><strong>Evaluar</strong> las ventajas y desventajas de cada enfoque en diferentes escenarios de minería de datos.</p></li>
+</ul>
+</section>
+<section class="slide level2">
+
+<h3 id="introducción">Introducción</h3>
 <ol type="1">
-<li>Un estimador (regresor o clasificador)</li>
-<li>Un espacio de parámetros</li>
-<li>Un método de búsqueda</li>
-<li>Un esquema de validación cruzada</li>
-<li>Una función de puntaje</li>
+<li><p>Método práctico para inducir modelos probabilísticos y razonar sobre nuevos datos. Permite calcular la probabilidad asociada a cada hipótesis, ofreciendo una ventaja frente a otras técnicas.</p></li>
+<li><p>Proporciona un marco para analizar variadas técnicas de aprendizaje y minería de datos, en el ambito de la descripción y clasificación.</p></li>
 </ol>
 </section>
-<section id="métodos-generales-para-búsqueda-de-parámetros" class="slide level2">
-<h2>Métodos Generales para Búsqueda de Parámetros</h2>
+<section class="slide level2">
+
+<h3 id="ejemplo-sistema-de-recomendación-en-inversiones">Ejemplo: Sistema de Recomendación en Inversiones</h3>
+<p>Como ejemplo de la ventaja que supone poder dar la probabilidad asociada a la clasificación, piénsese en un sistema de recomendaciones para invertir en bolsa.</p>
 <ul>
-<li>GridSearchCV: Evalúa todas las combinaciones de parámetros.</li>
-<li>RandomizedSearchCV: Muestrea un número específico de combinaciones con una distribución dada.</li>
-</ul>
-<p>Ambas tienen versiones de “halving” para una búsqueda más rápida: HalvingGridSearchCV y HalvingRandomSearchCV.</p>
-</section>
-<section id="grid-search-cv" class="slide level2">
-<h2>Grid Search CV</h2>
-<ul>
-<li><p>La búsqueda en cuadrícula proporcionada por GridSearchCV genera exhaustivamente candidatos a partir de una cuadrícula de valores de parámetros especificados con el parámetro param_grid.</p></li>
-<li><p>Por ejemplo, el siguiente param_grid:</p></li>
-</ul>
-<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href=""></a>param_grid <span class="op">=</span> [</span>
-<span id="cb2-2"><a href=""></a>    {<span class="st">'C'</span>: [<span class="dv">1</span>, <span class="dv">10</span>, <span class="dv">100</span>, <span class="dv">1000</span>], <span class="st">'kernel'</span>: [<span class="st">'linear'</span>]},</span>
-<span id="cb2-3"><a href=""></a>    {<span class="st">'C'</span>: [<span class="dv">1</span>, <span class="dv">10</span>, <span class="dv">100</span>, <span class="dv">1000</span>], <span class="st">'gamma'</span>: [<span class="fl">0.001</span>, <span class="fl">0.0001</span>], <span class="st">'kernel'</span>: [<span class="st">'rbf'</span>]}</span>
-<span id="cb2-4"><a href=""></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<ul>
-<li><p>Este ejemplo especifica que se deben explorar dos cuadrículas: una con un kernel lineal y valores de C en [1, 10, 100, 1000], y la segunda con un kernel RBF, y el producto cruzado de valores de C en [1, 10, 100, 1000] y valores de gamma en [0.001, 0.0001].</p></li>
-<li><p>La instancia de GridSearchCV implementa la API de estimador habitual: al “ajustarla” en un conjunto de datos, se evalúan todas las combinaciones posibles de valores de parámetros y se retiene la mejor combinación.</p></li>
+<li><p>A partir de unos datos de entrada sobre un determinado producto, el sistema nos recomienda si invertir o no.</p></li>
+<li><p>Si no invertimos, no perdemos nada, pero si invertimos podremos multiplicar nuestra inversión o perderla parcial o totalmente.</p></li>
 </ul>
 </section>
-<section id="optimización-aleatoria-de-parámetros" class="slide level2">
-<h2>Optimización Aleatoria de Parámetros:</h2>
-<p>Aunque el uso de una cuadrícula de configuraciones de parámetros es actualmente el método más utilizado para la optimización de parámetros, existen otros métodos de búsqueda con propiedades más favorables.</p>
+<section class="slide level2">
+
 <ul>
-<li><p>RandomizedSearchCV implementa una búsqueda aleatoria sobre los parámetros, donde cada configuración se selecciona de una distribución de valores posibles de los parámetros. Este método tiene dos beneficios principales sobre una búsqueda exhaustiva:</p>
+<li><p>Supongamos que consultamos acerca de dos productos diferentes, <strong>P1</strong> y <strong>P2</strong>.</p></li>
+<li><p>Si el sistema no trata con incertidumbre, podría decir <em>SI</em> para ambos productos, lo que podría llevarnos a diversificar la inversión.</p></li>
+<li><p>Si el sistema usa un método bayesiano, la salida podría ser:</p>
+<ul>
+<li><strong>P1</strong>: <em>SI</em> con probabilidad 0.9, <em>NO</em> con probabilidad 0.1.</li>
+<li><strong>P2</strong>: <em>SI</em> con probabilidad 0.52, <em>NO</em> con probabilidad 0.48.</li>
+</ul></li>
+</ul>
+<p>Sin duda alguna, el encargado de tomar la decisión preferiría tener esta información a la proporcionada por un sistema no bayesiano.</p>
+</section>
+<section class="slide level2">
+
+<h3 id="teorema-de-bayes">Teorema de Bayes</h3>
+<ul>
+<li><p>El Teorema de Bayes, propuesto por el filósofo inglés Thomas Bayes en 1760, permite calcular distribuciones condicionales.</p></li>
+<li><p>Este teorema proporciona la probabilidad de que ocurra un evento A, dado que ya ha ocurrido un evento B. La fórmula es: <span class="math display">\[
+P(A|B) = \frac{{P(A) \cdot P(B|A)}}{{P(B)}}
+\]</span></p></li>
+</ul>
+<p>Donde: - <strong>P(A|B)</strong>: Probabilidad a posteriori. - <strong>P(B|A)</strong>: Verosimilitud. - <strong>P(A)</strong>: Probabilidad a priori.</p>
+</section>
+<section class="slide level2">
+
+<h3 id="clasificación-bayesiana-naïve-bayes">Clasificación Bayesiana: Naïve Bayes</h3>
+<ul>
+<li><p>Suposición: todos los atributos son independientes conocido el valor de la clase.</p></li>
+<li><p>Si los eventos <strong>A</strong> y <strong>B</strong> son independientes, entonces se cumple que:</p></li>
+</ul>
+<p><span class="math display">\[
+P(A|B) = P(A) \quad \text{y} \quad P(B|A) = P(B)
+\]</span></p>
+<ul>
+<li>El modelo de clasificación con redes bayesianas se basa en la suposición de que todos los atributos son independientes, conocido el valor de la variable clase.</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<h3 id="representación-gráfica-de-una-red-bayesiana">Representación Gráfica de una Red Bayesiana</h3>
+<ul>
+<li><p><strong>Modelo probabilístico</strong> con un único nodo raíz (la clase), y todos los atributos son nodos hoja que tienen como único padre a la variable clase.</p></li>
+<li><p>[Hernández et al., 2004]</p></li>
+</ul>
+
+<img data-src="Imagen1.png" class="r-stretch quarto-figure-center"><p class="caption">Representación de Red Bayesiana</p></section>
+<section class="slide level2">
+
+<h3 id="probabilidad-condicional-con-múltiples-predictores">Probabilidad Condicional con Múltiples Predictores</h3>
+<p>Para más de un predictor:</p>
+<p>Sean <span class="math inline">\(x_1\)</span> y <span class="math inline">\(x_2\)</span> dos predictores de la clase <span class="math inline">\(C\)</span>, la probabilidad condicional se define como:</p>
+<p><span class="math display">\[
+P(C|x_1, x_2) = \frac{P(x_1, x_2|C) \cdot P(C)}{P(x_1, x_2)} = \frac{P(x_1|C) \cdot P(x_2|C) \cdot P(C)}{P(x_1, x_2)}
+\]</span></p>
+<p>Para tres predictores:</p>
+<p><span class="math display">\[
+P(C|x_1, x_2, x_3) = \frac{P(x_1, x_2, x_3|C) \cdot P(C)}{P(x_1, x_2, x_3)}
+\]</span> <span class="math display">\[
+\frac{P(x_1, x_2, x_3|C) \cdot P(C)}{P(x_1, x_2, x_3)} = \frac{P(x_1|C) \cdot P(x_2|C) \cdot P(x_3|C) \cdot P(C)}{P(x_1, x_2, x_3)}
+\]</span></p>
+</section>
+<section class="slide level2">
+
+<h3 id="ejemplo-de-naive-bayes">Ejemplo de Naive Bayes</h3>
+<p>Para entender mejor cómo funciona Naive Bayes, consideremos un conjunto de datos con 1500 observaciones y tres clases de salida:</p>
+<ul>
+<li><strong>Gato</strong></li>
+<li><strong>Loro</strong></li>
+<li><strong>Tortuga</strong></li>
+</ul>
+<p>Las variables predictoras son categóricas (verdadero o falso):</p>
+<ul>
+<li>Nadar</li>
+<li>Alas</li>
+<li>Color verde</li>
+<li>Dientes afilados</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<h3 id="resumen-de-clases">Resumen de Clases</h3>
+<p><strong>Clase de Gatos</strong>: - 450 de 500 (90%) de gatos pueden nadar - 0 gatos tienen alas - 0 gatos son de color verde - Todos los 500 gatos tienen dientes afilados</p>
+<p><strong>Clase de Loros</strong>: - 50 de 500 (10%) de loros pueden nadar - Todos los 500 loros tienen alas - 400 de 500 (80%) son de color verde - Ningún loro tiene dientes afilados</p>
+<p><strong>Clase de Tortugas</strong>: - Las 500 tortugas pueden nadar - 0 tortugas tienen alas - 100 de 500 (20%) son de color verde - 50 de 500 (10%) tienen dientes afilados</p>
+</section>
+<section class="slide level2">
+
+<h3 id="clasificación-con-naive-bayes">Clasificación con Naive Bayes</h3>
+<p>Con estos datos, clasifiquemos la siguiente observación en una de las clases de salida (gato, loro o tortuga) usando Naive Bayes.</p>
+<h3 id="observación">Observación:</h3>
+<ul>
+<li>Nadar: Verdadero</li>
+<li>Color Verde: Verdadero</li>
+</ul>
+<p>El objetivo es predecir si el animal es un <strong>gato</strong>, <strong>loro</strong> o <strong>tortuga</strong> basándonos en estas variables.</p>
+</section>
+<section class="slide level2">
+
+<h3 id="verificación-es-un-gato">Verificación: ¿Es un Gato?</h3>
+<p>Para comprobar si el animal es un gato, calculamos:</p>
+<p><span class="math display">\[
+\small P(\text{Gato} | \text{Nadar}, \text{Verde}) = \frac{P(\text{Nadar}|\text{Gato}) \cdot P(\text{Verde}|\text{Gato}) \cdot P(\text{Gato})}{P(\text{Nadar}, \text{Verde})}
+\]</span></p>
+<p>Sustituyendo valores:</p>
+<p><span class="math display">\[
+\small P(\text{Gato} | \text{Nadar}, \text{Verde}) = \frac{0.9 \cdot 0 \cdot 0.333}{P(\text{Nadar}, \text{Verde})} = 0
+\]</span></p>
+</section>
+<section class="slide level2">
+
+<h3 id="verificación-es-un-loro">Verificación: ¿Es un Loro?</h3>
+<p>Para comprobar si el animal es un loro, calculamos:</p>
+<p><span class="math display">\[
+\small P(\text{Loro} | \text{Nadar}, \text{Verde}) = \frac{P(\text{Nadar}|\text{Loro}) \cdot P(\text{Verde}|\text{Loro}) \cdot P(\text{Loro})}{P(\text{Nadar}, \text{Verde})}
+\]</span></p>
+<p>Sustituyendo valores:</p>
+<p><span class="math display">\[
+\small P(\text{Loro} | \text{Nadar}, \text{Verde}) = \frac{0.1 \cdot 0.8 \cdot 0.333}{P(\text{Nadar}, \text{Verde})} = \frac{0.0264}{P(\text{Nadar}, \text{Verde})}
+\]</span></p>
+</section>
+<section class="slide level2">
+
+<h3 id="verificación-es-una-tortuga">Verificación: ¿Es una Tortuga?</h3>
+<p>Para comprobar si el animal es una tortuga, calculamos:</p>
+<p><span class="math display">\[
+P(\text{Tortuga} | \text{Nadar}, \text{Verde}) = \frac{P(\text{Nadar}|\text{Tortuga}) \cdot P(\text{Verde}|\text{Tortuga}) \cdot P(\text{Tortuga})}{P(\text{Nadar}, \text{Verde})}
+\]</span></p>
+<p>Sustituyendo valores:</p>
+<p><span class="math display">\[
+P(\text{Tortuga} | \text{Nadar}, \text{Verde}) = \frac{1 \cdot 0.2 \cdot 0.333}{P(\text{Nadar}, \text{Verde})} = \frac{0.0666}{P(\text{Nadar}, \text{Verde})}
+\]</span></p>
+</section>
+<section class="slide level2">
+
+<h3 id="verificación-es-una-tortuga-1">Verificación: ¿Es una Tortuga?</h3>
+<p>Para comprobar si el animal es una tortuga, calculamos:</p>
+<p><span class="math display">\[
+P(\text{Tortuga} | \text{Nadar}, \text{Verde}) = \frac{P(\text{Nadar}|\text{Tortuga}) \cdot P(\text{Verde}|\text{Tortuga}) \cdot P(\text{Tortuga})}{P(\text{Nadar}, \text{Verde})}
+\]</span></p>
+<p>Sustituyendo valores:</p>
+<p><span class="math display">\[
+P(\text{Tortuga} | \text{Nadar}, \text{Verde}) = \frac{1 \cdot 0.2 \cdot 0.333}{P(\text{Nadar}, \text{Verde})} = \frac{0.0666}{P(\text{Nadar}, \text{Verde})}
+\]</span></p>
+</section>
+<section class="slide level2">
+
+<h3 id="conclusión">Conclusión</h3>
+<p>Para todos los cálculos, el denominador es el mismo, es decir, <span class="math inline">\(P(\text{Nadar}, \text{Verde})\)</span>. <span class="math display">\[
+P(\text{Tortuga} | \text{Nadar}, \text{Verde}) = 0.0666 / P(\text{Nadar}, \text{Verde})
+\]</span> <span class="math display">\[
+P(\text{Loro} | \text{Nadar}, \text{Verde}) = 0.0264 / P(\text{Nadar}, \text{Verde})
+\]</span></p>
+<p>Dado que <span class="math inline">\(P(\text{Tortuga} | \text{Nadar}, \text{Verde})\)</span> es mayor que <span class="math inline">\(P(\text{Loro} | \text{Nadar}, \text{Verde})\)</span>, podemos predecir correctamente que el animal es una <strong>Tortuga</strong>.</p>
+</section>
+<section class="slide level2">
+
+<h3 id="algoritmo-de-naive-bayes">Algoritmo de Naive Bayes</h3>
 <ol type="1">
-<li>Se puede elegir un presupuesto independiente del número de parámetros y valores posibles.</li>
-<li>Agregar parámetros que no influyen en el rendimiento no reduce la eficiencia.</li>
-</ol></li>
-<li><p>La especificación de cómo deben muestrearse los parámetros se realiza mediante un diccionario, de forma muy similar a como se especifican los parámetros en GridSearchCV.</p></li>
-<li><p>Además, un presupuesto computacional, que corresponde al número de candidatos muestreados o iteraciones de muestreo, se especifica utilizando el parámetro n_iter.</p></li>
-<li><p>Para cada parámetro, se puede especificar una distribución de valores posibles o una lista de opciones discretas (que se muestrearán de forma uniforme).</p></li>
+<li>Encontrar <span class="math inline">\(P(C_i)\)</span>, calculando el total de la i-ésima clase en el total de datos de entrenamiento.</li>
+<li>Calcular la <span class="math inline">\(P(x_t|C_i)\)</span> para cada atributo o predictor de los datos de entrenamiento <span class="math inline">\(X\)</span>.</li>
+<li>Calcular la <span class="math inline">\(P(X|C_i) = \prod_{t=1}^{n} P(x_t|C_i)\)</span>.</li>
+<li>Calcular la <span class="math inline">\(P(C_i|X)\)</span>.</li>
+<li>Seleccionar la mayor probabilidad para clasificar los nuevos datos.</li>
+</ol>
+</section>
+<section class="slide level2">
+
+<h3 id="ejemplo-diagnóstico-de-sepsis-usando-naive-bayes">Ejemplo: Diagnóstico de Sepsis usando Naive Bayes</h3>
+<p>Vamos a usar un ejemplo para ilustrar cómo funciona la clasificación Naive Bayes. El ejemplo utilizado es el diagnóstico de sepsis. Supongamos que hay dos predictores de sepsis: la tasa respiratoria y el estado mental.</p>
+</section>
+<section class="slide level2">
+
+<h3 id="tabla-de-verosimilitudes">Tabla de Verosimilitudes</h3>
+<p>La siguiente tabla muestra las verosimilitudes para diagnosticar sepsis usando la tasa respiratoria y el estado mental. Los datos provienen de un conjunto de entrenamiento.</p>
+<table class="caption-top" style="width:100%;">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 36%">
+<col style="width: 33%">
+<col style="width: 9%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>Tasa Respiratoria</th>
+<th>Estado Mental</th>
+<th>Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td></td>
+<td>Rápida</td>
+<td>Lenta</td>
+<td>Alterado</td>
+</tr>
+<tr class="even">
+<td><strong>Sepsis</strong></td>
+<td>15/20</td>
+<td>5/20</td>
+<td>17/20</td>
+</tr>
+<tr class="odd">
+<td><strong>No-Sepsis</strong></td>
+<td>5/80</td>
+<td>75/80</td>
+<td>3/80</td>
+</tr>
+<tr class="even">
+<td><strong>Total</strong></td>
+<td>20/100</td>
+<td>80/100</td>
+<td>20/100</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="slide level2">
+
+<h3 id="probabilidades-previas">Probabilidades Previas</h3>
+<p>Las probabilidades previas para sepsis y no-sepsis son:</p>
+<ul>
+<li><span class="math inline">\(P(\text{sepsis}) = 20/100 = 0.2\)</span></li>
+<li><span class="math inline">\(P(\text{no-sepsis}) = 80/100 = 0.8\)</span></li>
 </ul>
 </section>
 <section class="slide level2">
 
+<h3 id="probabilidades-de-verosimilitud">Probabilidades de Verosimilitud</h3>
+<p>Las probabilidades de verosimilitud para los diferentes predictores son:</p>
 <ul>
-<li>Ejemplo:</li>
-</ul>
-<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href=""></a>{<span class="st">'C'</span>: scipy.stats.expon(scale<span class="op">=</span><span class="dv">100</span>), <span class="st">'gamma'</span>: scipy.stats.expon(scale<span class="op">=</span><span class="fl">.1</span>),</span>
-<span id="cb3-2"><a href=""></a><span class="st">'kernel'</span>: [<span class="st">'rbf'</span>], <span class="st">'class_weight'</span>:[<span class="st">'balanced'</span>, <span class="va">None</span>]}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<ul>
-<li><p>Este ejemplo utiliza el módulo scipy.stats, que contiene muchas distribuciones útiles para el muestreo de parámetros, tales como expon, gamma, uniform, loguniform o randint.</p></li>
-<li><p>En principio, se puede pasar cualquier función que proporcione un método rvs (muestra de variates aleatorios) para muestrear un valor. Una llamada a la función rvs debería proporcionar muestras aleatorias independientes de los valores posibles de los parámetros en llamadas consecutivas.</p></li>
+<li><p><span class="math inline">\(P(\text{tasa respiratoria rápida}|\text{sepsis}) = 15/20 = 0.75\)</span></p></li>
+<li><p><span class="math inline">\(P(\text{tasa respiratoria lenta}|\text{sepsis}) = 5/20 = 0.25\)</span></p></li>
+<li><p><span class="math inline">\(P(\text{tasa respiratoria rápida}|\text{no-sepsis}) = 5/80 = 0.0625\)</span></p></li>
+<li><p><span class="math inline">\(P(\text{tasa respiratoria lenta}|\text{no-sepsis}) = 75/80 = 0.9375\)</span></p></li>
+<li><p><span class="math inline">\(P(\text{estado mental alterado}|\text{sepsis}) = 17/20 = 0.85\)</span></p></li>
+<li><p><span class="math inline">\(P(\text{estado mental normal}|\text{sepsis}) = 3/20 = 0.15\)</span></p></li>
+<li><p><span class="math inline">\(P(\text{estado mental alterado}|\text{no-sepsis}) = 3/80 = 0.0375\)</span></p></li>
+<li><p><span class="math inline">\(P(\text{estado mental normal}|\text{no-sepsis}) = 77/80 = 0.9625\)</span></p></li>
 </ul>
 </section>
 <section class="slide level2">
 
-<ul>
-<li><p>Para parámetros continuos, como el C mencionado anteriormente, es importante especificar una distribución continua para aprovechar al máximo la aleatorización. De esta manera, aumentar n_iter siempre conducirá a una búsqueda más precisa.</p></li>
-<li><p>Una variable aleatoria continua log-uniforme es la versión continua de un parámetro espaciado logarítmicamente. Por ejemplo, para especificar el equivalente de C de arriba, se puede usar loguniform(1, 100) en lugar de [1, 10, 100].</p></li>
-<li><p>Reflejando el ejemplo anterior en la búsqueda de cuadrícula, podemos especificar una variable aleatoria continua que esté distribuida log-uniformemente entre 1e0 y 1e3</p></li>
-</ul>
-<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href=""></a><span class="im">from</span> sklearn.utils.fixes <span class="im">import</span> loguniform</span>
-<span id="cb4-2"><a href=""></a>{<span class="st">'C'</span>: loguniform(<span class="fl">1e0</span>, <span class="fl">1e3</span>),</span>
-<span id="cb4-3"><a href=""></a><span class="st">'gamma'</span>: loguniform(<span class="fl">1e-4</span>, <span class="fl">1e-3</span>),</span>
-<span id="cb4-4"><a href=""></a><span class="st">'kernel'</span>: [<span class="st">'rbf'</span>],</span>
-<span id="cb4-5"><a href=""></a><span class="st">'class_weight'</span>:[<span class="st">'balanced'</span>, <span class="va">None</span>]}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<h3 id="aplicando-naive-bayes">Aplicando Naive Bayes</h3>
+<p>Queremos clasificar un paciente con una tasa respiratoria lenta y un estado mental alterado. Según la regla de clasificación de máxima verosimilitud, calculamos solo el numerador de la ecuación de Bayes.</p>
+<p>La verosimilitud de sepsis dado una tasa respiratoria lenta y un estado mental alterado es:</p>
+<p><span class="math display">\[
+\tiny P(\text{sepsis}|\text{tasa respiratoria lenta} \cap \text{alterado}) = P(\text{tasa respiratoria lenta}|\text{sepsis}) \times P(\text{alterado}|\text{sepsis}) \times P(\text{sepsis})
+\]</span></p>
 </section>
-<section id="búsqueda-de-parámetros-óptimos-con-reducción-sucesiva" class="slide level2">
-<h2>Búsqueda de parámetros óptimos con reducción sucesiva</h2>
-<ul>
-<li><p>Scikit-learn también proporciona los estimadores HalvingGridSearchCV y HalvingRandomSearchCV, que pueden utilizarse para buscar en un espacio de parámetros mediante reducción sucesiva.</p></li>
-<li><p>La reducción sucesiva (SH, por sus siglas en inglés) es como un torneo entre combinaciones de parámetros candidatas.</p></li>
-<li><p>SH es un proceso de selección iterativo donde todos los candidatos (combinaciones de parámetros) se evalúan con una pequeña cantidad de recursos en la primera iteración. Solo algunos de estos candidatos son seleccionados para la siguiente iteración, a la cual se le asignarán más recursos.</p></li>
-<li><p>Para el ajuste de parámetros, el recurso suele ser el número de muestras de entrenamiento, pero también puede ser un parámetro numérico arbitrario, como n_estimators en un bosque aleatorio.</p></li>
-</ul>
+<section class="slide level2">
+
+<h3 id="cálculo-de-sepsis">Cálculo de Sepsis</h3>
+<p>Sustituyendo los valores en la fórmula:</p>
+<p><span class="math display">\[
+P(\text{sepsis}|\text{lenta}, \text{alterado}) = 0.25 \times 0.85 \times 0.2 = 0.0425
+\]</span></p>
 </section>
-<section id="iteraciones-de-reducción-sucesiva" class="slide level2">
-<h2>Iteraciones de Reducción Sucesiva</h2>
-<ul>
-<li>Como se ilustra en la figura a continuación, solo un subconjunto de candidatos “sobrevive” hasta la última iteración.</li>
-<li>Estos son los candidatos que consistentemente han estado entre los de mayor puntaje en todas las iteraciones.</li>
-<li>En cada iteración se asigna una cantidad creciente de recursos por candidato, en este caso el número de muestras.</li>
-</ul>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="halving_iterations_1.png" style="width:40.0%"></p>
-<figcaption>Puntaje de iteraciones sobre candidatos</figcaption>
-</figure>
-</div>
+<section class="slide level2">
+
+<h3 id="cálculo-de-sepsis-1">Cálculo de Sepsis</h3>
+<p>Sustituyendo los valores en la fórmula:</p>
+<p><span class="math display">\[
+P(\text{sepsis}|\text{lenta}, \text{alterado}) = 0.25 \times 0.85 \times 0.2 = 0.0425
+\]</span></p>
 </section>
-<section id="iteraciones-de-reducción-sucesiva-1" class="slide level2">
-<h2>Iteraciones de Reducción Sucesiva</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="halving_iterations_1.png" style="width:50.0%"></p>
-<figcaption>Puntaje de iteraciones sobre candidatos</figcaption>
-</figure>
-</div>
-<div style="font-size: 0.5em;">
+<section class="slide level2">
+
+<h3 id="clasificación-bayesiana-ventajas">Clasificación Bayesiana: Ventajas</h3>
 <ul>
-<li>En la primera iteración, se utiliza una pequeña cantidad de recursos.</li>
-<li>En la segunda iteración, solo se evalúa la mejor mitad de los candidatos, duplicando los recursos asignados.</li>
-<li>Este proceso se repite hasta la última iteración, donde solo quedan 2 candidatos.</li>
-<li>El mejor candidato es aquel que obtiene el mejor puntaje en la última iteración.</li>
-</ul>
-</div>
-</section>
-<section id="iteraciones-de-reducción-sucesiva-2" class="slide level2">
-<h2>Iteraciones de Reducción Sucesiva</h2>
-<ul>
-<li>Reducción progresiva de candidatos: En cada iteración, solo los candidatos con mejor rendimiento avanzan, mientras que se eliminan aquellos con peores resultados.</li>
-<li>Asignación creciente de recursos: Con cada iteración, la cantidad de recursos asignados a cada candidato (por ejemplo, muestras de entrenamiento) se multiplica por un factor, permitiendo una evaluación más exhaustiva de los mejores candidatos.</li>
-<li>Control con el parámetro factor: Este parámetro determina la velocidad de crecimiento de los recursos y la eliminación de candidatos. Un valor de factor=3 suele ser adecuado para equilibrar ambas.</li>
-<li>Eliminación agresiva (aggressive_elimination=True): Cuando los recursos son limitados, esta opción acelera el proceso al eliminar más candidatos en cada iteración.</li>
+<li>Funciona mejor que otros modelos o algoritmos, bajo el supuesto de independencia entre los predictores.</li>
+<li>Requiere una pequeña cantidad de datos de entrenamiento para estimar los datos de prueba.</li>
+<li>Es fácil de implementar.</li>
 </ul>
 </section>
-<section id="tips-para-la-busqueda-de-parametros" class="slide level2">
-<h2>Tips para la busqueda de parametros</h2>
-<h4 id="especificar-una-métrica-objetivo">Especificar una Métrica Objetivo</h4>
+<section class="slide level2">
+
+<h3 id="clasificación-bayesiana-desventajas">Clasificación Bayesiana: Desventajas</h3>
 <ul>
-<li><p>La búsqueda de parámetros utiliza, por defecto, la función de puntuación del estimador.</p>
-<ul>
-<li><code>sklearn.metrics.accuracy_score</code> para clasificación.</li>
-<li><code>sklearn.metrics.r2_score</code> para regresión.</li>
-</ul></li>
-<li><p>En algunos casos, otras métricas pueden ser más adecuadas.</p>
-<ul>
-<li>Ejemplo: en clasificación desequilibrada, la precisión no siempre es informativa.</li>
-</ul></li>
-<li><p><strong>Personalización de la métrica</strong>: Se puede especificar una métrica alternativa mediante el parámetro <code>scoring</code> en la mayoría de las herramientas de búsqueda de parámetros.</p></li>
-<li><p>Para más detalles, consulta la definición de reglas de evaluación en el parámetro <code>scoring</code>.</p></li>
+<li>Asume implícitamente que todos los atributos son mutuamente independientes; en la vida real, es casi imposible que obtengamos un conjunto de predictores completamente independientes.</li>
+<li>Si la variable categórica tiene una categoría en el conjunto de datos de prueba que no se observó en el conjunto de entrenamiento, el modelo asignará una probabilidad de 0 y no podrá hacer una predicción (frecuencia cero).</li>
 </ul>
 </section>
-<section id="especificar-múltiples-métricas-para-la-evaluación" class="slide level2">
-<h2>Especificar Múltiples Métricas para la Evaluación</h2>
+<section class="slide level2">
+
+<h3 id="clasificadores-basados-en-redes-bayesianas-rb">Clasificadores Basados en Redes Bayesianas (RB)</h3>
 <ul>
-<li><strong>GridSearchCV</strong> y <strong>RandomizedSearchCV</strong> permiten definir múltiples métricas con el parámetro <code>scoring</code>.
-<ul>
-<li>Las métricas pueden especificarse como:
-<ul>
-<li>Lista de nombres de puntuación predefinidos.</li>
-<li>Diccionario que asigna el nombre del puntaje a su función o nombre predefinido.</li>
-</ul></li>
-</ul></li>
-<li><strong>Parámetro <code>refit</code></strong>:
-<ul>
-<li>Se debe establecer en la métrica usada para obtener <code>best_params_</code> y construir el <code>best_estimator_</code>.</li>
-<li>Para evitar reconstruir el modelo, establece <code>refit=False</code>.</li>
-<li>Dejar <code>refit=None</code> genera un error con múltiples métricas.</li>
-</ul></li>
-<li>Consulta en la documentacion sklearn la <strong>Demostración de evaluación con múltiples métricas</strong> para ejemplos de uso.</li>
+<li><strong>TAN (Tree Augmented Naïve Bayes)</strong>: permite ciertas dependencias entre los atributos, asumiendo una red bayesiana con forma de árbol.</li>
+<li><strong>BAN (Bayesian Network Augmented Naive Bayes)</strong>: similar a TAN, permite iniciar la red como un NB y luego agregar arcos con un algoritmo de aprendizaje.</li>
+<li><strong>Redes Bayesianas</strong>: aprenden una red incluyendo todas las variables (clase y atributos) para clasificar.</li>
 </ul>
 </section>
-<section id="estimadores-compuestos-y-espacios-de-parámetros" class="slide level2">
-<h2>Estimadores Compuestos y Espacios de Parámetros</h2>
+<section class="slide level2">
+
+<h3 id="aplicaciones-de-clasificación-bayesiana">Aplicaciones de Clasificación Bayesiana</h3>
 <ul>
-<li><p><strong>GridSearchCV</strong> y <strong>RandomizedSearchCV</strong> permiten la búsqueda de parámetros en estimadores compuestos o anidados**:</p>
-<ul>
-<li>Ejemplos: <code>Pipeline</code>, <code>ColumnTransformer</code>, <code>VotingClassifier</code>, <code>CalibratedClassifierCV</code>.</li>
-</ul></li>
-<li><p><strong>Sintaxis <code>&lt;estimator&gt;__&lt;parameter&gt;</code></strong>:</p>
-<ul>
-<li>Se utiliza para definir los parámetros de estimadores anidados.</li>
-<li>Ejemplo de uso con <code>Pipeline</code> y <code>CalibratedClassifierCV</code> para configurar y ajustar hiperparámetros en un solo proceso.</li>
-</ul></li>
-<li><p>Permite búsquedas complejas en modelos con múltiples niveles de anidamiento.</p></li>
-<li><p>Consulta <strong>Pipeline: encadenamiento de estimadores</strong> para búsquedas de parámetros en pipelines.</p></li>
+<li><strong>Predicción en tiempo real</strong>.</li>
+<li><strong>Predicción de clases múltiples</strong>: bien conocido por su función en problemas de múltiples clases.</li>
+<li><strong>Clasificación de texto</strong>: usada ampliamente debido a mejores resultados en problemas de varias clases y su regla de independencia.</li>
 </ul>
 </section>
-<section id="selección-de-modelo-desarrollo-y-evaluación" class="slide level2">
-<h2>Selección de Modelo: Desarrollo y Evaluación</h2>
+<section class="slide level2">
+
+<h3 id="otras-aplicaciones">Otras Aplicaciones</h3>
 <ul>
-<li>La selección de modelo ajusta varios parámetros usando los datos etiquetados.</li>
-<li><strong>Evaluación del modelo</strong>:
-<ul>
-<li>Es importante usar muestras separadas (no vistas durante la búsqueda) para evaluar el modelo final.</li>
-<li>Recomendación: dividir los datos en:
-<ul>
-<li>Conjunto de desarrollo (para <code>GridSearchCV</code>).</li>
-<li>Conjunto de evaluación (para calcular métricas de rendimiento).</li>
-</ul></li>
-</ul></li>
-<li><strong>Función <code>train_test_split</code></strong> facilita esta división.</li>
+<li><strong>Filtrado de correo no deseado</strong>: se usa ampliamente en la detección de spam.</li>
+<li><strong>Análisis de opinión</strong>: utilizado en el análisis de redes sociales para identificar sentimientos positivos y negativos.</li>
+<li><strong>Sistemas de recomendación</strong>: para filtrar información y predecir si un usuario desea un recurso determinado o no.</li>
 </ul>
 </section>
-<section id="paralelización-en-búsqueda-de-parámetros" class="slide level2">
-<h2>Paralelización en Búsqueda de Parámetros</h2>
+<section class="slide level2">
+
+<h3 id="ejemplo-scikit-learn-naive-bayes">Ejemplo Scikit-learn Naive Bayes</h3>
+<p>Los métodos Naive Bayes son un conjunto de algoritmos de aprendizaje supervisado basados en la aplicación del teorema de Bayes con la suposición “ingenua” de independencia condicional entre cada par de características dado el valor de la variable de clase. El teorema de Bayes establece la siguiente relación, dada una variable de clase (y) y un vector de características dependientes ():</p>
+<p><span class="math display">\[
+P(y | \mathbf{x}) = \frac{P(y) P(\mathbf{x} | y)}{P(\mathbf{x})}
+\]</span></p>
+<p>Utilizando la suposición de independencia condicional, podemos simplificar esta relación a:</p>
+<p><span class="math display">\[
+P(y | \mathbf{x}) \approx P(y) \prod_{i=1}^{n} P(x_i | y)
+\]</span></p>
+</section>
+<section class="slide level2">
+
+<h3 id="ejemplo-scikit-learn-naive-bayes-1">Ejemplo Scikit-learn Naive Bayes</h3>
+<p>Ya que <span class="math inline">\(P(\mathbf{x})\)</span> es constante, podemos utilizar la siguiente regla de clasificación:</p>
+<p><span class="math display">\[
+\hat{y} = \underset{y}{\operatorname{argmax}} \ P(y) \prod_{i=1}^{n} P(x_i | y)
+\]</span></p>
+<p>Usamos la estimación de <strong>Máxima A Posteriori (MAP)</strong> para estimar <span class="math inline">\(P(y)\)</span> y <span class="math inline">\(P(x_i | y)\)</span>, donde <span class="math inline">\(P(y)\)</span> es la frecuencia relativa de la clase <span class="math inline">\(y\)</span> en el conjunto de entrenamiento.</p>
+</section>
+<section class="slide level2">
+
+<h3 id="gaussian-naive-bayes">1.9.1. Gaussian Naive Bayes</h3>
+<p>El GaussianNB implementa el algoritmo Naive Bayes Gaussiano para clasificación. Se asume que las características siguen una distribución Gaussiana:</p>
+<p><span class="math display">\[
+P(x_i | y) = \frac{1}{\sqrt{2\pi\sigma_y^2}} \exp\left(-\frac{(x_i - \mu_y)^2}{2\sigma_y^2}\right)
+\]</span></p>
+<p>Los parámetros <span class="math inline">\(\mu_y\)</span> y <span class="math inline">\(\sigma_y\)</span> se estiman utilizando máxima verosimilitud.</p>
+</section>
+<section class="slide level2">
+
+<h3 id="gaussian-naive-bayes-codigo-python-scikit-learn">1.9.1. Gaussian Naive Bayes (Codigo Python Scikit-learn)</h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href=""></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> load_iris</span>
+<span id="cb1-2"><a href=""></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb1-3"><a href=""></a><span class="im">from</span> sklearn.naive_bayes <span class="im">import</span> GaussianNB</span>
+<span id="cb1-4"><a href=""></a></span>
+<span id="cb1-5"><a href=""></a>X, y <span class="op">=</span> load_iris(return_X_y<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb1-6"><a href=""></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(X, y, test_size<span class="op">=</span><span class="fl">0.5</span>, random_state<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb1-7"><a href=""></a></span>
+<span id="cb1-8"><a href=""></a>gnb <span class="op">=</span> GaussianNB()</span>
+<span id="cb1-9"><a href=""></a>y_pred <span class="op">=</span> gnb.fit(X_train, y_train).predict(X_test)</span>
+<span id="cb1-10"><a href=""></a></span>
+<span id="cb1-11"><a href=""></a><span class="bu">print</span>(<span class="st">"Número de puntos mal clasificados de un total de </span><span class="sc">%d</span><span class="st"> puntos: </span><span class="sc">%d</span><span class="st">"</span> <span class="op">%</span> (X_test.shape[<span class="dv">0</span>], (y_test <span class="op">!=</span> y_pred).<span class="bu">sum</span>()))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section class="slide level2">
+
+<h3 id="multinomial-naive-bayes">1.9.2. Multinomial Naive Bayes</h3>
+<p>El <strong>MultinomialNB</strong> implementa el algoritmo Naive Bayes para datos distribuidos de forma multinomial. Este método es clásico para clasificación de texto, donde los datos suelen representarse como recuentos de vectores de palabras.</p>
+<h4 id="fórmula-de-multinomial-naive-bayes">Fórmula de Multinomial Naive Bayes</h4>
+<p>El parámetro <span class="math inline">\(\theta_{y,i}\)</span> es la probabilidad de que la característica <span class="math inline">\(i\)</span> aparezca en una muestra perteneciente a la clase <span class="math inline">\(y\)</span>, estimado como:</p>
+<p><span class="math display">\[
+\theta_{y,i} = \frac{N_{y,i} + \alpha}{N_y + \alpha n}
+\]</span></p>
+<p>Donde:</p>
 <ul>
-<li>Las combinaciones de parámetros se evalúan de forma independiente en cada partición de datos.</li>
-<li><strong>Ejecución en paralelo</strong>:
+<li><span class="math inline">\(N_{y,i}\)</span> es el número de veces que la característica (i) aparece en una muestra de la clase (y).</li>
+<li><span class="math inline">\(N_y\)</span> es el recuento total de todas las características para la clase (y).</li>
+<li><span class="math inline">\(\alpha\)</span> es un parámetro de suavizado.</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<h3 id="complement-naive-bayes">1.9.3. Complement Naive Bayes</h3>
+<p>El <strong>ComplementNB</strong> es una adaptación del Naive Bayes multinomial que es particularmente adecuado para conjuntos de datos desequilibrados. Utiliza estadísticas del complemento de cada clase para calcular los pesos del modelo.</p>
+<h4 id="fórmula-de-complement-naive-bayes">Fórmula de Complement Naive Bayes</h4>
+<p>La estimación de los pesos del modelo se calcula con la siguiente fórmula:</p>
+<p><span class="math display">\[
+\hat{\theta}_{c,i} = \frac{\alpha_i + \sum_{j: y_j \neq c} d_{i,j}}{\alpha + \sum_{j: y_j \neq c} \sum_k d_{k,j}}
+\]</span></p>
+<h4 id="parámetros-de-la-fórmula">Parámetros de la Fórmula</h4>
 <ul>
-<li>Usa el argumento <code>n_jobs=-1</code> para ejecutar cálculos en paralelo y optimizar el tiempo de procesamiento.</li>
-</ul></li>
-<li>Consulta la firma de la función y el glosario sobre <code>n_jobs</code> para más detalles.</li>
+<li><span class="math inline">\(\hat{\theta}_{c,i}\)</span>: Estimación del peso del modelo para la clase (c) y la característica (i).</li>
+<li><span class="math inline">\(\alpha_i\)</span>: Parámetro de suavizado.</li>
+<li><span class="math inline">\(d_{i,j}\)</span>: Frecuencia de la característica (i) en el documento (j).</li>
+<li><span class="math inline">\(\alpha\)</span>: Suma de los parámetros de suavizado.</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<h3 id="bernoulli-naive-bayes">1.9.4. Bernoulli Naive Bayes</h3>
+<p>El <strong>BernoulliNB</strong> implementa el Naive Bayes para datos distribuidos según la distribución de <strong>Bernoulli</strong>, es decir, características binarias. Este clasificador es útil para datos donde cada característica es binaria, como la <strong>presencia o ausencia de palabras</strong> en la clasificación de texto.</p>
+<h4 id="regla-de-decisión-de-bernoulli-naive-bayes">Regla de Decisión de Bernoulli Naive Bayes</h4>
+<p>La regla de decisión para el clasificador Bernoulli Naive Bayes es:</p>
+<p><span class="math display">\[
+P(x_i | y) = P(x_i = 1 | y)^{x_i} \cdot (1 - P(x_i = 1 | y))^{1 - x_i}
+\]</span></p>
+<h4 id="aplicación-de-bernoulli-naive-bayes">Aplicación de Bernoulli Naive Bayes</h4>
+<ul>
+<li><strong><span class="math inline">\(P(x_i = 1 | y)\)</span></strong>: Probabilidad de que la característica (x_i) ocurra dado (y).</li>
+<li><strong><span class="math inline">\(x_i\)</span></strong>: Valor binario que indica si la característica está presente (1) o ausente (0).</li>
+<li>Este clasificador penaliza explícitamente la no ocurrencia de una característica, lo que lo diferencia del Naive Bayes multinomial.</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<h3 id="categorical-naive-bayes">1.9.5. Categorical Naive Bayes</h3>
+<p>El <strong>CategoricalNB</strong> implementa el Naive Bayes para datos categóricos. Este clasificador es útil cuando cada característica tiene una distribución categórica, es decir, se representa como una de varias categorías posibles.</p>
+<h4 id="fórmula-de-categorical-naive-bayes">Fórmula de Categorical Naive Bayes</h4>
+<p>La probabilidad de la categoría <span class="math inline">\(t\)</span> en la característica <span class="math inline">\(i\)</span> dado <span class="math inline">\(y\)</span> es estimada como:</p>
+<p><span class="math display">\[
+P(x_i = t | y) = \frac{N_{t, i, c} + \alpha}{N_c + \alpha n_i}
+\]</span></p>
+<h4 id="parámetros-de-la-fórmula-1">Parámetros de la Fórmula</h4>
+<ul>
+<li><span class="math inline">\(N_{t, i, c}\)</span>: Número de veces que la categoría (t) aparece en la característica (i) en la clase (y).</li>
+<li><span class="math inline">\(N_c\)</span>: Número total de muestras en la clase (y).</li>
+<li><span class="math inline">\(\alpha\)</span>: Parámetro de suavizado que evita probabilidades de cero.</li>
+<li><span class="math inline">\(n_i\)</span>: Número de categorías posibles para la característica (i).</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<h3 id="modelo-naive-bayes-fuera-de-memoria">1.9.6. Modelo Naive Bayes fuera de memoria</h3>
+<p>Los modelos <strong>Naive Bayes</strong> pueden utilizarse para resolver problemas de clasificación a gran escala en los que el conjunto de entrenamiento no cabe en la memoria.</p>
+<ul>
+<li>Clasificadores como <strong>MultinomialNB</strong>, <strong>BernoulliNB</strong> y <strong>GaussianNB</strong> exponen un método <code>partial_fit</code>, que permite ajustar el modelo de forma incremental.</li>
+</ul>
+<h4 id="código-de-partial_fit">Código de partial_fit</h4>
+<p>Aquí tienes un ejemplo de uso del método <code>partial_fit</code> para un modelo GaussianNB:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href=""></a>gnb.partial_fit(X_train, y_train, classes<span class="op">=</span>[<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section class="slide level2">
+
+<h3 id="en-resumen">En Resumen</h3>
+<h5 id="naive-bayes-overview">1. Naive Bayes Overview:</h5>
+<ul>
+<li>Explicación breve de la suposición Naive, el teorema de Bayes y la estimación del Máximo A Posteriori (MAP).</li>
+</ul>
+<h5 id="gaussian-naive-bayes-1">2.Gaussian Naive Bayes:</h5>
+<ul>
+<li>Se enfocan en cómo se asumen distribuciones gaussianas para las características y se estiman los parámetros con máxima verosimilitud.</li>
+</ul>
+<h5 id="multinomial-naive-bayes-1">3. Multinomial Naive Bayes:</h5>
+<ul>
+<li>Utilizado para la clasificación de texto; explica las distribuciones multinomiales y técnicas de suavizado (Laplace, Lidstone).</li>
+</ul>
+<h5 id="complement-naive-bayes-1">4. Complement Naive Bayes:</h5>
+<ul>
+<li>Útil para conjuntos de datos desequilibrados, utilizando estadísticas del complemento para mejorar el rendimiento.</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<h3 id="en-resumen-1">En Resumen</h3>
+<h5 id="bernoulli-naive-bayes-1">5. Bernoulli Naive Bayes:</h5>
+<ul>
+<li>Ideal para vectores de características binarias, comúnmente usado en clasificación de texto con ocurrencias binarias.</li>
+</ul>
+<h5 id="categorical-naive-bayes-1">6. Categorical Naive Bayes:</h5>
+<ul>
+<li>Maneja características categóricas, utilizando distribuciones categóricas para calcular probabilidades.</li>
+</ul>
+<h5 id="naive-bayes-fuera-de-memoria">7. Naive Bayes fuera de memoria:</h5>
+<ul>
+<li>Explica el aprendizaje incremental con partial_fit para grandes conjuntos de datos que no caben en memoria de una sola vez.</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<h3 id="un-poco-de-historia-máquinas-de-soporte-vectorial-svm">Un Poco de Historia: Máquinas de Soporte Vectorial (SVM)</h3>
+<ul>
+<li>Las SVM fueron desarrolladas por Vladimir Vapnik y su equipo en los laboratorios AT&amp;T a finales de los años 70 y durante los 80.</li>
+<li>El modelo fue presentado formalmente en la conferencia <strong>COLT (Computational Learning Theory)</strong> en 1992 por Vapnik y otros autores.</li>
+<li>Este avance marcó un hito importante al llevar la <strong>formulación teórica</strong> de las SVM hacia su <strong>aplicación práctica</strong> en problemas reales de reconocimiento de formas (<em>pattern recognition</em>).</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<h3 id="clasificación-binaria-lineal-en-svm">Clasificación Binaria Lineal en SVM</h3>
+<ul>
+<li><strong>Objetivo</strong>: Encontrar un hiperplano que separe dos clases de manera óptima.</li>
+<li><strong>Margen máximo</strong>: Se maximiza la distancia entre las clases y el hiperplano.</li>
+<li><strong>Función de decisión</strong>: Clasifica los puntos según su posición relativa al hiperplano.</li>
+<li><strong>Soporte vectorial</strong>: Los puntos más cercanos al hiperplano que definen la frontera de separación.</li>
+<li><strong>Linealidad</strong>: Adecuado para problemas donde las clases son separables linealmente.</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<h3 id="imagen-clasificación-binaria-lineal-en-svm">Imagen Clasificación Binaria Lineal en SVM</h3>
+
+<img data-src="Imagen2.png" class="r-stretch quarto-figure-center"><p class="caption">Clasificacion Binaria Lineal</p></section>
+<section id="cual-es-el-mejor-hiperplano-separador" class="slide level2">
+<h2>Cual es el mejor hiperplano separador?</h2>
+
+<img data-src="Imagen3.png" class="r-stretch quarto-figure-center"><p class="caption">Clasificacion Binaria Lineal</p></section>
+<section id="hiperplano-que-maximiza-el-margen-geométrico" class="slide level2">
+<h2>Hiperplano que Maximiza el Margen Geométrico</h2>
+<ul>
+<li><p>La idea central de las <strong>SVM de margen máximo</strong> consiste en seleccionar el hiperplano que maximiza la distancia mínima (o <strong>margen geométrico</strong>) entre los ejemplos del conjunto de datos y el hiperplano.</p></li>
+<li><p>Solo los puntos que se encuentran en las fronteras (conocidos como <strong>vectores soporte</strong>) son considerados para definir el hiperplano óptimo.</p></li>
+<li><p>Este enfoque se justifica dentro de la <strong>teoría del aprendizaje estadístico</strong> y está alineado con el principio de <strong>Minimización del Riesgo Estructural</strong>.</p></li>
+<li><p>Referencia: [Hernández et al., 2004].</p></li>
+</ul>
+</section>
+<section id="hiperplano-que-maximiza-el-margen-geométrico-1" class="slide level2">
+<h2>Hiperplano que Maximiza el Margen Geométrico</h2>
+
+<img data-src="Imagen4.png" class="r-stretch quarto-figure-center"><p class="caption">Hiperplano que Maximiza el Margen Geométrico</p></section>
+<section id="clasificación-lineal" class="slide level2">
+<h2>Clasificación Lineal</h2>
+<p>Supongamos dos vectores <span class="math inline">\(x = (x, y)\)</span> y <span class="math inline">\(w = (w_1, w_2)\)</span>, y una constante <span class="math inline">\(b\)</span>, la ecuación de la recta <span class="math inline">\(y = ax + c\)</span> se define como:</p>
+<p><span class="math display">\[
+x \cdot w + b = 0
+\]</span></p>
+<p>Expandiendo:</p>
+<p><span class="math display">\[
+(x, y) \cdot (w_1, w_2) + b = 0
+\]</span></p>
+<p><span class="math display">\[
+xw_1 + yw_2 + b = 0
+\]</span></p>
+<p>Despejando para <span class="math inline">\(y\)</span>:</p>
+<p><span class="math display">\[
+y = -\frac{w_1}{w_2}x - \frac{b}{w_2}
+\]</span></p>
+</section>
+<section id="función-de-clasificación" class="slide level2">
+<h2>Función de Clasificación</h2>
+<p>La función de clasificación para una entrada <span class="math inline">\(x_i\)</span> se define como:</p>
+<p><span class="math display">\[
+f(x_i) =
+\begin{cases}
++1 &amp; \text{si } x \cdot w + b \geq 0 \\
+-1 &amp; \text{si } x \cdot w + b &lt; 0
+\end{cases}
+\]</span></p>
+</section>
+<section id="clasificacion-no-lineal" class="slide level2">
+<h2>Clasificacion No Lineal</h2>
+
+<img data-src="Imagen5.png" class="r-stretch quarto-figure-center"><p class="caption">Clasificación No Lineal</p></section>
+<section id="clasificación-no-lineal" class="slide level2">
+<h2>Clasificación No-Lineal</h2>
+<ul>
+<li><p>El aprendizaje de <strong>separadores no lineales</strong> se consigue mediante una <strong>transformación no lineal</strong> del espacio de atributos de entrada (input space) hacia un espacio de características (<strong>feature space</strong>) de dimensionalidad mucho mayor, donde es posible realizar una separación lineal.</p></li>
+<li><p>El uso de las denominadas <strong>funciones núcleo</strong> (<em>kernel functions</em>), que calculan el producto escalar de dos vectores en el espacio de características, permite trabajar de manera eficiente en dicho espacio sin la necesidad de calcular explícitamente las transformaciones de los ejemplos de aprendizaje.</p></li>
+<li><p>Referencia: [Hernández et al., 2004].</p></li>
+</ul>
+</section>
+<section id="kernel" class="slide level2">
+<h2>Kernel</h2>
+<ul>
+<li><p>Un <strong>kernel</strong> es una función que devuelve el resultado del <strong>producto punto</strong> entre dos vectores, realizado en un espacio dimensional diferente al espacio original donde se encuentran los vectores.</p></li>
+<li><p>El <strong>producto punto</strong> entre dos vectores <span class="math inline">\(a\)</span> y <span class="math inline">\(b\)</span> se define como:</p></li>
+</ul>
+<p><span class="math display">\[
+a \cdot b = \sum_{i=1}^{n} a_i b_i = a_1 b_1 + a_2 b_2 + \dots + a_n b_n
+\]</span></p>
+<ul>
+<li>Esta transformación permite realizar operaciones en un espacio de características de mayor dimensionalidad sin necesidad de calcular explícitamente las coordenadas de los vectores en el nuevo espacio.</li>
+</ul>
+</section>
+<section id="kernel-lineal" class="slide level2">
+<h2>Kernel Lineal</h2>
+
+<img data-src="Imagen6.png" class="r-stretch quarto-figure-center"><p class="caption">Kernel Lineal</p></section>
+<section id="kernel-polimonico" class="slide level2">
+<h2>Kernel Polimonico</h2>
+
+<img data-src="Imagen7.png" class="r-stretch quarto-figure-center"><p class="caption">Kernel Polimonico</p></section>
+<section id="kernel-gaussiano" class="slide level2">
+<h2>Kernel Gaussiano</h2>
+
+<img data-src="Imagen8.png" class="r-stretch quarto-figure-center"><p class="caption">Kernel Gaussiano</p></section>
+<section id="algoritmo-para-un-svm" class="slide level2">
+<h2>Algoritmo para un SVM</h2>
+<ol type="1">
+<li>Definir el hiperplano <span class="math inline">\(X\beta = 0\)</span>.</li>
+<li>Transformar los datos utilizando una <strong>función de núcleo</strong> (<em>kernel</em>).</li>
+<li>Seleccionar un hiperplano que maximice el <strong>margen geométrico</strong>.</li>
+<li>Como la posibilidad de una separación perfecta es baja, es necesario permitir cierta <strong>holgura</strong> para el margen, permitiendo que algunos puntos estén en el lado equivocado del margen.</li>
+<li>Determinar los <strong>hiperparámetros óptimos</strong> (por ejemplo, <span class="math inline">\(\gamma\)</span>, penalización).</li>
+<li>Evaluar el modelo.</li>
+</ol>
+</section>
+<section id="ventajas-de-svm" class="slide level2">
+<h2>Ventajas de SVM</h2>
+<ul>
+<li><p><strong>Alta dimensionalidad</strong>: SVM es eficaz en espacios de alta dimensión, como en la clasificación de documentos y el análisis de sentimientos, donde la dimensionalidad puede ser extremadamente grande.</p></li>
+<li><p><strong>Eficiencia de memoria</strong>: Solo un subconjunto de los puntos de entrenamiento (vectores soporte) se utiliza en el proceso de decisión para asignar nuevos miembros, lo que reduce la memoria requerida.</p></li>
+<li><p><strong>Versatilidad</strong>: La capacidad de aplicar diferentes <strong>funciones núcleo</strong> (<em>kernel</em>) permite mayor flexibilidad en los límites de decisión, mejorando el rendimiento de la clasificación, especialmente en problemas no lineales.</p></li>
+</ul>
+</section>
+<section id="desventajas-de-svm" class="slide level2">
+<h2>Desventajas de SVM</h2>
+<ul>
+<li><p><strong>Selección de parámetros del kernel</strong>: Las SVM son muy sensibles a la elección de los parámetros del <strong>kernel</strong>. En espacios de características de alta dimensión con pocas muestras, los vectores soporte son menos efectivos, lo que puede llevar a un rendimiento de clasificación deficiente al agregar nuevas muestras.</p></li>
+<li><p><strong>No probabilístico</strong>: SVM no proporciona una interpretación probabilística directa para la pertenencia a un grupo. El clasificador solo coloca los objetos por encima o por debajo de un hiperplano de clasificación. Sin embargo, una métrica para determinar la “efectividad” de la clasificación es la distancia del nuevo punto al límite de decisión.</p></li>
+</ul>
+</section>
+<section id="svm-vs.-redes-neuronales-nn" class="slide level2">
+<h2>SVM vs.&nbsp;Redes Neuronales (NN)</h2>
+<h3 id="similaridades">Similaridades:</h3>
+<ul>
+<li>Ambos algoritmos son <strong>paramétricos</strong>, dependen del parámetro de costo (C) y de la función <strong>kernel</strong>.</li>
+<li>Ambos pueden aproximar funciones de decisión <strong>no lineales</strong>.</li>
+<li>Clasifican con una <strong>precisión comparable</strong>.</li>
+</ul>
+</section>
+<section id="svm-vs.-redes-neuronales-nn-1" class="slide level2">
+<h2>SVM vs.&nbsp;Redes Neuronales (NN)</h2>
+<h3 id="diferencias">Diferencias:</h3>
+<ul>
+<li>Una <strong>red neuronal profunda</strong> tiene una complejidad mayor que una SVM con el mismo número de parámetros.</li>
+<li>SVM identifica de forma fiable el <strong>límite de decisión</strong> usando vectores soporte, mientras que NN requiere procesar <strong>toda la data de entrenamiento</strong>.</li>
+<li>SVM requiere <strong>menos tiempo de procesamiento</strong> que NN.</li>
+<li>SVM son más confiables y garantizan la <strong>convergencia a un mínimo global</strong>, independientemente de la configuración inicial.</li>
+</ul>
+</section>
+<section id="aplicaciones-de-svm" class="slide level2">
+<h2>Aplicaciones de SVM</h2>
+<ul>
+<li><p><strong>Problema de la doble espiral</strong>: Un problema artificial que consiste en aprender a distinguir dos áreas que definen espirales en un plano bidimensional.</p></li>
+<li><p><strong>Categorización o clasificación de textos</strong>: Usado para la organización automática de documentos y filtrado de documentos, como el filtrado de mensajes no deseados o <strong>spam</strong>.</p></li>
+<li><p><strong>Modelo basado en bag-of-words</strong>: Representa documentos utilizando vectores de palabras, conocido como el modelo de <strong>bolsa de palabras</strong>.</p></li>
+</ul>
+</section>
+<section class="slide level2">
+
+<h3 id="ejemplos-scikit-learn-máquinas-de-soporte-vectorial-svm">Ejemplos Scikit-learn: Máquinas de Soporte Vectorial (SVM)</h3>
+<p>Las <strong>Máquinas de Soporte Vectorial (SVM)</strong> son un conjunto de métodos de aprendizaje supervisado utilizados para clasificación, regresión y detección de outliers.</p>
+<h4 id="ventajas-de-las-svm">Ventajas de las SVM:</h4>
+<ul>
+<li>Efectivas en espacios de alta dimensionalidad.</li>
+<li>Efectivas incluso cuando el número de dimensiones es mayor que el número de muestras.</li>
+<li>Usan un subconjunto de puntos de entrenamiento en la función de decisión (vectores de soporte), por lo que también son eficientes en memoria.</li>
+<li>Versátiles: Se pueden especificar diferentes funciones de Kernel. Los kernels comunes están disponibles, pero también es posible especificar kernels personalizados.</li>
+</ul>
+<h4 id="desventajas-de-las-svm">Desventajas de las SVM:</h4>
+<ul>
+<li>Si el número de características es mucho mayor que el número de muestras, evitar el sobreajuste al elegir las funciones Kernel y el término de regularización es crucial.</li>
+<li>Las SVM no proporcionan estimaciones de probabilidad directamente; se calculan utilizando una costosa validación cruzada de cinco pliegues.</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<h3 id="clasificación-con-svm">Clasificación con SVM</h3>
+<p>Las clases <strong>SVC</strong>, <strong>NuSVC</strong> y <strong>LinearSVC</strong> pueden realizar clasificación binaria y multiclase en un conjunto de datos.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href=""></a><span class="im">from</span> sklearn <span class="im">import</span> svm</span>
+<span id="cb3-2"><a href=""></a>X <span class="op">=</span> [[<span class="dv">0</span>, <span class="dv">0</span>], [<span class="dv">1</span>, <span class="dv">1</span>]]</span>
+<span id="cb3-3"><a href=""></a>y <span class="op">=</span> [<span class="dv">0</span>, <span class="dv">1</span>]</span>
+<span id="cb3-4"><a href=""></a>clf <span class="op">=</span> svm.SVC()</span>
+<span id="cb3-5"><a href=""></a>clf.fit(X, y)</span>
+<span id="cb3-6"><a href=""></a>clf.predict([[<span class="fl">2.</span>, <span class="fl">2.</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>Las SVM utilizan un subconjunto de los datos de entrenamiento llamados vectores de soporte.</li>
+<li>Propiedades como los vectores de soporte se pueden obtener con los atributos support_vectors_, support_ y n_support_.</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<h3 id="clasificación-multiclase">1.4.1.1 Clasificación multiclase</h3>
+<p>Las clases SVC y NuSVC implementan la estrategia de “uno contra uno” para la clasificación multiclase.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href=""></a>X <span class="op">=</span> [[<span class="dv">0</span>], [<span class="dv">1</span>], [<span class="dv">2</span>], [<span class="dv">3</span>]]</span>
+<span id="cb4-2"><a href=""></a>Y <span class="op">=</span> [<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>]</span>
+<span id="cb4-3"><a href=""></a>clf <span class="op">=</span> svm.SVC(decision_function_shape<span class="op">=</span><span class="st">'ovo'</span>)</span>
+<span id="cb4-4"><a href=""></a>clf.fit(X, Y)</span>
+<span id="cb4-5"><a href=""></a>clf.decision_function_shape <span class="op">=</span> <span class="st">"ovr"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>Por otro lado, LinearSVC implementa la estrategia “uno contra el resto” y entrena n modelos para las n clases.</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<h3 id="puntuaciones-y-probabilidades">1.4.1.2 Puntuaciones y probabilidades</h3>
+<p>El método decision_function de SVC y NuSVC proporciona puntuaciones por clase para cada muestra.</p>
+<ul>
+<li>Si se establece probability=True, se habilitan las estimaciones de probabilidad.</li>
+</ul>
+<p>Para estimaciones más precisas, se recomienda utilizar decision_function en lugar de predict_proba.</p>
+</section>
+<section class="slide level2">
+
+<h3 id="regresión-con-svm">1.4.2. Regresión con SVM</h3>
+<p>El método de clasificación de soporte vectorial se puede extender para resolver problemas de regresión, conocido como Regresión de Soporte Vectorial (SVR).</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href=""></a><span class="im">from</span> sklearn <span class="im">import</span> svm</span>
+<span id="cb5-2"><a href=""></a>X <span class="op">=</span> [[<span class="dv">0</span>, <span class="dv">0</span>], [<span class="dv">2</span>, <span class="dv">2</span>]]</span>
+<span id="cb5-3"><a href=""></a>y <span class="op">=</span> [<span class="fl">0.5</span>, <span class="fl">2.5</span>]</span>
+<span id="cb5-4"><a href=""></a>regr <span class="op">=</span> svm.SVR()</span>
+<span id="cb5-5"><a href=""></a>regr.fit(X, y)</span>
+<span id="cb5-6"><a href=""></a>regr.predict([[<span class="dv">1</span>, <span class="dv">1</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section class="slide level2">
+
+<h3 id="estimación-de-densidad-y-detección-de-novedades">1.4.3. Estimación de Densidad y Detección de Novedades</h3>
+<p>La clase <strong>OneClassSVM</strong> implementa una SVM de una sola clase (<strong>One-Class SVM</strong>) que se utiliza para la detección de outliers (valores atípicos) o anomalías en los datos.</p>
+<h4 id="propósito-de-oneclasssvm">Propósito de OneClassSVM</h4>
+<ul>
+<li>Detecta datos que no siguen el patrón general de un conjunto de datos.</li>
+<li>Es especialmente útil en situaciones donde los datos de entrenamiento no contienen ejemplos de outliers.</li>
+</ul>
+<h4 id="ejemplo-de-detección-de-outliers">Ejemplo de Detección de Outliers</h4>
+<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href=""></a><span class="im">from</span> sklearn <span class="im">import</span> svm</span>
+<span id="cb6-2"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb6-3"><a href=""></a></span>
+<span id="cb6-4"><a href=""></a><span class="co"># Generar datos de ejemplo</span></span>
+<span id="cb6-5"><a href=""></a>X <span class="op">=</span> <span class="fl">0.3</span> <span class="op">*</span> np.random.randn(<span class="dv">100</span>, <span class="dv">2</span>)</span>
+<span id="cb6-6"><a href=""></a>X_train <span class="op">=</span> np.r_[X <span class="op">+</span> <span class="dv">2</span>, X <span class="op">-</span> <span class="dv">2</span>]</span>
+<span id="cb6-7"><a href=""></a></span>
+<span id="cb6-8"><a href=""></a><span class="co"># Entrenar el modelo OneClassSVM</span></span>
+<span id="cb6-9"><a href=""></a>clf <span class="op">=</span> svm.OneClassSVM(gamma<span class="op">=</span><span class="st">'auto'</span>).fit(X_train)</span>
+<span id="cb6-10"><a href=""></a></span>
+<span id="cb6-11"><a href=""></a><span class="co"># Predecir si las muestras son outliers o no</span></span>
+<span id="cb6-12"><a href=""></a>y_pred_train <span class="op">=</span> clf.predict(X_train)</span>
+<span id="cb6-13"><a href=""></a></span>
+<span id="cb6-14"><a href=""></a><span class="co"># Resultados:</span></span>
+<span id="cb6-15"><a href=""></a><span class="bu">print</span>(<span class="st">"Predicción de entrenamiento:"</span>, y_pred_train)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section class="slide level2">
+
+<h3 id="complejidad">1.4.4. Complejidad</h3>
+<p>Las <strong>Máquinas de Soporte Vectorial (SVM)</strong> son herramientas poderosas, pero sus requisitos de cómputo y almacenamiento aumentan rápidamente con el número de vectores de entrenamiento.</p>
+<h4 id="problema-de-programación-cuadrática-qp">Problema de Programación Cuadrática (QP)</h4>
+<p>El núcleo de una SVM es un problema de <strong>programación cuadrática (QP)</strong>, que separa los <strong>vectores de soporte</strong> del resto de los datos de entrenamiento.</p>
+<ul>
+<li>Este problema es computacionalmente costoso debido al número de vectores de entrenamiento y la dimensionalidad del espacio de características.</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<h3 id="escalabilidad-de-svm-con-libsvm">Escalabilidad de SVM con libsvm</h3>
+<ul>
+<li>El solucionador de <strong>QP</strong> utilizado por la implementación basada en <strong>libsvm</strong> escala entre:</li>
+</ul>
+<p><span class="math display">\[
+\mathcal{O}(n_{\text{training}}^2)
+\]</span></p>
+<p>y</p>
+<p><span class="math display">\[
+\mathcal{O}(n_{\text{training}}^3)
+\]</span></p>
+<ul>
+<li>dependiendo de qué tan eficientemente se use la caché de <strong>libsvm</strong> en la práctica (esto depende del conjunto de datos).</li>
+</ul>
+<h3 id="casos-de-datos-dispersos">Casos de Datos Dispersos</h3>
+<p>Si los datos son muy dispersos, este costo de complejidad debe reemplazarse por el <strong>número promedio de características no nulas</strong> en un vector de muestra.</p>
+</section>
+<section id="eficiencia-en-el-caso-lineal" class="slide level2">
+<h2>Eficiencia en el Caso Lineal</h2>
+<p>Para el caso lineal, el algoritmo utilizado en <strong>LinearSVC</strong> (implementado por <strong>liblinear</strong>) es mucho más eficiente que su contraparte basada en <strong>libsvm</strong>.</p>
+<ul>
+<li>Puede <strong>escalar casi linealmente</strong> a millones de muestras y/o características, lo que lo hace más adecuado para grandes conjuntos de datos.</li>
+</ul>
+<div class="sourceCode" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href=""></a><span class="im">from</span> sklearn <span class="im">import</span> svm</span>
+<span id="cb7-2"><a href=""></a>X <span class="op">=</span> [[<span class="dv">0</span>, <span class="dv">0</span>], [<span class="dv">2</span>, <span class="dv">2</span>]]</span>
+<span id="cb7-3"><a href=""></a>y <span class="op">=</span> [<span class="fl">0.5</span>, <span class="fl">2.5</span>]</span>
+<span id="cb7-4"><a href=""></a></span>
+<span id="cb7-5"><a href=""></a><span class="co"># Ajuste del modelo utilizando LinearSVC</span></span>
+<span id="cb7-6"><a href=""></a>regr <span class="op">=</span> svm.LinearSVC()</span>
+<span id="cb7-7"><a href=""></a>regr.fit(X, y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section class="slide level2">
+
+<h3 id="consejos-para-el-uso-práctico">1.4.5. Consejos para el uso práctico</h3>
+<h4 id="escalar-los-datos">Escalar los datos</h4>
+<ul>
+<li>Las SVM no son invariantes al escalado, por lo que es altamente recomendable escalar los datos.</li>
+</ul>
+<div class="sourceCode" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href=""></a><span class="im">from</span> sklearn.pipeline <span class="im">import</span> make_pipeline</span>
+<span id="cb8-2"><a href=""></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
+<span id="cb8-3"><a href=""></a><span class="im">from</span> sklearn.svm <span class="im">import</span> SVC</span>
+<span id="cb8-4"><a href=""></a>clf <span class="op">=</span> make_pipeline(StandardScaler(), SVC())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Al utilizar <strong>SVM</strong> es importante tener en cuenta algunos aspectos prácticos para optimizar el rendimiento y evitar errores comunes.</p>
+<h4 id="evitar-la-copia-de-datos">Evitar la Copia de Datos</h4>
+<ul>
+<li>Para <strong>SVC</strong>, <strong>SVR</strong>, <strong>NuSVC</strong> y <strong>NuSVR</strong>, si los datos no están en formato <strong>C-contiguo</strong> y de doble precisión, serán copiados antes de llamar a la implementación subyacente en <strong>C</strong>.</li>
+<li>Verifica si un array de <strong>numpy</strong> es <strong>C-contiguo</strong> inspeccionando su atributo <code>flags</code>.</li>
+<li>Para <strong>LinearSVC</strong> (y <strong>LogisticRegression</strong>), cualquier entrada pasada como array <strong>numpy</strong> será copiada y convertida a la representación interna de datos dispersos de <strong>liblinear</strong>.</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<h3 id="tamaño-de-la-caché-del-kernel">Tamaño de la Caché del Kernel</h3>
+<ul>
+<li>Para SVC, SVR, NuSVC y NuSVR, el tamaño de la caché del kernel impacta significativamente en el tiempo de ejecución para problemas grandes.</li>
+<li>Si tienes suficiente RAM, se recomienda ajustar cache_size a un valor más alto, como 500MB o 1000MB.</li>
+</ul>
+<div class="sourceCode" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href=""></a><span class="im">from</span> sklearn <span class="im">import</span> svm</span>
+<span id="cb9-2"><a href=""></a>clf <span class="op">=</span> svm.SVC(cache_size<span class="op">=</span><span class="dv">500</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<h4 id="ajuste-del-parámetro-c">Ajuste del Parámetro C</h4>
+<ul>
+<li>El parámetro C tiene un valor predeterminado de 1, lo cual es razonable en general.</li>
+<li>Si tienes muchas observaciones con ruido, deberías disminuir C, ya que C menor implica más regularización.</li>
+<li>Para LinearSVC y LinearSVR, los resultados de predicción mejoran hasta un umbral, después del cual valores más altos de C ya no aportan beneficios.</li>
+</ul>
+<div class="sourceCode" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href=""></a>clf <span class="op">=</span> svm.LinearSVC(C<span class="op">=</span><span class="fl">0.1</span>)</span>
+<span id="cb10-2"><a href=""></a>clf.fit(X, y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section class="slide level2">
+
+<h3 id="control-de-aleatoriedad">Control de Aleatoriedad</h3>
+<ul>
+<li>Algunas implementaciones, como SVC y NuSVC, usan un generador de números aleatorios para barajar los datos durante la estimación de probabilidades (si probability=True).</li>
+<li>Controla la aleatoriedad con el parámetro random_state.</li>
+</ul>
+<div class="sourceCode" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href=""></a>clf <span class="op">=</span> svm.SVC(random_state<span class="op">=</span><span class="dv">42</span>, probability<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section class="slide level2">
+
+<h3 id="kernels-personalizados">Kernels Personalizados</h3>
+<div class="sourceCode" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href=""></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb12-2"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb12-3"><a href=""></a></span>
+<span id="cb12-4"><a href=""></a><span class="im">from</span> sklearn <span class="im">import</span> datasets, svm</span>
+<span id="cb12-5"><a href=""></a><span class="im">from</span> sklearn.inspection <span class="im">import</span> DecisionBoundaryDisplay</span>
+<span id="cb12-6"><a href=""></a></span>
+<span id="cb12-7"><a href=""></a><span class="co"># Importamos algunos datos para trabajar</span></span>
+<span id="cb12-8"><a href=""></a>iris <span class="op">=</span> datasets.load_iris()</span>
+<span id="cb12-9"><a href=""></a>X <span class="op">=</span> iris.data[:, :<span class="dv">2</span>]  <span class="co"># solo tomamos las dos primeras características. Podríamos</span></span>
+<span id="cb12-10"><a href=""></a><span class="co"># evitar este corte seleccionando un conjunto de datos bidimensional</span></span>
+<span id="cb12-11"><a href=""></a>Y <span class="op">=</span> iris.target</span>
+<span id="cb12-12"><a href=""></a></span>
+<span id="cb12-13"><a href=""></a></span>
+<span id="cb12-14"><a href=""></a><span class="kw">def</span> my_kernel(X, Y):</span>
+<span id="cb12-15"><a href=""></a>    <span class="co">"""</span></span>
+<span id="cb12-16"><a href=""></a><span class="co">    Creamos un kernel personalizado:</span></span>
+<span id="cb12-17"><a href=""></a></span>
+<span id="cb12-18"><a href=""></a><span class="co">                 (2  0)</span></span>
+<span id="cb12-19"><a href=""></a><span class="co">    k(X, Y) = X  (    ) Y.T</span></span>
+<span id="cb12-20"><a href=""></a><span class="co">                 (0  1)</span></span>
+<span id="cb12-21"><a href=""></a><span class="co">    """</span></span>
+<span id="cb12-22"><a href=""></a>    M <span class="op">=</span> np.array([[<span class="dv">2</span>, <span class="dv">0</span>], [<span class="dv">0</span>, <span class="fl">1.0</span>]])</span>
+<span id="cb12-23"><a href=""></a>    <span class="cf">return</span> np.dot(np.dot(X, M), Y.T)</span>
+<span id="cb12-24"><a href=""></a></span>
+<span id="cb12-25"><a href=""></a></span>
+<span id="cb12-26"><a href=""></a>h <span class="op">=</span> <span class="fl">0.02</span>  <span class="co"># tamaño del paso en la malla</span></span>
+<span id="cb12-27"><a href=""></a></span>
+<span id="cb12-28"><a href=""></a><span class="co"># Creamos una instancia de SVM y ajustamos nuestros datos.</span></span>
+<span id="cb12-29"><a href=""></a>clf <span class="op">=</span> svm.SVC(kernel<span class="op">=</span>my_kernel)</span>
+<span id="cb12-30"><a href=""></a>clf.fit(X, Y)</span>
+<span id="cb12-31"><a href=""></a></span>
+<span id="cb12-32"><a href=""></a>ax <span class="op">=</span> plt.gca()</span>
+<span id="cb12-33"><a href=""></a>DecisionBoundaryDisplay.from_estimator(</span>
+<span id="cb12-34"><a href=""></a>    clf,</span>
+<span id="cb12-35"><a href=""></a>    X,</span>
+<span id="cb12-36"><a href=""></a>    cmap<span class="op">=</span>plt.cm.Paired,</span>
+<span id="cb12-37"><a href=""></a>    ax<span class="op">=</span>ax,</span>
+<span id="cb12-38"><a href=""></a>    response_method<span class="op">=</span><span class="st">"predict"</span>,</span>
+<span id="cb12-39"><a href=""></a>    plot_method<span class="op">=</span><span class="st">"pcolormesh"</span>,</span>
+<span id="cb12-40"><a href=""></a>    shading<span class="op">=</span><span class="st">"auto"</span>,</span>
+<span id="cb12-41"><a href=""></a>)</span>
+<span id="cb12-42"><a href=""></a></span>
+<span id="cb12-43"><a href=""></a><span class="co"># También trazamos los puntos de entrenamiento</span></span>
+<span id="cb12-44"><a href=""></a>plt.scatter(X[:, <span class="dv">0</span>], X[:, <span class="dv">1</span>], c<span class="op">=</span>Y, cmap<span class="op">=</span>plt.cm.Paired, edgecolors<span class="op">=</span><span class="st">"k"</span>)</span>
+<span id="cb12-45"><a href=""></a>plt.title(<span class="st">"Clasificación de 3 clases usando SVM con kernel personalizado"</span>)</span>
+<span id="cb12-46"><a href=""></a>plt.axis(<span class="st">"tight"</span>)</span>
+<span id="cb12-47"><a href=""></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section class="slide level2">
+
+
+<img data-src="Imagen9.png" class="r-stretch quarto-figure-center"><p class="caption">Kernel Personalizado</p></section>
+<section class="slide level2">
+
+<h3 id="conclusiones">Conclusiones</h3>
+<ul>
+<li><p><strong>¿Cómo se define el Teorema de Bayes?</strong></p></li>
+<li><p><strong>¿En qué consiste la clasificación Bayesiana?</strong></p></li>
+<li><p><strong>¿Cuáles son las ventajas y desventajas de Naive Bayes (NB)?</strong></p></li>
+<li><p><strong>¿Cómo funciona el algoritmo SVM?</strong></p></li>
+<li><p><strong>¿Cuáles funciones núcleo (kernel) se pueden utilizar?</strong></p></li>
+<li><p><strong>¿Cuáles son las ventajas y desventajas de SVM?</strong></p></li>
+<li><p><strong>Aplicaciones</strong> de SVM y Naive Bayes.</p></li>
 </ul>
 </section>
 <section id="referencias" class="slide level2">
 <h2>Referencias</h2>
+<ol type="1">
+<li>EMC Education Services (2015). <em>Data Science and Big Data Analytics</em>.</li>
+<li>Hernández, J., Ramírez, M. J., Ferri, C. (2004). <em>Introducción a la minería de datos</em>.</li>
+<li>Material de Clase Mailiu: <a href="mailto:m.dazpea@uandresbello.edu" class="email">m.dazpea@uandresbello.edu</a></li>
+<li><strong>H. Zhang</strong> (2004). <em>The optimality of Naive Bayes</em>. Proc. FLAIRS.</li>
+<li><strong>Rennie, J. D., Shih, L., Teevan, J., &amp; Karger, D. R.</strong> (2003). <em>Tackling the poor assumptions of naive Bayes text classifiers</em>. In ICML (Vol. 3, pp.&nbsp;616-623).</li>
+<li><strong>C.D. Manning, P. Raghavan and H. Schütze</strong> (2008). <em>Introduction to Information Retrieval</em>. Cambridge University Press.</li>
+<li><strong>McCallum, A., &amp; Nigam, K.</strong> (1998). <em>A comparison of event models for Naive Bayes text classification</em>. Proc. AAAI/ICML-98 Workshop on Learning for Text Categorization, pp.&nbsp;41-48.</li>
+<li><strong>Metsis, V., Androutsopoulos, I., &amp; Paliouras, G.</strong> (2006). <em>Spam filtering with Naive Bayes – Which Naive Bayes?</em> 3rd Conf. on Email and Anti-Spam (CEAS).</li>
+<li><strong>Raphael A. Finkel and J.L. Bentley</strong> (1979). <em>Quad Trees: A Data Structure for Retrieval on Composite Keys</em>. Stanford University, <a href="http://i.stanford.edu/pub/cstr/reports/cs/tr/79/773/CS-TR-79-773.pdf">CS-TR-79-773</a>.</li>
+</ol>
+</section>
+<section id="anexos-validación-cruzada-evaluación-del-rendimiento-del-estimador" class="slide level2">
+<h2>Anexos: “Validación Cruzada: Evaluación del Rendimiento del Estimador”</h2>
+
+<img data-src="Cross_Validation1.png" class="r-stretch quarto-figure-center"><p class="caption">Cross_Validation</p></section>
+<section id="introducción-a-la-validación-cruzada" class="slide level2">
+<h2><strong>Introducción a la Validación Cruzada</strong></h2>
 <ul>
-<li><p>Bergstra, J., &amp; Bengio, Y. (2012). <em>Random search for hyper-parameter optimization</em>. The Journal of Machine Learning Research.</p></li>
-<li><p>Scikit-learn: Machine Learning in Python. <em>scikit-learn.org</em>. Disponible en: https://scikit-learn.org/stable/</p></li>
+<li><p>La validación cruzada se utiliza para evaluar el rendimiento de un modelo al dividir los datos en conjuntos de entrenamiento y prueba.</p></li>
+<li><p>El <strong>overfitting</strong> ocurre cuando un modelo aprende el ruido en los datos en lugar de la señal real.</p>
+<ul>
+<li>Esto conduce a una precisión perfecta en los datos de entrenamiento, pero un mal rendimiento en datos no vistos.</li>
+</ul></li>
+<li><p>En scikit-learn, una división aleatoria en conjuntos de entrenamiento y prueba se puede calcular con la función train_test_split</p></li>
+<li><p>Vamos a cargar el conjunto de datos iris para ajustar una máquina de soporte vectorial lineal (SVM) en él:</p></li>
+</ul>
+<h3 id="división-de-conjuntos-en-scikit-learn">División de Conjuntos en Scikit-learn</h3>
+<div class="sourceCode" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb13-2"><a href=""></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb13-3"><a href=""></a><span class="im">from</span> sklearn <span class="im">import</span> datasets</span>
+<span id="cb13-4"><a href=""></a><span class="im">from</span> sklearn <span class="im">import</span> svm</span>
+<span id="cb13-5"><a href=""></a></span>
+<span id="cb13-6"><a href=""></a><span class="co"># Cargar el conjunto de datos Iris</span></span>
+<span id="cb13-7"><a href=""></a>X, y <span class="op">=</span> datasets.load_iris(return_X_y<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb13-8"><a href=""></a></span>
+<span id="cb13-9"><a href=""></a><span class="co"># Ver la forma de los datos</span></span>
+<span id="cb13-10"><a href=""></a>X.shape, y.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="división-de-conjuntos-en-scikit-learn-1" class="slide level2">
+<h2>División de Conjuntos en Scikit-learn</h2>
+<ul>
+<li>Ahora podemos tomar una muestra del conjunto de entrenamiento, reservando el 40% de los datos para la evaluación de nuestro clasificador.</li>
+</ul>
+<div class="sourceCode" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href=""></a><span class="co"># Dividir los datos en conjuntos de entrenamiento y prueba, </span></span>
+<span id="cb14-2"><a href=""></a><span class="co"># reservando el 40% de los datos para la prueba (test_size=0.4).</span></span>
+<span id="cb14-3"><a href=""></a><span class="co"># El parámetro random_state asegura que la división sea reproducible.</span></span>
+<span id="cb14-4"><a href=""></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(</span>
+<span id="cb14-5"><a href=""></a>    X, y, test_size<span class="op">=</span><span class="fl">0.4</span>, random_state<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb14-6"><a href=""></a></span>
+<span id="cb14-7"><a href=""></a><span class="co"># Mostrar la forma (dimensiones) del conjunto de entrenamiento (X e y)</span></span>
+<span id="cb14-8"><a href=""></a>X_train.shape, y_train.shape</span>
+<span id="cb14-9"><a href=""></a></span>
+<span id="cb14-10"><a href=""></a><span class="co"># Mostrar la forma (dimensiones) del conjunto de prueba (X e y)</span></span>
+<span id="cb14-11"><a href=""></a>X_test.shape, y_test.shape</span>
+<span id="cb14-12"><a href=""></a></span>
+<span id="cb14-13"><a href=""></a><span class="co"># Entrenar un clasificador de máquina de soporte vectorial (SVM) con un kernel lineal.</span></span>
+<span id="cb14-14"><a href=""></a><span class="co"># El parámetro C=1 regula el margen del clasificador.</span></span>
+<span id="cb14-15"><a href=""></a>clf <span class="op">=</span> svm.SVC(kernel<span class="op">=</span><span class="st">'linear'</span>, C<span class="op">=</span><span class="dv">1</span>).fit(X_train, y_train)</span>
+<span id="cb14-16"><a href=""></a></span>
+<span id="cb14-17"><a href=""></a><span class="co"># Calcular la puntuación de precisión del modelo en el conjunto de prueba.</span></span>
+<span id="cb14-18"><a href=""></a>clf.score(X_test, y_test)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="riesgo-de-sobreajuste-al-ajustar-hiperparámetros-en-modelos" class="slide level2">
+<h2>Riesgo de Sobreajuste al Ajustar Hiperparámetros en Modelos</h2>
+<ul>
+<li><p>Al ajustar los hiperparámetros, como el valor de C en una SVM, existe el riesgo de sobreajuste en el conjunto de prueba.</p></li>
+<li><p>Esto ocurre porque los parámetros pueden ajustarse hasta que el modelo rinda de manera óptima en el conjunto de prueba, lo que puede provocar que el modelo se ajuste demasiado a esos datos y no generalice bien con datos nuevos.</p></li>
+<li><p>Este problema se conoce como fuga de conocimiento del conjunto de prueba hacia el modelo.</p></li>
+</ul>
+<h3 id="la-solución-conjunto-de-validación">La Solución: Conjunto de Validación</h3>
+<ul>
+<li><p>Para mitigar este riesgo, una parte adicional del conjunto de datos se reserva como conjunto de validación.</p></li>
+<li><p>El modelo se entrena en el conjunto de entrenamiento y luego se evalúa en el conjunto de validación para ajustar los hiperparámetros.</p></li>
+<li><p>Después de obtener buenos resultados en el conjunto de validación, se realiza una evaluación final en el conjunto de prueba.</p></li>
+</ul>
+<h3 id="problema-de-la-partición-de-datos">Problema de la Partición de Datos</h3>
+<ul>
+<li><p>Pero dividir los datos en tres conjuntos (entrenamiento, validación y prueba) reduce drásticamente el número de muestras disponibles para entrenar el modelo, lo que podría afectar su precisión.</p></li>
+<li><p>Además, los resultados pueden depender de una selección aleatoria particular de los conjuntos de entrenamiento y validación.</p></li>
+<li><p>Una solución a este problema es un procedimiento llamado validación cruzada (abreviado como CV). Se debe mantener un conjunto de prueba para la evaluación final, pero el conjunto de validación ya no es necesario cuando se utiliza la validación cruzada.</p></li>
+</ul>
+</section>
+<section id="validacion-cruzada-k-fold" class="slide level2">
+<h2>Validacion Cruzada K-Fold</h2>
+<ul>
+<li><p>En el enfoque básico, llamado validación cruzada k-fold, el conjunto de entrenamiento se divide en k subconjuntos más pequeños. El siguiente procedimiento se sigue para cada uno de los k “folds”:</p>
+<ol type="1">
+<li>Un modelo se entrena utilizando k-1 de los subconjuntos como datos de entrenamiento;</li>
+<li>El modelo resultante se valida en la parte restante de los datos (es decir, se utiliza como conjunto de prueba para calcular una métrica de rendimiento, como la precisión).</li>
+</ol></li>
+<li><p>La métrica de rendimiento reportada por la validación cruzada k-fold es el promedio de los valores calculados en el bucle.</p></li>
+<li><p>Este enfoque puede ser computacionalmente costoso, pero no desperdicia demasiados datos (como ocurre al fijar arbitrariamente un conjunto de validación).</p></li>
+</ul>
+
+<img data-src="Cross_Validation2.png" class="r-stretch quarto-figure-center"><p class="caption">Cross_Validation</p></section>
+<section id="cálculo-de-métricas-con-validación-cruzada" class="slide level2">
+<h2>Cálculo de métricas con validación cruzada</h2>
+<ul>
+<li><p>La forma más simple de utilizar la validación cruzada es llamar a la función auxiliar cross_val_score en el estimador y el conjunto de datos.</p></li>
+<li><p>El siguiente ejemplo demuestra cómo estimar la precisión de una máquina de soporte vectorial con kernel lineal en el conjunto de datos iris, dividiendo los datos, ajustando un modelo y calculando la puntuación 5 veces consecutivas (con divisiones diferentes cada vez):</p></li>
+</ul>
+<div class="sourceCode" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href=""></a><span class="co"># Importar la función cross_val_score para realizar validación cruzada</span></span>
+<span id="cb15-2"><a href=""></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> cross_val_score</span>
+<span id="cb15-3"><a href=""></a></span>
+<span id="cb15-4"><a href=""></a><span class="co"># Crear un clasificador SVM con un kernel lineal y un estado aleatorio fijo para reproducibilidad</span></span>
+<span id="cb15-5"><a href=""></a>clf <span class="op">=</span> svm.SVC(kernel<span class="op">=</span><span class="st">'linear'</span>, C<span class="op">=</span><span class="dv">1</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb15-6"><a href=""></a></span>
+<span id="cb15-7"><a href=""></a><span class="co"># Realizar validación cruzada con 5 particiones (cv=5)</span></span>
+<span id="cb15-8"><a href=""></a>scores <span class="op">=</span> cross_val_score(clf, X, y, cv<span class="op">=</span><span class="dv">5</span>)</span>
+<span id="cb15-9"><a href=""></a></span>
+<span id="cb15-10"><a href=""></a><span class="co"># Mostrar las puntuaciones de precisión obtenidas en cada partición</span></span>
+<span id="cb15-11"><a href=""></a>scores</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li><p>Resultado array([0.96…, 1. , 0.96…, 0.96…, 1. ])</p></li>
+<li><p>La puntuación media y la desviación estándar se dan de la siguiente manera:</p></li>
+</ul>
+<div class="sourceCode" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href=""></a><span class="co"># Imprimir la precisión promedio y la desviación estándar de las puntuaciones obtenidas</span></span>
+<span id="cb16-2"><a href=""></a><span class="bu">print</span>(<span class="st">"</span><span class="sc">%0.2f</span><span class="st"> accuracy with a standard deviation of </span><span class="sc">%0.2f</span><span class="st">"</span> <span class="op">%</span> (scores.mean(), scores.std()))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>0.98 accuracy with a standard deviation of 0.02</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<ul>
+<li>Por defecto, la puntuación calculada en cada iteración de la validación cruzada (CV) es el método score del estimador. Es posible cambiar esto utilizando el parámetro scoring:</li>
+</ul>
+<div class="sourceCode" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href=""></a><span class="co"># Importar la métrica de evaluación</span></span>
+<span id="cb17-2"><a href=""></a><span class="im">from</span> sklearn <span class="im">import</span> metrics</span>
+<span id="cb17-3"><a href=""></a></span>
+<span id="cb17-4"><a href=""></a><span class="co"># Realizar validación cruzada con 5 particiones (cv=5) utilizando la métrica F1 macro</span></span>
+<span id="cb17-5"><a href=""></a>scores <span class="op">=</span> cross_val_score(</span>
+<span id="cb17-6"><a href=""></a>    clf, X, y, cv<span class="op">=</span><span class="dv">5</span>, scoring<span class="op">=</span><span class="st">'f1_macro'</span>)</span>
+<span id="cb17-7"><a href=""></a></span>
+<span id="cb17-8"><a href=""></a><span class="co"># Mostrar las puntuaciones F1 obtenidas en cada partición</span></span>
+<span id="cb17-9"><a href=""></a>scores</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li><p>Resultado: array([0.96…, 1. …, 0.96…, 0.96…, 1. ])</p></li>
+<li><p>Ver el parámetro de evaluación: The scoring parameter: definir las reglas de evaluación del modelo para más detalles. En el caso del conjunto de datos Iris, las muestras están equilibradas entre las clases objetivo, por lo tanto, la exactitud (accuracy) y el puntaje F1 son casi iguales.</p></li>
+<li><p>Cuando el argumento cv es un número entero, cross_val_score utiliza las estrategias KFold o StratifiedKFold por defecto, siendo la última usada si el estimador proviene de ClassifierMixin.</p></li>
+</ul>
+</section>
+<section id="la-función-cross_validate-y-la-evaluación-de-múltiples-métricas" class="slide level2">
+<h2>La función cross_validate y la evaluación de múltiples métricas</h2>
+<ul>
+<li><p>La función cross_validate se diferencia de cross_val_score en dos aspectos:</p>
+<ol type="1">
+<li>Permite especificar múltiples métricas para la evaluación.</li>
+<li>Devuelve un diccionario que contiene los tiempos de ajuste (fit-times), tiempos de puntuación (score-times) (y opcionalmente los puntajes de entrenamiento, estimadores ajustados, índices de división de entrenamiento-prueba) además del puntaje de prueba.</li>
+</ol></li>
+<li><p>Para la evaluación de una sola métrica, donde el parámetro scoring es una cadena, función callable o None, las claves serán: [‘test_score’, ‘fit_time’, ‘score_time’].</p></li>
+<li><p>Y para la evaluación de múltiples métricas, el valor devuelto es un diccionario con las siguientes claves: [‘test_<nombre_scorer1>’, ‘test_<nombre_scorer2>’, ‘test_&lt;nombre_scorer…&gt;’, ‘fit_time’, ‘score_time’].</nombre_scorer2></nombre_scorer1></p></li>
+<li><p>El parámetro return_train_score está configurado en False por defecto para ahorrar tiempo de computación.</p></li>
+<li><p>Para evaluar los puntajes en el conjunto de entrenamiento también, debes establecerlo en True. También puedes conservar el estimador ajustado en cada conjunto de entrenamiento estableciendo return_estimator=True.</p></li>
+<li><p>De manera similar, puedes establecer return_indices=True para retener los índices de entrenamiento y prueba utilizados para dividir el conjunto de datos en conjuntos de entrenamiento y prueba para cada división de validación cruzada.</p></li>
+</ul>
+</section>
+<section id="la-función-cross_validate-y-la-evaluación-de-múltiples-métricas-1" class="slide level2">
+<h2>La función cross_validate y la evaluación de múltiples métricas</h2>
+<p>Las múltiples métricas pueden especificarse como una lista, tupla o conjunto de nombres de evaluadores (scorers) predefinidos:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href=""></a><span class="co"># Importar la función cross_validate para realizar validación cruzada con múltiples métricas</span></span>
+<span id="cb18-2"><a href=""></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> cross_validate</span>
+<span id="cb18-3"><a href=""></a></span>
+<span id="cb18-4"><a href=""></a><span class="co"># Importar la métrica de evaluación recall_score</span></span>
+<span id="cb18-5"><a href=""></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> recall_score</span>
+<span id="cb18-6"><a href=""></a></span>
+<span id="cb18-7"><a href=""></a><span class="co"># Definir las métricas de evaluación que se utilizarán en la validación cruzada</span></span>
+<span id="cb18-8"><a href=""></a>scoring <span class="op">=</span> [<span class="st">'precision_macro'</span>, <span class="st">'recall_macro'</span>]</span>
+<span id="cb18-9"><a href=""></a></span>
+<span id="cb18-10"><a href=""></a><span class="co"># Crear un clasificador SVM con un kernel lineal y un estado aleatorio fijo para reproducibilidad</span></span>
+<span id="cb18-11"><a href=""></a>clf <span class="op">=</span> svm.SVC(kernel<span class="op">=</span><span class="st">'linear'</span>, C<span class="op">=</span><span class="dv">1</span>, random_state<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb18-12"><a href=""></a></span>
+<span id="cb18-13"><a href=""></a><span class="co"># Realizar validación cruzada con las métricas definidas</span></span>
+<span id="cb18-14"><a href=""></a>scores <span class="op">=</span> cross_validate(clf, X, y, scoring<span class="op">=</span>scoring)</span>
+<span id="cb18-15"><a href=""></a></span>
+<span id="cb18-16"><a href=""></a><span class="co"># Mostrar las claves del diccionario de resultados ordenadas</span></span>
+<span id="cb18-17"><a href=""></a><span class="bu">sorted</span>(scores.keys())</span>
+<span id="cb18-18"><a href=""></a></span>
+<span id="cb18-19"><a href=""></a><span class="co"># Mostrar las puntuaciones de recall macro obtenidas en cada partición</span></span>
+<span id="cb18-20"><a href=""></a>scores[<span class="st">'test_recall_macro'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="la-función-cross_validate-y-la-evaluación-de-múltiples-métricas-2" class="slide level2">
+<h2>La función cross_validate y la evaluación de múltiples métricas</h2>
+<ul>
+<li>O como un diccionario que mapea el nombre del evaluador (scorer) a una función de evaluación (scoring) predefinida o personalizada:</li>
+</ul>
+<div class="sourceCode" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href=""></a><span class="co"># Importar la función make_scorer para crear un evaluador personalizado</span></span>
+<span id="cb19-2"><a href=""></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> make_scorer</span>
+<span id="cb19-3"><a href=""></a></span>
+<span id="cb19-4"><a href=""></a><span class="co"># Definir las métricas de evaluación que se utilizarán en la validación cruzada</span></span>
+<span id="cb19-5"><a href=""></a><span class="co"># 'prec_macro' utiliza la métrica de precisión macro predefinida</span></span>
+<span id="cb19-6"><a href=""></a><span class="co"># 'rec_macro' utiliza un evaluador personalizado para la métrica de recall macro</span></span>
+<span id="cb19-7"><a href=""></a>scoring <span class="op">=</span> {<span class="st">'prec_macro'</span>: <span class="st">'precision_macro'</span>,</span>
+<span id="cb19-8"><a href=""></a>           <span class="st">'rec_macro'</span>: make_scorer(recall_score, average<span class="op">=</span><span class="st">'macro'</span>)}</span>
+<span id="cb19-9"><a href=""></a></span>
+<span id="cb19-10"><a href=""></a><span class="co"># Realizar validación cruzada con las métricas definidas, utilizando 5 particiones (cv=5)</span></span>
+<span id="cb19-11"><a href=""></a><span class="co"># y devolviendo las puntuaciones del conjunto de entrenamiento</span></span>
+<span id="cb19-12"><a href=""></a>scores <span class="op">=</span> cross_validate(clf, X, y, scoring<span class="op">=</span>scoring,</span>
+<span id="cb19-13"><a href=""></a>                        cv<span class="op">=</span><span class="dv">5</span>, return_train_score<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb19-14"><a href=""></a></span>
+<span id="cb19-15"><a href=""></a><span class="co"># Mostrar las claves del diccionario de resultados ordenadas</span></span>
+<span id="cb19-16"><a href=""></a><span class="bu">sorted</span>(scores.keys())</span>
+<span id="cb19-17"><a href=""></a></span>
+<span id="cb19-18"><a href=""></a><span class="co"># Mostrar las puntuaciones de recall macro obtenidas en el conjunto de entrenamiento en cada partición</span></span>
+<span id="cb19-19"><a href=""></a>scores[<span class="st">'train_rec_macro'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="la-función-cross_validate-y-la-evaluación-de-una-unica-métrica" class="slide level2">
+<h2>La función cross_validate y la evaluación de una unica métrica</h2>
+<ul>
+<li>Aquí tienes un ejemplo de uso de cross_validate utilizando una única métrica:</li>
+</ul>
+<div class="sourceCode" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href=""></a><span class="co"># Realizar validación cruzada con la métrica de precisión macro, utilizando 5 particiones (cv=5)</span></span>
+<span id="cb20-2"><a href=""></a><span class="co"># y devolviendo los estimadores ajustados para cada partición</span></span>
+<span id="cb20-3"><a href=""></a>scores <span class="op">=</span> cross_validate(clf, X, y,</span>
+<span id="cb20-4"><a href=""></a>                        scoring<span class="op">=</span><span class="st">'precision_macro'</span>, cv<span class="op">=</span><span class="dv">5</span>,</span>
+<span id="cb20-5"><a href=""></a>                        return_estimator<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb20-6"><a href=""></a></span>
+<span id="cb20-7"><a href=""></a><span class="co"># Mostrar las claves del diccionario de resultados ordenadas</span></span>
+<span id="cb20-8"><a href=""></a><span class="bu">sorted</span>(scores.keys())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="obtención-de-predicciones-mediante-validación-cruzada" class="slide level2">
+<h2>Obtención de predicciones mediante validación cruzada</h2>
+<ul>
+<li><p>La función cross_val_predict tiene una interfaz similar a cross_val_score, pero devuelve, para cada elemento en la entrada, la predicción que se obtuvo para ese elemento cuando estaba en el conjunto de prueba.</p></li>
+<li><p>Solo se pueden utilizar estrategias de validación cruzada que asignen todos los elementos a un conjunto de prueba exactamente una vez (de lo contrario, se generará una excepción).</p></li>
+<li><p>Nota sobre el uso inapropiado de cross_val_predict:</p>
+<ol type="1">
+<li>El resultado de cross_val_predict puede ser diferente de aquellos obtenidos utilizando cross_val_score, ya que los elementos se agrupan de diferentes maneras.</li>
+<li>La función cross_val_score toma un promedio sobre los pliegues de validación cruzada, mientras que cross_val_predict simplemente devuelve las etiquetas (o probabilidades) de varios modelos distintos sin diferenciarlos.</li>
+<li>Por lo tanto, cross_val_predict no es una medida adecuada del error de generalización.</li>
+</ol></li>
+</ul>
+</section>
+<section id="ejemplos" class="slide level2">
+<h2>Ejemplos:</h2>
+<h3 id="k-fold">K-Fold</h3>
+<div class="sourceCode" id="cb21"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href=""></a><span class="co">## Ejemplo de K-Fold con K=5</span></span>
+<span id="cb21-2"><a href=""></a></span>
+<span id="cb21-3"><a href=""></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> KFold</span>
+<span id="cb21-4"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb21-5"><a href=""></a></span>
+<span id="cb21-6"><a href=""></a><span class="co"># Crear un conjunto de datos de ejemplo</span></span>
+<span id="cb21-7"><a href=""></a>X <span class="op">=</span> np.arange(<span class="dv">20</span>)  <span class="co"># Datos de ejemplo</span></span>
+<span id="cb21-8"><a href=""></a></span>
+<span id="cb21-9"><a href=""></a><span class="co"># Crear el objeto KFold con 5 particiones, sin barajar los datos y sin estado aleatorio fijo</span></span>
+<span id="cb21-10"><a href=""></a>kf <span class="op">=</span> KFold(n_splits<span class="op">=</span><span class="dv">5</span>, shuffle<span class="op">=</span><span class="va">False</span>, random_state<span class="op">=</span><span class="va">None</span>)</span>
+<span id="cb21-11"><a href=""></a></span>
+<span id="cb21-12"><a href=""></a><span class="co"># Iterar sobre cada partición (fold)</span></span>
+<span id="cb21-13"><a href=""></a><span class="cf">for</span> fold, (train_index, test_index) <span class="kw">in</span> <span class="bu">enumerate</span>(kf.split(X)):</span>
+<span id="cb21-14"><a href=""></a>    <span class="bu">print</span>(<span class="ss">f"Fold </span><span class="sc">{</span>fold<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb21-15"><a href=""></a>    <span class="bu">print</span>(<span class="ss">f"Entrenamiento: </span><span class="sc">{</span>train_index<span class="sc">}</span><span class="ss">, Prueba: </span><span class="sc">{</span>test_index<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section class="slide level2">
+
+<ul>
+<li>Podemos visualizar cómo se divide el conjunto de datos en cada iteración:</li>
+</ul>
+<div class="sourceCode" id="cb22"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href=""></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb22-2"><a href=""></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> KFold</span>
+<span id="cb22-3"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb22-4"><a href=""></a></span>
+<span id="cb22-5"><a href=""></a><span class="co"># Crear un conjunto de datos de ejemplo</span></span>
+<span id="cb22-6"><a href=""></a>X <span class="op">=</span> np.arange(<span class="dv">20</span>)  <span class="co"># Datos de ejemplo</span></span>
+<span id="cb22-7"><a href=""></a></span>
+<span id="cb22-8"><a href=""></a><span class="co"># Crear el objeto KFold con 5 particiones, barajando los datos y con un estado aleatorio fijo</span></span>
+<span id="cb22-9"><a href=""></a>kf <span class="op">=</span> KFold(n_splits<span class="op">=</span><span class="dv">5</span>, shuffle<span class="op">=</span><span class="va">False</span>, random_state<span class="op">=</span><span class="va">None</span>)</span>
+<span id="cb22-10"><a href=""></a></span>
+<span id="cb22-11"><a href=""></a><span class="co"># Crear una figura y un eje para la visualización</span></span>
+<span id="cb22-12"><a href=""></a>fig, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb22-13"><a href=""></a></span>
+<span id="cb22-14"><a href=""></a><span class="co"># Iterar sobre cada partición (fold)</span></span>
+<span id="cb22-15"><a href=""></a><span class="cf">for</span> i, (train_index, test_index) <span class="kw">in</span> <span class="bu">enumerate</span>(kf.split(X)):</span>
+<span id="cb22-16"><a href=""></a>    <span class="co"># Crear listas de índices para los conjuntos de entrenamiento y prueba</span></span>
+<span id="cb22-17"><a href=""></a>    y_train <span class="op">=</span> [i <span class="op">+</span> <span class="fl">0.5</span>] <span class="op">*</span> <span class="bu">len</span>(train_index)</span>
+<span id="cb22-18"><a href=""></a>    y_test <span class="op">=</span> [i <span class="op">+</span> <span class="fl">0.5</span>] <span class="op">*</span> <span class="bu">len</span>(test_index)</span>
+<span id="cb22-19"><a href=""></a>    </span>
+<span id="cb22-20"><a href=""></a>    <span class="co"># Graficar los índices de entrenamiento y prueba</span></span>
+<span id="cb22-21"><a href=""></a>    ax.scatter(train_index, y_train, c<span class="op">=</span><span class="st">'blue'</span>, marker<span class="op">=</span><span class="st">'s'</span>, s<span class="op">=</span><span class="dv">100</span>, label<span class="op">=</span><span class="st">'Entrenamiento'</span> <span class="cf">if</span> i <span class="op">==</span> <span class="dv">0</span> <span class="cf">else</span> <span class="st">""</span>)</span>
+<span id="cb22-22"><a href=""></a>    ax.scatter(test_index, y_test, c<span class="op">=</span><span class="st">'red'</span>, marker<span class="op">=</span><span class="st">'o'</span>, s<span class="op">=</span><span class="dv">100</span>, label<span class="op">=</span><span class="st">'Prueba'</span> <span class="cf">if</span> i <span class="op">==</span> <span class="dv">0</span> <span class="cf">else</span> <span class="st">""</span>)</span>
+<span id="cb22-23"><a href=""></a></span>
+<span id="cb22-24"><a href=""></a><span class="co"># Configurar etiquetas y título del gráfico</span></span>
+<span id="cb22-25"><a href=""></a>ax.set_xlabel(<span class="st">'Índice de muestra'</span>)</span>
+<span id="cb22-26"><a href=""></a>ax.set_yticks([i <span class="op">+</span> <span class="fl">0.5</span> <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5</span>)])</span>
+<span id="cb22-27"><a href=""></a>ax.set_yticklabels([<span class="ss">f'Fold </span><span class="sc">{</span>i<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ss">'</span> <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5</span>)])</span>
+<span id="cb22-28"><a href=""></a>ax.set_title(<span class="st">'Visualización de K-Fold Cross-Validation'</span>)</span>
+<span id="cb22-29"><a href=""></a>ax.legend()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="validación-cruzada-con-grupos" class="slide level2">
+<h2>Validación Cruzada con Grupos</h2>
+<ul>
+<li>Group K-Fold Cross-Validation
+<ul>
+<li>GroupKFold asegura que las muestras del mismo grupo no aparezcan en ambos conjuntos de entrenamiento y prueba.</li>
+<li>Útil cuando las muestras dentro de un grupo están relacionadas o son dependientes.</li>
+</ul></li>
+</ul>
+<p>Ejemplo con Grupos</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href=""></a><span class="co"># Crear un conjunto de datos de ejemplo</span></span>
+<span id="cb23-2"><a href=""></a>X <span class="op">=</span> np.arange(<span class="dv">10</span>)  <span class="co"># Datos de ejemplo</span></span>
+<span id="cb23-3"><a href=""></a>y <span class="op">=</span> np.random.randint(<span class="dv">0</span>, <span class="dv">2</span>, size<span class="op">=</span><span class="dv">10</span>)  <span class="co"># Etiquetas de ejemplo (0 o 1)</span></span>
+<span id="cb23-4"><a href=""></a>groups <span class="op">=</span> np.array([<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">5</span>])  <span class="co"># Grupos de ejemplo</span></span>
+<span id="cb23-5"><a href=""></a></span>
+<span id="cb23-6"><a href=""></a><span class="co"># Crear el objeto GroupKFold con 5 particiones</span></span>
+<span id="cb23-7"><a href=""></a>gkf <span class="op">=</span> GroupKFold(n_splits<span class="op">=</span><span class="dv">5</span>)</span>
+<span id="cb23-8"><a href=""></a></span>
+<span id="cb23-9"><a href=""></a><span class="co"># Iterar sobre cada partición (fold)</span></span>
+<span id="cb23-10"><a href=""></a><span class="cf">for</span> train_index, test_index <span class="kw">in</span> gkf.split(X, y, groups):</span>
+<span id="cb23-11"><a href=""></a>    <span class="bu">print</span>(<span class="ss">f"Entrenamiento: </span><span class="sc">{</span>train_index<span class="sc">}</span><span class="ss">, Prueba: </span><span class="sc">{</span>test_index<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="visualización-de-groupkfold" class="slide level2">
+<h2>Visualización de GroupKFold</h2>
+<ul>
+<li>Group K-Fold Cross-Validation se utiliza cuando tus datos están organizados en grupos y quieres asegurarte de que las muestras de un mismo grupo no aparezcan en ambos conjuntos de entrenamiento y prueba durante la validación cruzada.</li>
+</ul>
+<div class="sourceCode" id="cb24"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href=""></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> GroupKFold</span>
+<span id="cb24-2"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb24-3"><a href=""></a></span>
+<span id="cb24-4"><a href=""></a><span class="co"># Crear un conjunto de datos de ejemplo</span></span>
+<span id="cb24-5"><a href=""></a>X <span class="op">=</span> np.arange(<span class="dv">10</span>)  <span class="co"># Datos de ejemplo</span></span>
+<span id="cb24-6"><a href=""></a>y <span class="op">=</span> np.random.randint(<span class="dv">0</span>, <span class="dv">2</span>, size<span class="op">=</span><span class="dv">10</span>)  <span class="co"># Etiquetas de ejemplo (0 o 1)</span></span>
+<span id="cb24-7"><a href=""></a>groups <span class="op">=</span> np.array([<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">5</span>])  <span class="co"># Grupos de ejemplo</span></span>
+<span id="cb24-8"><a href=""></a></span>
+<span id="cb24-9"><a href=""></a><span class="co"># Crear el objeto GroupKFold con 5 particiones</span></span>
+<span id="cb24-10"><a href=""></a>gkf <span class="op">=</span> GroupKFold(n_splits<span class="op">=</span><span class="dv">5</span>)</span>
+<span id="cb24-11"><a href=""></a></span>
+<span id="cb24-12"><a href=""></a><span class="co"># Iterar sobre cada partición (fold)</span></span>
+<span id="cb24-13"><a href=""></a><span class="cf">for</span> train_index, test_index <span class="kw">in</span> gkf.split(X, y, groups):</span>
+<span id="cb24-14"><a href=""></a>    <span class="bu">print</span>(<span class="ss">f"Entrenamiento: </span><span class="sc">{</span>train_index<span class="sc">}</span><span class="ss">, Prueba: </span><span class="sc">{</span>test_index<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb24-15"><a href=""></a></span>
+<span id="cb24-16"><a href=""></a>    <span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb24-17"><a href=""></a>    <span class="im">from</span> sklearn.model_selection <span class="im">import</span> GroupKFold</span>
+<span id="cb24-18"><a href=""></a>    <span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb24-19"><a href=""></a></span>
+<span id="cb24-20"><a href=""></a>    <span class="co"># Crear un conjunto de datos de ejemplo</span></span>
+<span id="cb24-21"><a href=""></a>    X <span class="op">=</span> np.arange(<span class="dv">10</span>)  <span class="co"># Datos de ejemplo</span></span>
+<span id="cb24-22"><a href=""></a>    groups <span class="op">=</span> np.array([<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">5</span>])  <span class="co"># Grupos de ejemplo</span></span>
+<span id="cb24-23"><a href=""></a></span>
+<span id="cb24-24"><a href=""></a>    <span class="co"># Crear el objeto GroupKFold con 5 particiones</span></span>
+<span id="cb24-25"><a href=""></a>    gkf <span class="op">=</span> GroupKFold(n_splits<span class="op">=</span><span class="dv">5</span>)</span>
+<span id="cb24-26"><a href=""></a></span>
+<span id="cb24-27"><a href=""></a>    <span class="co"># Crear una figura y un eje para la visualización</span></span>
+<span id="cb24-28"><a href=""></a>    fig, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb24-29"><a href=""></a></span>
+<span id="cb24-30"><a href=""></a>    <span class="co"># Iterar sobre cada partición (fold)</span></span>
+<span id="cb24-31"><a href=""></a>    <span class="cf">for</span> i, (train_index, test_index) <span class="kw">in</span> <span class="bu">enumerate</span>(gkf.split(X, groups<span class="op">=</span>groups)):</span>
+<span id="cb24-32"><a href=""></a>        <span class="co"># Crear listas de índices para los conjuntos de entrenamiento y prueba</span></span>
+<span id="cb24-33"><a href=""></a>        y_train <span class="op">=</span> [i <span class="op">+</span> <span class="fl">0.5</span>] <span class="op">*</span> <span class="bu">len</span>(train_index)</span>
+<span id="cb24-34"><a href=""></a>        y_test <span class="op">=</span> [i <span class="op">+</span> <span class="fl">0.5</span>] <span class="op">*</span> <span class="bu">len</span>(test_index)</span>
+<span id="cb24-35"><a href=""></a>        </span>
+<span id="cb24-36"><a href=""></a>        <span class="co"># Graficar los índices de entrenamiento y prueba</span></span>
+<span id="cb24-37"><a href=""></a>        ax.scatter(train_index, y_train, c<span class="op">=</span><span class="st">'blue'</span>, marker<span class="op">=</span><span class="st">'s'</span>, s<span class="op">=</span><span class="dv">100</span>, label<span class="op">=</span><span class="st">'Entrenamiento'</span> <span class="cf">if</span> i <span class="op">==</span> <span class="dv">0</span> <span class="cf">else</span> <span class="st">""</span>)</span>
+<span id="cb24-38"><a href=""></a>        ax.scatter(test_index, y_test, c<span class="op">=</span><span class="st">'red'</span>, marker<span class="op">=</span><span class="st">'o'</span>, s<span class="op">=</span><span class="dv">100</span>, label<span class="op">=</span><span class="st">'Prueba'</span> <span class="cf">if</span> i <span class="op">==</span> <span class="dv">0</span> <span class="cf">else</span> <span class="st">""</span>)</span>
+<span id="cb24-39"><a href=""></a></span>
+<span id="cb24-40"><a href=""></a>    <span class="co"># Configurar etiquetas y título del gráfico</span></span>
+<span id="cb24-41"><a href=""></a>    ax.set_xlabel(<span class="st">'Índice de muestra'</span>)</span>
+<span id="cb24-42"><a href=""></a>    ax.set_yticks([i <span class="op">+</span> <span class="fl">0.5</span> <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5</span>)])</span>
+<span id="cb24-43"><a href=""></a>    ax.set_yticklabels([<span class="ss">f'Fold </span><span class="sc">{</span>i<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ss">'</span> <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5</span>)])</span>
+<span id="cb24-44"><a href=""></a>    ax.set_title(<span class="st">'Visualización de GroupKFold'</span>)</span>
+<span id="cb24-45"><a href=""></a>    ax.legend()</span>
+<span id="cb24-46"><a href=""></a></span>
+<span id="cb24-47"><a href=""></a>    <span class="co"># Mostrar el gráfico</span></span>
+<span id="cb24-48"><a href=""></a>    plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="stratified-k-fold-cross-validation" class="slide level2">
+<h2>Stratified K-Fold Cross-Validation</h2>
+<p>Concepto</p>
+<pre><code>•   Stratified K-Fold mantiene la proporción de clases en cada fold.
+•   Es especialmente útil en conjuntos de datos desequilibrados.
+•   Garantiza que cada fold sea una representación adecuada del conjunto completo.</code></pre>
+<div class="sourceCode" id="cb26"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href=""></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> StratifiedKFold</span>
+<span id="cb26-2"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb26-3"><a href=""></a></span>
+<span id="cb26-4"><a href=""></a><span class="co"># Crear un conjunto de datos de ejemplo</span></span>
+<span id="cb26-5"><a href=""></a>X <span class="op">=</span> np.ones((<span class="dv">50</span>, <span class="dv">1</span>))</span>
+<span id="cb26-6"><a href=""></a>y <span class="op">=</span> np.hstack((np.zeros(<span class="dv">45</span>), np.ones(<span class="dv">5</span>)))  <span class="co"># 45 ceros y 5 unos</span></span>
+<span id="cb26-7"><a href=""></a></span>
+<span id="cb26-8"><a href=""></a><span class="co"># Crear el objeto StratifiedKFold con 5 particiones, barajando los datos y con un estado aleatorio fijo</span></span>
+<span id="cb26-9"><a href=""></a>skf <span class="op">=</span> StratifiedKFold(n_splits<span class="op">=</span><span class="dv">5</span>, shuffle<span class="op">=</span><span class="va">False</span>, random_state<span class="op">=</span><span class="va">None</span>)</span>
+<span id="cb26-10"><a href=""></a></span>
+<span id="cb26-11"><a href=""></a><span class="co"># Iterar sobre cada partición (fold)</span></span>
+<span id="cb26-12"><a href=""></a><span class="cf">for</span> fold, (train_index, test_index) <span class="kw">in</span> <span class="bu">enumerate</span>(skf.split(X, y)):</span>
+<span id="cb26-13"><a href=""></a>    <span class="bu">print</span>(<span class="ss">f"Fold </span><span class="sc">{</span>fold<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb26-14"><a href=""></a>    <span class="co"># Mostrar la distribución de las clases en el conjunto de entrenamiento</span></span>
+<span id="cb26-15"><a href=""></a>    <span class="bu">print</span>(<span class="ss">f"Distribución en entrenamiento: </span><span class="sc">{</span>np<span class="sc">.</span>bincount(y[train_index].astype(<span class="bu">int</span>))<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb26-16"><a href=""></a>    <span class="co"># Mostrar la distribución de las clases en el conjunto de prueba</span></span>
+<span id="cb26-17"><a href=""></a>    <span class="bu">print</span>(<span class="ss">f"Distribución en prueba: </span><span class="sc">{</span>np<span class="sc">.</span>bincount(y[test_index].astype(<span class="bu">int</span>))<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="visualizacion-stratified-k-fold-cross-validation" class="slide level2">
+<h2>Visualizacion: Stratified K-Fold Cross-Validation</h2>
+<ul>
+<li>StratifiedGroupKFold es un esquema de validación cruzada que combina tanto StratifiedKFold como GroupKFold.</li>
+<li>La idea es intentar preservar la distribución de clases en cada división, manteniendo al mismo tiempo cada grupo dentro de una única división.</li>
+<li>Esto puede ser útil cuando tienes un conjunto de datos desequilibrado, de modo que usar solo GroupKFold podría producir divisiones sesgadas.</li>
+</ul>
+<div class="sourceCode" id="cb27"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href=""></a>    <span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb27-2"><a href=""></a>    <span class="im">from</span> sklearn.model_selection <span class="im">import</span> StratifiedKFold</span>
+<span id="cb27-3"><a href=""></a>    <span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb27-4"><a href=""></a></span>
+<span id="cb27-5"><a href=""></a>    <span class="co"># Crear un conjunto de datos de ejemplo</span></span>
+<span id="cb27-6"><a href=""></a>    X <span class="op">=</span> np.arange(<span class="dv">50</span>)</span>
+<span id="cb27-7"><a href=""></a>    y <span class="op">=</span> np.hstack((np.zeros(<span class="dv">45</span>), np.ones(<span class="dv">5</span>)))</span>
+<span id="cb27-8"><a href=""></a></span>
+<span id="cb27-9"><a href=""></a>    <span class="co"># Crear el objeto StratifiedKFold con 5 particiones, barajando los datos y con un estado aleatorio fijo</span></span>
+<span id="cb27-10"><a href=""></a>    skf <span class="op">=</span> StratifiedKFold(n_splits<span class="op">=</span><span class="dv">5</span>, shuffle<span class="op">=</span><span class="va">True</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb27-11"><a href=""></a></span>
+<span id="cb27-12"><a href=""></a>    <span class="co"># Crear una figura y un eje para la visualización</span></span>
+<span id="cb27-13"><a href=""></a>    fig, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb27-14"><a href=""></a></span>
+<span id="cb27-15"><a href=""></a>    <span class="co"># Iterar sobre cada partición (fold)</span></span>
+<span id="cb27-16"><a href=""></a>    <span class="cf">for</span> i, (train_index, test_index) <span class="kw">in</span> <span class="bu">enumerate</span>(skf.split(X, y)):</span>
+<span id="cb27-17"><a href=""></a>        <span class="co"># Crear listas de índices para los conjuntos de entrenamiento y prueba</span></span>
+<span id="cb27-18"><a href=""></a>        y_train <span class="op">=</span> [i <span class="op">+</span> <span class="fl">0.5</span>] <span class="op">*</span> <span class="bu">len</span>(train_index)</span>
+<span id="cb27-19"><a href=""></a>        y_test <span class="op">=</span> [i <span class="op">+</span> <span class="fl">0.5</span>] <span class="op">*</span> <span class="bu">len</span>(test_index)</span>
+<span id="cb27-20"><a href=""></a>        </span>
+<span id="cb27-21"><a href=""></a>        <span class="co"># Graficar los índices de entrenamiento y prueba</span></span>
+<span id="cb27-22"><a href=""></a>        ax.scatter(train_index, y_train, c<span class="op">=</span><span class="st">'blue'</span>, marker<span class="op">=</span><span class="st">'s'</span>, s<span class="op">=</span><span class="dv">10</span>, label<span class="op">=</span><span class="st">'Entrenamiento'</span> <span class="cf">if</span> i <span class="op">==</span> <span class="dv">0</span> <span class="cf">else</span> <span class="st">""</span>)</span>
+<span id="cb27-23"><a href=""></a>        ax.scatter(test_index, y_test, c<span class="op">=</span><span class="st">'red'</span>, marker<span class="op">=</span><span class="st">'o'</span>, s<span class="op">=</span><span class="dv">10</span>, label<span class="op">=</span><span class="st">'Prueba'</span> <span class="cf">if</span> i <span class="op">==</span> <span class="dv">0</span> <span class="cf">else</span> <span class="st">""</span>)</span>
+<span id="cb27-24"><a href=""></a></span>
+<span id="cb27-25"><a href=""></a>    <span class="co"># Configurar etiquetas y título del gráfico</span></span>
+<span id="cb27-26"><a href=""></a>    ax.set_xlabel(<span class="st">'Índice de muestra'</span>)</span>
+<span id="cb27-27"><a href=""></a>    ax.set_yticks([i <span class="op">+</span> <span class="fl">0.5</span> <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5</span>)])</span>
+<span id="cb27-28"><a href=""></a>    ax.set_yticklabels([<span class="ss">f'Fold </span><span class="sc">{</span>i<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ss">'</span> <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5</span>)])</span>
+<span id="cb27-29"><a href=""></a>    ax.set_title(<span class="st">'Visualización de Stratified K-Fold'</span>)</span>
+<span id="cb27-30"><a href=""></a>    ax.legend()</span>
+<span id="cb27-31"><a href=""></a></span>
+<span id="cb27-32"><a href=""></a>    <span class="co"># Mostrar el gráfico</span></span>
+<span id="cb27-33"><a href=""></a>    plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="preguntas-y-respuestas" class="slide level2">
+<h2>Preguntas y Respuestas</h2>
+<h3 id="pregunta-1">Pregunta 1</h3>
+<ul>
+<li><p>P: ¿Qué es el sobreajuste (overfitting) y por qué es perjudicial para un modelo de aprendizaje automático?</p></li>
+<li><p>R:</p>
+<ul>
+<li><p>El sobreajuste ocurre cuando un modelo aprende los detalles y el ruido en los datos de entrenamiento hasta el punto de perjudicar su rendimiento en datos nuevos.</p></li>
+<li><p>Es perjudicial porque el modelo no generaliza bien a datos no vistos, lo que significa que su rendimiento en el mundo real será pobre.</p></li>
+</ul></li>
+</ul>
+<h3 id="pregunta-2">Pregunta 2</h3>
+<ul>
+<li><p>P: ¿Por qué es importante dividir los datos en conjuntos de entrenamiento y prueba?</p></li>
+<li><p>R:</p>
+<ul>
+<li>Dividir los datos permite evaluar cómo generaliza el modelo a datos no vistos.</li>
+<li>El conjunto de entrenamiento se utiliza para ajustar el modelo, mientras que el conjunto de prueba evalúa su rendimiento real.</li>
+</ul></li>
+</ul>
+<p>Riesgo de Sobreajuste al Ajustar Hiperparámetros - Al ajustar hiperparámetros, como el valor de C en una SVM, existe el riesgo de sobreajuste si se evalúa repetidamente en el conjunto de prueba.</p>
+<h3 id="pregunta-3">Pregunta 3</h3>
+<ul>
+<li>P: ¿Cómo podemos evitar el sobreajuste al ajustar hiperparámetros?</li>
+</ul>
+<p>R: - Utilizando un conjunto de validación separado o aplicando validación cruzada. - La validación cruzada permite usar todos los datos para entrenamiento y validación sin sobreajustar al conjunto de prueba.</p>
+</section>
+<section id="pregunta-4" class="slide level2">
+<h2>Pregunta 4</h2>
+<ul>
+<li><p>P: ¿Qué ventaja tiene la validación cruzada K-Fold sobre una única división entrenamiento/prueba?</p></li>
+<li><p>R:</p>
+<ul>
+<li>La validación cruzada utiliza más datos para el entrenamiento y validación.</li>
+<li>Proporciona una estimación más robusta y menos sesgada del rendimiento del modelo.</li>
+</ul></li>
+</ul>
+<h3 id="pregunta-5">Pregunta 5</h3>
+<ul>
+<li><p>P: ¿Para qué sirve la función cross_validate y en qué se diferencia de cross_val_score?</p></li>
+<li><p>R:</p>
+<ul>
+<li>cross_validate permite evaluar múltiples métricas simultáneamente y proporciona tiempos de ajuste y puntuación.</li>
+<li>A diferencia de cross_val_score, que solo permite una métrica y devuelve las puntuaciones directamente.</li>
+</ul></li>
+</ul>
+<h3 id="pregunta-6">Pregunta 6</h3>
+<ul>
+<li><p>P: ¿Es adecuado usar cross_val_predict para estimar el error de generalización? ¿Por qué?</p></li>
+<li><p>R:</p>
+<ul>
+<li><p>No es adecuado porque las predicciones se obtienen de modelos entrenados en diferentes particiones.</p></li>
+<li><p>No proporciona una métrica de rendimiento agregada y puede llevar a interpretaciones incorrectas del error.</p></li>
+</ul>
+<hr></li>
+</ul>
+</section>
+<section id="introducción-al-algoritmo-k-nn" class="slide level2">
+<h2>Introducción al Algoritmo k-NN</h2>
+<ul>
+<li><p>¿Qué es k-NN? -k-NN (k-Nearest Neighbors) es un algoritmo de aprendizaje supervisado utilizado tanto para clasificación como para regresión.</p></li>
+<li><p>-Se basa en la idea de que muestras similares están cerca en el espacio de características.</p></li>
+<li><p>¿Cómo funciona?</p>
+<ol type="1">
+<li>Definición de k: Seleccionar el número de vecinos más cercanos a considerar.</li>
+<li>Cálculo de distancias: Medir la distancia entre el punto de interés y todos los puntos en el conjunto de entrenamiento.</li>
+<li>Identificación de vecinos: Seleccionar los k vecinos más cercanos según las distancias calculadas.</li>
+<li>Predicción:</li>
+</ol>
+<ul>
+<li>Clasificación: Asignar la clase más común entre los vecinos</li>
+<li>Regresión: Calcular el promedio de los valores de los vecinos.</li>
+</ul></li>
+</ul>
+</section>
+<section id="ventajas-del-algoritmo-k-nn" class="slide level2">
+<h2>Ventajas del Algoritmo k-NN</h2>
+<ul>
+<li>Simplicidad: Fácil de entender e implementar.</li>
+<li>Flexibilidad: No hace suposiciones sobre la distribución de los datos</li>
+<li>Adaptabilidad: Puede manejar problemas de clasificación y regresión.</li>
+</ul>
+<h3 id="desventajas-del-algoritmo-k-nn">Desventajas del Algoritmo k-NN</h3>
+<ul>
+<li>Eficiencia Computacional:
+<ul>
+<li>Puede ser costoso en términos de tiempo de cálculo para conjuntos de datos grandes. -Requiere calcular la distancia a todos los puntos de entrenamiento para cada predicción.</li>
+</ul></li>
+<li>Almacenamiento:
+<ul>
+<li>Necesita almacenar todo el conjunto de entrenamiento en memoria</li>
+<li>Sensibilidad a la Dimensionalidad:</li>
+<li>Su rendimiento puede degradarse con datos de alta dimensión.</li>
+</ul></li>
 </ul>
 <div class="quarto-auto-generated-content">
 <div class="footer footer-default">
@@ -633,19 +1840,19 @@ Carlos Correa Íñiguez (<a href="mailto:c.correainiguez@uandresbello.edu" class
   </div>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script>
-  <script src="Ejemplo_Ajuste_Hiperparametro_files/libs/revealjs/dist/reveal.js"></script>
+  <script src="Clasificacion Bayesiana_files/libs/revealjs/dist/reveal.js"></script>
   <!-- reveal.js plugins -->
-  <script src="Ejemplo_Ajuste_Hiperparametro_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
-  <script src="Ejemplo_Ajuste_Hiperparametro_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
-  <script src="Ejemplo_Ajuste_Hiperparametro_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
-  <script src="Ejemplo_Ajuste_Hiperparametro_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="Ejemplo_Ajuste_Hiperparametro_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  <script src="Clasificacion Bayesiana_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="Clasificacion Bayesiana_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="Clasificacion Bayesiana_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="Clasificacion Bayesiana_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="Clasificacion Bayesiana_files/libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
-  <script src="Ejemplo_Ajuste_Hiperparametro_files/libs/revealjs/plugin/notes/notes.js"></script>
-  <script src="Ejemplo_Ajuste_Hiperparametro_files/libs/revealjs/plugin/search/search.js"></script>
-  <script src="Ejemplo_Ajuste_Hiperparametro_files/libs/revealjs/plugin/zoom/zoom.js"></script>
-  <script src="Ejemplo_Ajuste_Hiperparametro_files/libs/revealjs/plugin/math/math.js"></script>
+  <script src="Clasificacion Bayesiana_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="Clasificacion Bayesiana_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="Clasificacion Bayesiana_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="Clasificacion Bayesiana_files/libs/revealjs/plugin/math/math.js"></script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
 
   <script>
